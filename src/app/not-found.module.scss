@@ -1,0 +1,20 @@
+.undefined_page {
+   @extend %bblockstyle;
+   background-color: var(--additional-card-bg);
+   padding: 0.714em;
+   flex: 1 1 auto;
+   height: 100%;
+
+   span {
+      @include m.flex(center);
+      height: 100%;
+      font-family: Coiny, Verdana, Geneva, Tahoma, sans-serif;
+      @include m.adaptiveValue('font-size', 49px, 23px);
+      text-align: center;
+      color: var(--undefined-page-span-color);
+      text-shadow:
+         0 0 0.063em var(--undefined-page-span-shadow),
+         0 0 0.063em var(--undefined-page-span-shadow),
+         0 0 0.063em var(--undefined-page-span-shadow);
+   }
+}

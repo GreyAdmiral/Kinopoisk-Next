@@ -1,0 +1,33 @@
+.error {
+   @include m.flex(center, center, column);
+   @extend %bblockstyle;
+   background-color: var(--additional-card-bg, v.$blackLightTransparent);
+   padding: 0.714em;
+   flex: 1 1 auto;
+   height: 100%;
+   gap: 10px;
+
+   p {
+      font-family: Coiny, Verdana, Geneva, Tahoma, sans-serif;
+      @include m.adaptiveValue('font-size', 49px, 23px);
+      text-align: center;
+      color: var(--error-color, v.$comicsRad);
+      padding-bottom: f.rem(12px);
+   }
+
+   button {
+      @extend %bblockstyle;
+      display: inline-block;
+      font-family: Coiny, Verdana, Geneva, Tahoma, sans-serif;
+      @include m.adaptiveValue('font-size', 18px, 14px);
+      color: var(--theme-button-color, v.$amberDark);
+      background-color: transparent;
+      @include m.animatebtn();
+      text-align: center;
+      padding: f.rem(5px) f.rem(10px);
+
+      @include m.focused {
+         box-shadow: inset 0 0 0.125em 0.125em var(--button-focus-shadow-color, v.$blackUltraTransparent);
+      }
+   }
+}
