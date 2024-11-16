@@ -1,0 +1,27 @@
+//==========================================Цвета====================================================//
+
+$black: #000000;
+$blackUltra: #111;
+$blackLight: #2b2b2b;
+$blackUltraLight: #232323;
+$blackUltraTransparent: rgba(26, 26, 26, 0.9);
+$blackLightTransparent: rgba(43, 43, 43, 0.9);
+$white: #ffffff;
+$whiteLux: #e4e4e4;
+$whiteDark: #e0dfdc;
+$gray: #a8a8a8;
+$grayTransparent: rgba(168, 168, 168, 0.9);
+$grayLight: #e0dfdc;
+$grayMiddle: #757575;
+$grayMiddleTransparent: rgba(117, 117, 117, 0.9);
+$orange: #f60;
+$yellow: #fc0;
+$orangeBlack: rgb(210, 85, 0);
+$yellowClack: rgb(218, 174, 0);
+$comicsRad: #800001;
+$amberDark: #ffbf00;
+
+//==========================================Настройки===============================================//
+
+// Цвет текста по-умолчанию
+$defaultTextColor: $gray;

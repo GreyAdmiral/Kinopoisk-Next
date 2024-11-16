@@ -1,0 +1,13 @@
+@use '../../vars' as vars;
+
+%layout {
+   display: grid;
+   grid-auto-flow: column;
+   grid-template-rows: minmax(75px, auto) 1fr minmax(25px, auto);
+}
+
+%bblockstyle {
+   border-radius: 10px;
+   border: 2px solid var(--card-bg, vars.$blackUltraTransparent);
+   background-color: var(--card-color, vars.$blackLight);
+}

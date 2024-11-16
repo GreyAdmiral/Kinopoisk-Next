@@ -1,0 +1,56 @@
+@use '../../tools/vars' as v;
+
+:root {
+   --default-text-color: #{v.$gray};
+   --text-color: #{v.$white};
+   --movie-title-color: #{v.$grayLight};
+   --raiting-color: #{v.$whiteLux};
+   --kip-raiting-bg: #{v.$yellowClack};
+   --imdb-raiting-bg: #{v.$orangeBlack};
+   --info-title: #{v.$whiteDark};
+   --error-color: #{v.$comicsRad};
+   --undefined-page-span-color: #{v.$grayMiddle};
+   --undefined-page-span-shadow: #{v.$comicsRad};
+   --card-color: #{v.$blackLight};
+   --card-bg: #{v.$blackUltraTransparent};
+   --additional-card-bg: #{v.$blackLightTransparent};
+   --button-focus-shadow-color: #{v.$blackUltraTransparent};
+   --button-color: #{v.$whiteDark};
+   --search-field-bg: #{v.$blackLight};
+   --search-caret-color: #{v.$whiteDark};
+   --header-title-shadow: #{v.$yellow};
+   --header-title-text: #{v.$comicsRad};
+   --header-link-shadow: #{v.$amberDark};
+   --disable-pagination-button: #{v.$gray};
+   --theme-button-color: #{v.$amberDark};
+   --notification-color: #{v.$comicsRad};
+   --notification-bg: #{v.$amberDark};
+   --notification-border: #{v.$comicsRad};
+   --footer-link-color: #{v.$amberDark};
+   --info-link-color-hover: #{v.$orangeBlack};
+   --selection-bg: #{v.$blackUltraTransparent};
+
+   &[data-theme='light'] {
+      --default-text-color: #{v.$blackLight};
+      --text-color: #{v.$black};
+      --movie-title-color: #{v.$blackUltra};
+      --raiting-color: #{v.$blackUltraLight};
+      --info-title: #{v.$blackUltra};
+      --undefined-page-span-color: #{v.$blackLight};
+      --undefined-page-span-shadow: #{v.$yellow};
+      --card-color: #{v.$gray};
+      --card-bg: #{v.$grayMiddle};
+      --additional-card-bg: #{v.$grayTransparent};
+      --button-focus-shadow-color: #{v.$whiteLux};
+      --button-color: #{v.$blackLight};
+      --search-field-bg: #{v.$grayTransparent};
+      --search-caret-color: #{v.$blackLight};
+      --header-title-shadow: #{v.$comicsRad};
+      --header-title-text: #{v.$orangeBlack};
+      --disable-pagination-button: #{v.$grayMiddle};
+      --theme-button-color: #{v.$orangeBlack};
+      --footer-link-color: #{v.$orangeBlack};
+      --info-link-color-hover: #{v.$comicsRad};
+      --selection-bg: #{v.$grayMiddle};
+   }
+}
