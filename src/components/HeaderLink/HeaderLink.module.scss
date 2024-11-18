@@ -1,0 +1,18 @@
+.header {
+   &_title {
+      &_link {
+         display: inline-block;
+         color: var(--header-title-text, v.$comicsRad);
+         padding: f.rem(5px);
+         text-shadow:
+            0 0 0.063em var(--header-title-shadow, v.$yellow),
+            0 0 0.063em var(--header-title-shadow, v.$yellow),
+            0 0 0.063em var(--header-title-shadow, v.$yellow);
+         text-transform: uppercase;
+
+         @include m.focused {
+            box-shadow: 0 0 5px 3px var(--header-link-shadow, v.$amberDark);
+         }
+      }
+   }
+}

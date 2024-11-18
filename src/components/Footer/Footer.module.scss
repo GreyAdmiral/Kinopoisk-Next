@@ -1,0 +1,27 @@
+.footer {
+   @extend %centerflex;
+   color: var(--text-color, v.$white);
+   min-height: 2.083em;
+   padding: 0.417em 0.208em;
+   @include m.adaptiveValue('font-size', 16px, 12px);
+
+   &_body {
+      text-transform: uppercase;
+      text-align: center;
+      text-wrap: balance;
+      padding: f.rem(5px) 0 f.rem(10px);
+
+      a {
+         color: inherit;
+         transition: color 0.4s ease 0s;
+
+         @include m.hover {
+            color: var(--footer-link-color, v.$amberDark);
+         }
+
+         @include m.focused {
+            color: var(--footer-link-color, v.$amberDark);
+         }
+      }
+   }
+}

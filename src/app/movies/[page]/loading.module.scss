@@ -1,0 +1,6 @@
+.loader {
+   &_container {
+      @include m.flex(center);
+      @extend %fullwhp;
+   }
+}

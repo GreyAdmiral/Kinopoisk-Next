@@ -1,0 +1,57 @@
+.movies {
+   @extend %bblockstyle;
+   background-color: var(--additional-card-bg, v.$blackLightTransparent);
+   padding: 0.714em;
+   flex: 1 1 auto;
+
+   &-not-found {
+      @include m.flex(center);
+      height: 100%;
+      font-family: Coiny, Verdana, Geneva, Tahoma, sans-serif;
+      text-align: center;
+      @include m.adaptiveValue('font-size', 49px, 23px);
+   }
+
+   &-center {
+      @include m.flex(center, center, column);
+   }
+}
+
+.half {
+   max-width: calc(75% - 2px);
+   align-self: flex-start;
+
+   @media all and (max-width: 450px) {
+      max-width: calc(55% - 2px);
+   }
+}
+
+.notification {
+   &-text {
+      padding-bottom: f.rem(5px);
+   }
+   &-buttons {
+      @include m.flex(center);
+      gap: 10px;
+   }
+
+   &-button {
+      color: var(--notification-color, v.$comicsRad);
+      background-color: var(--notification-bg, v.$amberDark);
+      border: 1px solid var(--notification-border, v.$comicsRad);
+      border-radius: 5px;
+      padding: f.rem(5px);
+      transition:
+         all ease-out 255ms,
+         color 0.4s ease 0s,
+         background-color 0.4s ease 0s;
+
+      @include m.animatebtn;
+      @include m.hover {
+         color: var(--notification-bg, v.$amberDark);
+         background-color: var(--notification-border, v.$comicsRad);
+      }
+
+      @include m.adaptiveValue('font-size', 16px, 13px);
+   }
+}

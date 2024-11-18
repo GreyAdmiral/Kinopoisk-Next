@@ -1,0 +1,23 @@
+.scheme {
+   &_button {
+      @extend %centerflex;
+      background: none;
+      color: var(--theme-button-color, v.$amberDark);
+      padding: f.rem(5px);
+      margin-bottom: f.rem(10px);
+      border-radius: f.rem(5px);
+      overflow: hidden;
+      @include m.luximage(var(--theme-button-color, v.$amberDark));
+      @include m.adaptiveValue('font-size', 49px, 23px);
+
+      svg {
+         width: 1.7ex;
+         height: 1.7ex;
+         color: inherit;
+      }
+
+      @include m.focused {
+         box-shadow: 0 0 5px 3px var(--theme-button-color, v.$amberDark);
+      }
+   }
+}

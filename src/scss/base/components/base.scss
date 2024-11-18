@@ -8,17 +8,8 @@ html {
    @extend %smoothscroll;
 }
 
-.wrapper {
+body {
    background-color: vars.$gray;
-   font-family: Verdana, Geneva, Tahoma, sans-serif;
-   height: 100%;
-   @extend %layout;
-   overflow-x: clip;
-
-   // Фикс для слайдеров
-   > * {
-      min-width: 0;
-   }
 
    [data-theme='light'] & {
       background: fixed vars.$gray url('/images/background-light.jpg') center 0 / cover no-repeat;
@@ -26,6 +17,18 @@ html {
 
    [data-theme='dark'] & {
       background: fixed vars.$black url('/images/background.jpg') center 0 / cover no-repeat;
+   }
+}
+
+.wrapper {
+   font-family: Verdana, Geneva, Tahoma, sans-serif;
+   min-height: 100%;
+   @extend %layout;
+   overflow-x: clip;
+
+   // Фикс для слайдеров
+   > * {
+      min-width: 0;
    }
 }
 
