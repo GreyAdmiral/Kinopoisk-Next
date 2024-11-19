@@ -1,0 +1,34 @@
+%full-flex-column {
+   @include m.flex(null, null, column);
+   gap: f.rem(5px);
+   width: 100%;
+   height: 100%;
+}
+
+.movie {
+   @include m.flex();
+   gap: f.rem(10px);
+   width: 100%;
+   height: 100%;
+
+   &_left_sidebar {
+      @include m.flex(null, null, column);
+      width: 100%;
+      max-width: 304px;
+
+      &_trailer {
+      }
+   }
+
+   &_content {
+      @extend %full-flex-column;
+      padding: f.rem(5px);
+   }
+
+   &_aside {
+      @include m.flex(null, null, column);
+      flex: 0 1 20%;
+      width: 100%;
+      padding-top: f.rem(5px);
+   }
+}

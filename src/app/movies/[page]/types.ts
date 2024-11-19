@@ -6,5 +6,3 @@ export type Props = {
       search: string;
    };
 };
-
-export type FetchOptions = { method: string; headers: HeadersInit };

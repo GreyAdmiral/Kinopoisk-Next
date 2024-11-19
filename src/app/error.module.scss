@@ -21,8 +21,9 @@
       font-family: Coiny, Verdana, Geneva, Tahoma, sans-serif;
       color: var(--theme-button-color, v.$amberDark);
       background-color: transparent;
+      padding: f.rem(10px) f.rem(10px) f.rem(5px);
       text-align: center;
-      padding: f.rem(5px) f.rem(10px);
+      text-transform: uppercase;
       @include m.animatebtn();
       @include m.adaptiveValue('font-size', 18px, 14px);
 

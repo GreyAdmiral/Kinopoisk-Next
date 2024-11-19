@@ -11,7 +11,10 @@ export const Header = () => {
                <h1 className={styles.header_title}>
                   <HeaderLink />
                </h1>
-               <ColorSchemeButton />
+
+               <div className={styles.header_controls}>
+                  <ColorSchemeButton />
+               </div>
             </div>
          </Container>
       </header>

@@ -1,0 +1,95 @@
+@use 'sass:math';
+@use 'sass:string';
+
+$checksize: 20px;
+$color: v.$whiteLux;
+$bg: v.$comicsRad;
+$disabledColor: #a7a7a7;
+$disabledBg: #c0c0c0;
+$border: v.$orangeBlack;
+$checkedFocusedShadow: v.$yellow;
+
+.custom_checkbox {
+   position: absolute;
+   right: f.rem(10px);
+   bottom: 0;
+   overflow: hidden;
+   cursor: pointer;
+   @include m.adaptiveValue('font-size', $checksize, $checksize * 0.8);
+
+   [type='checkbox'] {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      clip: rect(0 0 0 0);
+
+      @include m.focused {
+         &:not(:disabled) {
+            + span {
+               &::before {
+                  box-shadow: inset 0 0 f.em(5px, $checksize) $bg;
+               }
+            }
+
+            &:checked {
+               + span {
+                  &::before {
+                     box-shadow: inset 0 0 f.em(5px, $checksize) $checkedFocusedShadow;
+                  }
+               }
+            }
+         }
+      }
+
+      + span {
+         &:before {
+            overflow: hidden;
+         }
+      }
+
+      &:checked {
+         + span {
+            &:before {
+               background: $bg
+                  url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path class="checkmark" fill="%23#{str-slice(#{$color}, 2)}" d="M20.61 5.207a1 1 0 0 1 .183 1.403l-10 13a1 1 0 0 1-1.5.097l-5-5a1 1 0 0 1 1.414-1.414l4.195 4.195L19.207 5.39a1 1 0 0 1 1.403-.183Z" clip-rule="evenodd"/></svg>')
+                  center center / contain no-repeat;
+            }
+         }
+
+         &:disabled {
+            + span {
+               &:before {
+                  background-color: $disabledBg;
+                  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path class="checkmark" fill="%23#{str-slice(#{$disabledColor}, 2)}" d="M20.61 5.207a1 1 0 0 1 .183 1.403l-10 13a1 1 0 0 1-1.5.097l-5-5a1 1 0 0 1 1.414-1.414l4.195 4.195L19.207 5.39a1 1 0 0 1 1.403-.183Z" clip-rule="evenodd"/></svg>');
+               }
+            }
+         }
+      }
+
+      &:disabled {
+         + span {
+            &:before {
+               background-color: $disabledBg;
+            }
+         }
+      }
+   }
+
+   span {
+      position: relative;
+      @include m.iflex(null, center);
+      gap: f.em(10px, $checksize);
+
+      &:before {
+         content: '';
+         align-self: flex-start;
+         flex: 0 0 f.em($checksize, $checksize);
+         width: f.em($checksize, $checksize);
+         height: f.em($checksize, $checksize);
+         border: 1px solid $border;
+      }
+   }
+}

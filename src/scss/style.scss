@@ -4,3 +4,7 @@
 * {
    @extend %taphighlight;
 }
+
+::selection {
+   background-color: var(--selection-bg);
+}

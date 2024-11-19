@@ -1,6 +1,5 @@
 import { SCHEMES } from '@tools/costants';
-import type { SchemeName } from '@typesfolder/types';
 
-export function getSchemeIconId(schemeName: SchemeName) {
+export function getSchemeIconId(schemeName: string) {
    return schemeName === SCHEMES.LIGHT ? SCHEMES.DARK : SCHEMES.LIGHT;
 }

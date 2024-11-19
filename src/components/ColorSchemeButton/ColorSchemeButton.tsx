@@ -4,7 +4,6 @@ import { useLocalStorageSync } from '@hooks/useLocalStorageSync';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { getSchemeIconId } from '@tools/getSchemeIconId';
 import { SCHEMES } from '@tools/costants';
-import { SchemeName } from '@typesfolder/types';
 import styles from './ColorSchemeButton.module.scss';
 
 export const ColorSchemeButton = () => {
@@ -33,7 +32,7 @@ export const ColorSchemeButton = () => {
          aria-label={`Выбрать ${scheme == SCHEMES.LIGHT ? 'тёмную' : 'светлую'} тему`}
       >
          <svg>
-            <use xlinkHref={`/images/sprite.svg#${getSchemeIconId(scheme as SchemeName)}`} />
+            <use xlinkHref={`/images/sprite.svg#${getSchemeIconId(scheme)}`} />
          </svg>
       </button>
    );

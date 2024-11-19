@@ -6,10 +6,11 @@ interface ErrorProps {
 }
 
 export default function ErrorPage({ error }: ErrorProps) {
+   const buttonTitle = 'Обновить страницу';
+
    return (
       <div className={styles.error}>
-         <p>{error ? `Ошибка: ${error.message}` : 'Неизвестная ошибка!'}</p>
-         <p>{error ? `Причина: ${error.cause}` : 'Причина не установлена!'}</p>
+         <p>{error ? error?.message : 'Неизвестная ошибка!'}</p>
 
          <button
             type="button"
@@ -17,7 +18,7 @@ export default function ErrorPage({ error }: ErrorProps) {
                window.location.reload();
             }}
          >
-            Обновить страницу
+            {buttonTitle}
          </button>
       </div>
    );

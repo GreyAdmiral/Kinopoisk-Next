@@ -1,0 +1,29 @@
+.notification {
+   &_text {
+      padding-bottom: f.rem(5px);
+   }
+   &_buttons {
+      @include m.flex(center);
+      gap: 10px;
+   }
+
+   &_button {
+      color: var(--notification-color, v.$comicsRad);
+      background-color: var(--notification-bg, v.$amberDark);
+      border: 1px solid var(--notification-border, v.$comicsRad);
+      border-radius: 5px;
+      padding: f.rem(5px);
+      transition:
+         all ease-out 255ms,
+         color 0.4s ease 0s,
+         background-color 0.4s ease 0s;
+
+      @include m.animatebtn;
+      @include m.hover {
+         color: var(--notification-bg, v.$amberDark);
+         background-color: var(--notification-border, v.$comicsRad);
+      }
+
+      @include m.adaptiveValue('font-size', 16px, 13px);
+   }
+}

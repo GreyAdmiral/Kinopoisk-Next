@@ -1,0 +1,91 @@
+%link-effects {
+   transition: color 0.8s ease 0s;
+
+   @include m.hover {
+      color: var(--info-link-color-hover, v.$orangeBlack);
+   }
+
+   @include m.focused {
+      color: var(--info-link-color-hover, v.$orangeBlack);
+   }
+}
+
+.movie {
+   &_info {
+      @include m.flex(null, null, column);
+      gap: f.rem(5px);
+      width: 100%;
+      height: fit-content;
+
+      &_wrapper {
+         @include m.flex(space-between, center);
+      }
+
+      &_title {
+         font-variant: small-caps;
+         font-weight: bold;
+         color: var(--info-title, v.$whiteDark);
+         @include m.adaptiveValue('font-size', 26px, 16px);
+      }
+
+      &_subtitle {
+         padding-right: f.rem(10px);
+      }
+
+      &_rating {
+         display: flex;
+         font-weight: bold;
+         color: var(--raiting-color, v.$whiteLux);
+         border-radius: 10px;
+         overflow: hidden;
+         min-width: fit-content;
+         @include m.adaptiveValue('font-size', 12px, 8px);
+
+         span {
+            text-transform: uppercase;
+         }
+
+         &_kip {
+            display: inline-block;
+            background-color: var(--kip-raiting-bg, v.$yellowClack);
+            padding: 0.417em 0.833em;
+            text-align: center;
+            min-width: max-content;
+         }
+
+         &_imdb {
+            display: inline-block;
+            background-color: var(--imdb-raiting-bg, v.$orangeBlack);
+            padding: 0.417em 0.833em;
+            text-align: center;
+            min-width: max-content;
+         }
+
+         @media all and (max-width: 450px) {
+            display: none;
+         }
+      }
+
+      &_text {
+         @include m.adaptiveValue('font-size', 20px, 16px);
+
+         &_row {
+            padding: 0.143em;
+            line-height: 1.3;
+            color: var(--default-text-color, v.$gray);
+            @include m.adaptiveValue('font-size', 18px, 14px);
+
+            & span {
+               font-weight: bold;
+               line-height: 1.3;
+               color: var(--button-color, v.$whiteDark);
+               @include m.adaptiveValue('font-size', 19px, 15px);
+
+               @include m.smalltablet {
+                  word-wrap: break-word;
+               }
+            }
+         }
+      }
+   }
+}

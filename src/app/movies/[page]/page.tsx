@@ -1,33 +1,17 @@
-import type { Props, FetchOptions } from './types';
-import type { MoviesProps } from '@typesfolder/types';
-import styles from './page.module.scss';
+import { notFound } from 'next/navigation';
+import { MoviesCard } from '@components/MoviesCard/MoviesCard';
+import { Movie } from '@components/Movie/Movie';
+import { DownloadNotification } from '@/components/DownloadNotification/DownloadNotification';
+import { Services } from '@services/Kinopoisk';
+import type { Props } from './types';
+// import styles from './page.module.scss';
 
-async function getMovies(number: string): Promise<MoviesProps> {
-   const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}?page=${number}`;
-   const options: FetchOptions = {
-      method: 'GET',
-      headers: { 'X-API-KEY': process.env.NEXT_PUBLIC_API_KEY!, 'Content-Type': 'application/json' },
-   };
+export default async function MoviesPage({ params: { page = '' }, searchParams: { search } }: Props) {
+   const { total, totalPages, items: movies } = await Services.getMovies(page);
 
-   let movies = [];
-
-   try {
-      const res = await fetch(baseUrl, options);
-
-      if (!res.ok) {
-         throw new Error('Ошибка получения страниц!');
-      }
-
-      movies = await res.json();
-   } catch (err) {
-      console.error(err);
+   if (!movies || !Number.isInteger(+page)) {
+      notFound();
    }
-
-   return movies;
-}
-
-export default async function MoviesPage({ params: { page }, searchParams: { search } }: Props) {
-   const { total, totalPages, items: movies } = await getMovies(page);
 
    console.log('search: ', search); // ! Log
    console.log('total: ', total); // ! Log
@@ -35,10 +19,9 @@ export default async function MoviesPage({ params: { page }, searchParams: { sea
 
    return (
       <>
-         <div className={styles.movies}>
-            {movies.length &&
-               movies.map((movie) => <div key={movie.kinopoiskId}>{JSON.stringify(movie, null, 3)}</div>)}
-         </div>
+         <MoviesCard>{movies && movies.map((movie) => <Movie key={movie.kinopoiskId} movie={movie} />)}</MoviesCard>
+
+         <DownloadNotification />
       </>
    );
 }

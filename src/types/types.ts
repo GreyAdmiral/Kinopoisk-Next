@@ -98,4 +98,19 @@ export type SelectedMovie = {
    posterUrl: string;
    countries: string;
    genres: string;
+   link: string;
+   freeLink: string;
 };
+
+export type FetchOptions = { method: string; headers: HeadersInit };
+
+export interface Fact {
+   text: string;
+   type: string;
+   spoiler: boolean;
+}
+
+export interface Facts {
+   total: number;
+   items: Fact[];
+}

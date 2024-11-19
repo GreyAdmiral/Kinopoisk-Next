@@ -1,4 +1,4 @@
-import { MovieProps, SelectedMovie } from '@typesfolder/types';
+import type { MovieProps, SelectedMovie } from '@typesfolder/types';
 
 export function getSelectedInfo(movie: MovieProps): SelectedMovie {
    const separator = ' / ';
@@ -11,5 +11,7 @@ export function getSelectedInfo(movie: MovieProps): SelectedMovie {
       posterUrl: movie.posterUrl,
       countries: movie.countries.map((country) => country.country).join(separator),
       genres: movie.genres.map((genre) => genre.genre).join(separator),
+      link: `${window.location.origin}/movies/info/${movie.kinopoiskId}`,
+      freeLink: `https://flicksbar.mom/film/${movie.kinopoiskId}/`,
    };
 }
