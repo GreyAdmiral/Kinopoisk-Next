@@ -5,6 +5,7 @@ import { CustomCheckBox } from '@components/CustomCheckBox/CustomCheckBox';
 import type { FC } from 'react';
 import type { Props } from './types';
 import styles from './Movie.module.scss';
+import loadingImage from '@assets/images/loading.svg?url';
 
 export const Movie: FC<Props> = ({ movie }) => {
    const separator = ' / ';
@@ -48,7 +49,7 @@ export const Movie: FC<Props> = ({ movie }) => {
          <div className={styles.movie_body}>
             <div className={styles.movie_image}>
                <Image
-                  src={movie.posterUrlPreview}
+                  src={movie.posterUrlPreview || loadingImage}
                   fill={true}
                   unoptimized={true}
                   placeholder="empty"

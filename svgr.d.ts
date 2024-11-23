@@ -1,10 +1,10 @@
 declare module '*.svg' {
-   import { FC, SVGProps } from 'react';
-   const content: FC<SVGProps<SVGSVGElement>>;
+   import { StaticImport } from 'next/dist/shared/lib/get-img-props';
+   const content: StaticImport;
    export default content;
 }
 
 declare module '*.svg?url' {
-   const content: unknown;
+   const content: string;
    export default content;
 }

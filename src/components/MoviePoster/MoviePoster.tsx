@@ -3,6 +3,7 @@ import { isExists } from '@tools/isExist';
 import type { FC } from 'react';
 import type { MoviePosterProps } from './types';
 import styles from './MoviePoster.module.scss';
+import loadingImage from '@assets/images/loading.svg?url';
 
 export const MoviePoster: FC<MoviePosterProps> = ({ posterUrl, title }) => {
    const notFoundTitle = 'Не найдено';
@@ -14,7 +15,7 @@ export const MoviePoster: FC<MoviePosterProps> = ({ posterUrl, title }) => {
    return (
       <div className={styles.movie_left_sidebar_poster}>
          <Image
-            src={posterUrl}
+            src={posterUrl || loadingImage}
             width={posterWidth}
             height={posterHeight}
             unoptimized={true}
