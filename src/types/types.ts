@@ -114,3 +114,18 @@ export interface Facts {
    total: number;
    items: Fact[];
 }
+
+export interface Similar {
+   filmId: string | number;
+   nameRu: string;
+   nameEn: string;
+   nameOriginal: string;
+   posterUrl: string;
+   posterUrlPreview: string;
+   relationType: string;
+}
+
+export interface Similars {
+   total: string | number;
+   items: Similar[];
+}

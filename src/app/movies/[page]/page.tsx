@@ -9,7 +9,7 @@ import type { Props } from './types';
 export default async function MoviesPage({ params: { page = '' }, searchParams: { search } }: Props) {
    const { total, totalPages, items: movies } = await Services.getMovies(page);
 
-   if (!movies || !Number.isInteger(+page)) {
+   if (!movies || !Number.isInteger(+page) || !Number.isFinite(+page)) {
       notFound();
    }
 

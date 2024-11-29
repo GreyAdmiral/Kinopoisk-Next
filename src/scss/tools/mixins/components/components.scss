@@ -1,0 +1,16 @@
+@use '../../vars/' as vars;
+@use './others.scss' as o;
+
+@mixin movielink() {
+   padding: 0.278em;
+   color: var(--movie-link-color, vars.$orangeBlack);
+   font-family: Coiny, Verdana, Geneva, Tahoma, sans-serif;
+   text-transform: uppercase;
+   font-size: inherit;
+   letter-spacing: 3px;
+   transition: color 0.8s ease 0s;
+
+   @include o.hover {
+      color: var(--movie-link-hover-color, vars.$comicsRad);
+   }
+}

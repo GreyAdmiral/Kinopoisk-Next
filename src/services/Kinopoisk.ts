@@ -1,4 +1,4 @@
-import type { FetchOptions, MoviesProps, MovieDescription, Facts } from '@typesfolder/types';
+import type { FetchOptions, MoviesProps, MovieDescription, Facts, Similars } from '@typesfolder/types';
 
 let instance = null;
 
@@ -72,6 +72,26 @@ class Kinopoisk {
       }
 
       return facts;
+   }
+
+   async getSimilars(id: string): Promise<Similars> {
+      const baseUrl = `${this.baseUrl}/${id}/similars`;
+      let similars = null;
+
+      try {
+         const res = await fetch(baseUrl, this.header);
+
+         if (!res.ok) {
+            throw new Error('Ошибка получения информации о фактах!');
+         }
+
+         similars = await res.json();
+      } catch (err) {
+         console.error(err);
+         // throw new Error((err as Error).message);
+      }
+
+      return similars;
    }
 }
 

@@ -1,15 +1,3 @@
-%link-effects {
-   transition: color 0.8s ease 0s;
-
-   @include m.hover {
-      color: var(--info-link-color-hover, v.$orangeBlack);
-   }
-
-   @include m.focused {
-      color: var(--info-link-color-hover, v.$orangeBlack);
-   }
-}
-
 .movie {
    &_content {
       &_links {

@@ -1,27 +1,31 @@
-%full-flex-column {
-   @include m.flex(null, null, column);
-   gap: f.rem(5px);
-   width: 100%;
-   height: 100%;
-}
-
 .movie {
    @include m.flex();
    gap: f.rem(10px);
    width: 100%;
-   height: 100%;
+   // height: 100%;
+   height: fit-content;
+
+   @include m.smalltablet {
+      flex-direction: column;
+      gap: f.rem(25px);
+   }
 
    &_left_sidebar {
       @include m.flex(null, null, column);
       width: 100%;
       max-width: 304px;
 
-      &_trailer {
+      @include m.smalltablet {
+         align-self: center;
+         width: fit-content;
       }
    }
 
    &_content {
-      @extend %full-flex-column;
+      @include m.flex(null, null, column);
+      gap: f.rem(5px);
+      width: 100%;
+      height: 100%;
       padding: f.rem(5px);
    }
 

@@ -1,3 +1,5 @@
+import type { PropsWithChildren, ReactNode } from 'react';
+
 export type Props = {
    params: {
       page: string;
@@ -8,3 +10,7 @@ export type Props = {
 export type GetMovieProps = {
    id: string;
 };
+
+export interface MovieLayoutProps extends PropsWithChildren {
+   similars: ReactNode;
+}

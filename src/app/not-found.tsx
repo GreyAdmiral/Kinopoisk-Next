@@ -1,15 +1,21 @@
 import Link from 'next/link';
+import { BackLink } from '@components/BackLink/BackLink';
 import styles from './not-found.module.scss';
 
-export default function UndefinedPage() {
+export default function NotFoundPage() {
    const message = 'Такой страницы нет!';
-   const buttonTitle = 'Перейти на главную страницу';
+   const buttonTitle = 'На главную страницу';
 
    return (
       <div className={styles.undefined_page}>
-         <span>{message}</span>
+         <span className={styles.undefined_page_message}>{message}</span>
 
-         <Link href={'/'}>{buttonTitle}</Link>
+         <div className={styles.undefined_page_links}>
+            <Link href={'/'} className={styles.undefined_page_link}>
+               {buttonTitle}
+            </Link>
+            <BackLink />
+         </div>
       </div>
    );
 }

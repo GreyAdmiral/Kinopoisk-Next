@@ -1,7 +1,12 @@
 import { MoviesCard } from '@components/MoviesCard/MoviesCard';
-import type { PropsWithChildren } from 'react';
+import type { MovieLayoutProps } from './types';
 // import styles from './layout.module.scss';
 
-export default function MovieLayout({ children }: PropsWithChildren) {
-   return <MoviesCard>{children}</MoviesCard>;
+export default function MovieLayout({ children, similars }: MovieLayoutProps) {
+   return (
+      <MoviesCard>
+         {children}
+         {similars}
+      </MoviesCard>
+   );
 }

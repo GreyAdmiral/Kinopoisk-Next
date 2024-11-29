@@ -133,17 +133,7 @@
    }
 
    &_link {
-      padding: 0.278em;
-      color: var(--movie-link-color, v.$orangeBlack);
-      font-family: Coiny, Verdana, Geneva, Tahoma, sans-serif;
-      text-transform: uppercase;
-      font-size: inherit;
-      letter-spacing: 3px;
-      transition: color 0.8s ease 0s;
-
-      @include m.hover {
-         color: var(--movie-link-hover-color, v.$comicsRad);
-      }
+      @include m.movielink();
    }
 
    &:not(:last-child) {

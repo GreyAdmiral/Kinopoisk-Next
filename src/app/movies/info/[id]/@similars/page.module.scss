@@ -1,0 +1,21 @@
+.similars {
+   @include m.flex(null, null, column);
+   gap: f.rem(20px);
+   width: 100%;
+   height: fit-content;
+   padding: f.rem(45px) f.rem(5px) f.rem(5px);
+
+   &,
+   & * {
+      @extend %noselect;
+      @extend %taphighlight;
+   }
+
+   &_title {
+      color: var(--button-color, v.$whiteDark);
+      text-transform: uppercase;
+      font-weight: bold;
+      text-align: center;
+      @include m.adaptiveValue('font-size', 19px, 15px);
+   }
+}

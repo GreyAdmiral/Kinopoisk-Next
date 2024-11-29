@@ -57,6 +57,7 @@ export const MovieInfo: FC<MovieInfoProps> = ({ movie }) => {
       <article className={styles.movie_info}>
          <div className={styles.movie_info_wrapper}>
             <h2 className={styles.movie_info_title}>{validatedTitle}</h2>
+
             <div className={styles.movie_info_rating}>
                {ratingKinopoisk && <span className={styles.movie_info_rating_kip}>{`kp ${ratingKinopoisk || 0}`}</span>}
                {ratingImdb && <span className={styles.movie_info_rating_imdb}>{`imdb ${ratingImdb || 0}`}</span>}

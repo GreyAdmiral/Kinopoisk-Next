@@ -1,0 +1,37 @@
+%item-font-styles {
+   line-height: 1.3;
+   color: var(--default-text-color, v.$gray);
+   @include m.adaptiveValue('font-size', 18px, 14px);
+}
+
+.facts {
+   @include m.flex(null, null, column);
+   // gap: f.rem(5px);
+   padding: f.rem(5px);
+
+   &_title {
+      font-weight: bold;
+      line-height: 1.3;
+      color: var(--button-color, v.$whiteDark);
+      @include m.adaptiveValue('font-size', 19px, 15px);
+   }
+
+   &_list {
+      counter-reset: list;
+
+      &_item {
+         padding: f.rem(10px) f.rem(5px);
+         counter-increment: list;
+         @extend %item-font-styles;
+
+         &::before {
+            content: counter(list) '.';
+            display: inline-block;
+            height: 100%;
+            font-weight: bold;
+            margin-right: f.rem(5px);
+            @extend %item-font-styles;
+         }
+      }
+   }
+}

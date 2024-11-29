@@ -1,0 +1,23 @@
+.back {
+   @include m.flex(center);
+   gap: f.rem(2px);
+   font-family: Coiny, Verdana, Geneva, Tahoma, sans-serif;
+   color: var(--footer-link-color, v.$amberDark);
+   text-align: center;
+   text-transform: uppercase;
+   background: none;
+   @extend %link-effects;
+   @include m.adaptiveValue('font-size', 22px, 20px);
+
+   &_text {
+      padding-top: f.rem(6px);
+      color: inherit;
+   }
+
+   &_icon {
+      max-width: 100%;
+      height: auto;
+      color: inherit;
+      overflow: hidden;
+   }
+}

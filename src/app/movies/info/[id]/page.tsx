@@ -20,8 +20,6 @@ export default async function MoviePage({ params: { id = '' } }: Props) {
       <div className={styles.movie}>
          <div className={styles.movie_left_sidebar}>
             <MoviePoster posterUrl={posterUrl} title={title} />
-
-            {/* <div className={styles.movie_hero_trailer}></div> */}
          </div>
 
          <div className={styles.movie_content}>
