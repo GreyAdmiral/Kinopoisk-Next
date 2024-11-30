@@ -2,6 +2,7 @@
    position: fixed;
    left: f.rem(10px);
    bottom: f.rem(10px);
+   min-width: fit-content;
    border-radius: 5px;
    transition: all 0.8s ease 0s;
    z-index: 25;
@@ -9,8 +10,13 @@
    pointer-events: none;
 
    @include m.smalltablet {
-      left: 10%;
+      left: 5%;
       bottom: 10%;
+   }
+
+   @include m.mobile {
+      left: 50%;
+      transform: translateX(-50%);
    }
 
    &_body {

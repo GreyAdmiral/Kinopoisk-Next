@@ -8,6 +8,7 @@
    }
 
    &_button {
+      min-width: fit-content;
       color: var(--notification-color, v.$comicsRad);
       background-color: var(--notification-bg, v.$amberDark);
       border: 1px solid var(--notification-border, v.$comicsRad);
@@ -19,7 +20,13 @@
          background-color 0.4s ease 0s;
 
       @include m.animatebtn;
+
       @include m.hover {
+         color: var(--notification-bg, v.$amberDark);
+         background-color: var(--notification-border, v.$comicsRad);
+      }
+
+      @include m.focused {
          color: var(--notification-bg, v.$amberDark);
          background-color: var(--notification-border, v.$comicsRad);
       }

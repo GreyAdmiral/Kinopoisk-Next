@@ -13,12 +13,20 @@ export const DownloadNotification = () => {
    const [isVisible, setIsVisible] = useState<boolean>(false);
    const [checkedMoviesCounter, setCheckedMoviesCounter] = useState<number>(0);
 
-   const dialogClosehandker = () => {
+   const dialogCloseHandler = () => {
       const allCheckbox = document.querySelectorAll('article label[data-checked]');
+      const isAllVisible = allCheckbox.length === checkedMoviesCounter;
+
+      setCheckedMoviesCounter(0);
+      setIsVisible(false);
 
       allCheckbox.forEach((label) => {
          label.dispatchEvent(new CustomEvent('ResetAllCheckbox'));
       });
+
+      if (!isAllVisible) {
+         sessionStorage.setItem('selectedMovies', JSON.stringify([]));
+      }
    };
 
    const downloadSelectedInfo = function (e: MouseEvent) {
@@ -38,13 +46,21 @@ export const DownloadNotification = () => {
    };
 
    useEffect(() => {
+      const savedMovies = getSavedMovies('selectedMovies');
+      const savedMoviesCounter = savedMovies.length;
+
+      setCheckedMoviesCounter(savedMoviesCounter);
+      setIsVisible(!!savedMoviesCounter);
+   }, []);
+
+   useEffect(() => {
       function filmsChoiceHandler(e: Event) {
          e.stopPropagation();
          const { detail: checkedMovies } = e as CustomEvent;
          const checkedMoviesLength = checkedMovies.length;
 
          setCheckedMoviesCounter(checkedMoviesLength);
-         setIsVisible(checkedMoviesLength ? true : false);
+         setIsVisible(!!checkedMoviesLength);
       }
 
       document.body.addEventListener('FilmsChoice', filmsChoiceHandler);
@@ -55,11 +71,11 @@ export const DownloadNotification = () => {
    }, []);
 
    return isVisible ? (
-      <DialogNotification isOpenNotification={isVisible}>
+      <DialogNotification isOpenNotification={!!checkedMoviesCounter}>
          <div className={styles.notification_text}>{`Выбрано фильмов: ${checkedMoviesCounter}`}</div>
 
          <div className={styles.notification_buttons}>
-            <button className={styles.notification_button} onClick={dialogClosehandker}>
+            <button className={styles.notification_button} onClick={dialogCloseHandler}>
                {resetButtonTitle}
             </button>
 

@@ -11,7 +11,7 @@
          text-transform: uppercase;
 
          @include m.focused {
-            box-shadow: 0 0 5px 3px var(--header-link-shadow, v.$amberDark);
+            box-shadow: 0 0 5px 3px var(--theme-button-color, v.$amberDark);
          }
       }
    }

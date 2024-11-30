@@ -13,4 +13,8 @@
    @include o.hover {
       color: var(--movie-link-hover-color, vars.$comicsRad);
    }
+
+   @include o.focused {
+      color: var(--info-link-color-hover, vars.$orangeBlack);
+   }
 }

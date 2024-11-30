@@ -1,6 +1,5 @@
 .content {
-   display: flex;
-   flex-direction: column;
+   @include m.flex(null, null, column);
    gap: f.rem(5px);
    height: 100%;
 }
