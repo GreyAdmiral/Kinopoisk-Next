@@ -1,0 +1,25 @@
+.more {
+   @include m.flex(center);
+   padding: f.rem(20px) 0 f.rem(10px);
+
+   &_button {
+      align-self: center;
+      width: 225px;
+      padding: f.rem(15px) f.rem(10px) f.rem(10px);
+      background: var(--info-link-color-hover, v.$orangeBlack);
+      border-radius: 5px;
+      font-family: Coiny, Verdana, Geneva, Tahoma, sans-serif;
+      color: var(--movie-link-color, v.$orangeBlack);
+      text-transform: uppercase;
+      line-height: 1.25;
+      letter-spacing: 3px;
+      text-align: center;
+      @include m.animatebtn();
+      @include m.adaptiveValue('font-size', 20px, 16px);
+
+      @include m.focused {
+         color: var(--info-link-color-hover, v.$orangeBlack);
+         background: var(--movie-link-color, v.$orangeBlack);
+      }
+   }
+}
