@@ -5,6 +5,7 @@ import { QueryShow } from '@/components/QueryShow/QueryShow';
 import { Pagination } from '@components/Pagination/Pagination';
 import { MoreButton } from '@components/MoreButton/MoreButton';
 import { DownloadNotification } from '@components/DownloadNotification/DownloadNotification';
+import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
 import { Services } from '@services/Kinopoisk';
 import type { Props } from './types';
 // import styles from './page.module.scss';
@@ -39,6 +40,7 @@ export default async function MoviesPage({ params: { page = '' }, searchParams: 
          </QueryShow>
 
          <DownloadNotification />
+         <ScrollArrows />
       </>
    );
 }

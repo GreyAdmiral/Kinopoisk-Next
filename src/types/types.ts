@@ -129,3 +129,9 @@ export interface Similars {
    total: string | number;
    items: Similar[];
 }
+
+export type SmoothScrollProps = {
+   top?: number;
+   left?: number;
+   behavior?: ScrollBehavior;
+};

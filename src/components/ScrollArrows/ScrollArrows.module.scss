@@ -1,0 +1,41 @@
+.scroll {
+   &_buttons {
+      position: fixed;
+      @include m.flex(space-around, center, column);
+      gap: f.rem(10px);
+      top: 50%;
+      right: f.rem(21px);
+      transform: translateY(-50%);
+      width: f.rem(45px);
+      height: auto;
+      color: var(--up-down-arrows-color, v.$yellowJuce);
+      filter: drop-shadow(f.rem(-4) f.rem(4) f.rem(5px) v.$blackUltraTransparent);
+      pointer-events: none;
+      overflow: hidden;
+
+      &_arrow {
+         max-width: 100%;
+         aspect-ratio: 1/1;
+         cursor: pointer;
+         transition: all 0.4s ease 0s;
+         pointer-events: auto;
+
+         &:last-of-type {
+            transform: rotate(180deg);
+         }
+
+         &_hidden {
+            visibility: hidden;
+            color: transparent;
+         }
+      }
+
+      @media all and (max-width: 1320px) {
+         & {
+            top: auto;
+            bottom: 1.5rem;
+            transform: translateY(0);
+         }
+      }
+   }
+}

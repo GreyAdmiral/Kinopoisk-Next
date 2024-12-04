@@ -32,6 +32,7 @@
       --selection-bg: #{v.$blackUltraTransparent};
       --movie-link-color: #{v.$yellowClack};
       --movie-link-hover-color: #{v.$orangeBlack};
+      --up-down-arrows-color: #{v.$yellowJuce};
    }
 
    &[data-theme='light'] {
@@ -58,5 +59,6 @@
       --selection-bg: #{v.$grayMiddle};
       --movie-link-color: #{v.$orangeBlack};
       --movie-link-hover-color: #{v.$comicsRad};
+      --up-down-arrows-color: #{v.$yellowJuce};
    }
 }
