@@ -6,7 +6,8 @@
       height: fit-content;
 
       &_wrapper {
-         @include m.flex(space-between, center);
+         @include m.flex(space-between, flex-start);
+         gap: f.rem(55px);
       }
 
       &_title {

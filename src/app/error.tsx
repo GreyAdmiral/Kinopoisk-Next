@@ -7,10 +7,11 @@ interface ErrorProps {
 
 export default function ErrorPage({ error }: ErrorProps) {
    const buttonTitle = 'Обновить страницу';
+   const defaultErrorTitle = 'Неизвестная ошибка!';
 
    return (
       <div className={styles.error}>
-         <p>{error ? error?.message : 'Неизвестная ошибка!'}</p>
+         <p>{error ? error?.message : defaultErrorTitle}</p>
 
          <button
             type="button"
