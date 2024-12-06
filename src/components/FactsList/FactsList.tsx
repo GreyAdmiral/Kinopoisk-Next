@@ -1,6 +1,6 @@
-import { FactsListProps } from './types';
 import { getTextClearedOfTags } from '@tools/getTextClearedOfTags';
 import type { FC } from 'react';
+import type { FactsListProps } from './types';
 import styles from './FactsList.module.scss';
 
 export const FactsList: FC<FactsListProps> = ({ facts, title }) => {

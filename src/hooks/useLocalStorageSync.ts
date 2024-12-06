@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from 'react';
+import { useCallback, useSyncExternalStore } from 'react';
 
 export function useLocalStorageSync(key: string, initValue: string = '') {
    const getSnapshot = () => {
@@ -8,26 +8,28 @@ export function useLocalStorageSync(key: string, initValue: string = '') {
 
    const getServerSnapshot = () => initValue;
 
-   const subscribe = (cb: () => void) => {
-      const handleStorageChsnge = (e: StorageEvent) => {
-         if (e.key === key) {
-            cb();
-         }
-      };
+   const subscribe = useCallback(
+      (cb: () => void) => {
+         const handleStorageChsnge = (e: StorageEvent) => {
+            if (e.key === key) {
+               cb();
+            }
+         };
 
-      window.addEventListener('storage', handleStorageChsnge);
+         window.addEventListener('storage', handleStorageChsnge);
 
-      return () => {
-         window.removeEventListener('storage', handleStorageChsnge);
-      };
-   };
+         return () => {
+            window.removeEventListener('storage', handleStorageChsnge);
+         };
+      },
+      [key]
+   );
 
    const localStorageValue = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
    const setLocalStorageValue = (newValue: string) => {
       if (newValue) {
-         const value = typeof newValue === 'string' ? newValue : JSON.stringify(newValue);
-         localStorage.setItem(key, value);
+         localStorage.setItem(key, newValue);
       } else {
          localStorage.removeItem(key);
       }

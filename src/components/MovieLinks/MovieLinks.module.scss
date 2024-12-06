@@ -10,5 +10,9 @@
          @extend %link-effects;
          @include m.adaptiveValue('font-size', 20px, 16px);
       }
+
+      &_back {
+         align-self: flex-start;
+      }
    }
 }

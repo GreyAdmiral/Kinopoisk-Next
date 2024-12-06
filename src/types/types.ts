@@ -102,6 +102,8 @@ export type SelectedMovie = {
    freeLink: string;
 };
 
+export type SavedMovies = Array<[string, SelectedMovie]>;
+
 export type FetchOptions = { method: string; headers: HeadersInit };
 
 export interface Fact {

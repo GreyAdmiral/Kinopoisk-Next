@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { BackLink } from '../BackLink/BackLink';
 import type { FC } from 'react';
 import type { MovieLinksProps } from './types';
 import styles from './MovieLinks.module.scss';
@@ -28,6 +29,8 @@ export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl }) => {
                {it.title}
             </a>
          ))}
+
+         <BackLink className={styles.movie_content_back} />
       </article>
    ) : null;
 };

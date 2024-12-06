@@ -1,10 +1,11 @@
 'use client';
-import { DialogNotification } from '../DialogNotification/DialogNotification';
 import { useEffect, useState } from 'react';
+import { DialogNotification } from '@components/DialogNotification/DialogNotification';
+import { useSessionStorageSync } from '@hooks/useSessionStorageSync';
 import { getCSVLine } from '@tools/getCSVLine';
 import { downloadCSV } from '@tools/downloadCSV';
-import { getSavedMovies } from '@tools/getSavedMovies';
 import type { MouseEvent } from 'react';
+import type { SavedMovies } from '@typesfolder/types';
 import styles from './DownloadNotification.module.scss';
 
 export const DownloadNotification = () => {
@@ -12,6 +13,9 @@ export const DownloadNotification = () => {
    const downloadButtonTitle = 'Сохранить';
    const [isVisible, setIsVisible] = useState<boolean>(false);
    const [checkedMoviesCounter, setCheckedMoviesCounter] = useState<number>(0);
+   const [selectedMovies, setSelectedMovies] = useSessionStorageSync('selectedMovies', JSON.stringify([]));
+   const savedMovies: SavedMovies = JSON.parse(selectedMovies);
+   const savedMoviesCounter = savedMovies.length;
 
    const dialogCloseHandler = () => {
       const allCheckbox = document.querySelectorAll('article label[data-checked]');
@@ -25,13 +29,12 @@ export const DownloadNotification = () => {
       });
 
       if (!isAllVisible) {
-         sessionStorage.setItem('selectedMovies', JSON.stringify([]));
+         setSelectedMovies(JSON.stringify([]));
       }
    };
 
    const downloadSelectedInfo = function (e: MouseEvent) {
       e.stopPropagation();
-      const savedMovies = getSavedMovies('selectedMovies');
       const text = savedMovies.reduce((acc, [, it], idx, arr) => {
          let string = getCSVLine(it);
 
@@ -46,12 +49,9 @@ export const DownloadNotification = () => {
    };
 
    useEffect(() => {
-      const savedMovies = getSavedMovies('selectedMovies');
-      const savedMoviesCounter = savedMovies.length;
-
       setCheckedMoviesCounter(savedMoviesCounter);
       setIsVisible(!!savedMoviesCounter);
-   }, []);
+   }, [savedMoviesCounter]);
 
    useEffect(() => {
       function filmsChoiceHandler(e: Event) {

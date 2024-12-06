@@ -1,4 +1,3 @@
-import { FirstColorScheme } from '@/components/FirstColorScheme/FirstColorScheme';
 import { Container } from '@components/Container/Container';
 import { Header } from '@components/Header/Header';
 import { Footer } from '@components/Footer/Footer';
@@ -15,8 +14,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
    return (
       <html lang="ru">
-         <FirstColorScheme />
-
          <body>
             <div id="root" className="wrapper">
                <Header />

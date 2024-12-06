@@ -53,7 +53,11 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages }) => {
 
          {activePage && activePage < totalPages && (
             <div className={styles.more}>
-               <button className={styles.more_button} onClick={moreButtonClickHandler}>
+               <button
+                  className={styles.more_button}
+                  onClick={moreButtonClickHandler}
+                  {...(isLoading ? { disabled: true } : {})}
+               >
                   {isLoading ? loadingButtonTitle : buttonTitle}
                </button>
             </div>
