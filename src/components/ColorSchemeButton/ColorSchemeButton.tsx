@@ -7,6 +7,7 @@ import { SCHEMES } from '@tools/costants';
 import styles from './ColorSchemeButton.module.scss';
 
 export const ColorSchemeButton = () => {
+   const buttonsIconSize = 40;
    const [saveScheme, setSaveScheme] = useLocalStorageSync('userScheme', '');
    const isAutoDark = useMediaQuery('(prefers-color-scheme: dark)');
    const [scheme, setScheme] = useState(saveScheme ? saveScheme : isAutoDark ? SCHEMES.DARK : SCHEMES.LIGHT);
@@ -31,7 +32,7 @@ export const ColorSchemeButton = () => {
          title={`Выбрать ${scheme == SCHEMES.LIGHT ? 'тёмную' : 'светлую'} тему`}
          aria-label={`Выбрать ${scheme == SCHEMES.LIGHT ? 'тёмную' : 'светлую'} тему`}
       >
-         <svg>
+         <svg width={buttonsIconSize} height={buttonsIconSize}>
             <use xlinkHref={`/images/sprite.svg#${getSchemeIconId(scheme)}`} />
          </svg>
       </button>

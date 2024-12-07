@@ -14,8 +14,8 @@ class Kinopoisk {
       };
    }
 
-   async getMovies(number: string): Promise<MoviesProps> {
-      const baseUrl = `${this.baseUrl}?page=${number}`;
+   async getMovies(number: string, keyword?: string): Promise<MoviesProps> {
+      const baseUrl = `${this.baseUrl}?page=${number}${keyword ? `&keyword=${keyword}` : ''}`;
       let movies = [];
 
       try {

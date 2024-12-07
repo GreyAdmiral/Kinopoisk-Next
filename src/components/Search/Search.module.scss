@@ -1,0 +1,59 @@
+.search {
+   @include m.flex(center, null);
+   @extend %bblockstyle;
+   min-width: 15em;
+   overflow: hidden;
+
+   @include m.mobile {
+      order: 2;
+   }
+
+   &_button {
+      @include m.flex(center);
+      padding: f.rem(5px) f.rem(10px);
+      min-width: 40px;
+      @include m.colors(var(--button-color, v.$whiteDark), var(--card-color, v.$blackLight));
+      @include m.adaptiveValue('font-size', 16px, 12px);
+      @include m.focused {
+         color: var(--theme-button-color, v.$amberDark);
+
+         svg {
+            @include m.luximage(var(--theme-button-color, v.$amberDark));
+         }
+      }
+
+      &_sort {
+         border-top-left-radius: 10px;
+         border-bottom-left-radius: 10px;
+      }
+
+      &_submit {
+         border-top-right-radius: 10px;
+         border-bottom-right-radius: 10px;
+         @include m.animatebtn();
+
+         svg {
+            display: block;
+            max-width: 100%;
+            aspect-ratio: 1 / 1;
+            height: 100%;
+         }
+      }
+   }
+
+   &_input {
+      &_field {
+         display: inline-block;
+         padding: f.rem(10px) f.rem(5px);
+         height: 100%;
+         caret-color: var(--button-color, v.$whiteDark);
+         border-left: 2px solid var(--card-bg, v.$blackUltraTransparent);
+         border-right: 2px solid var(--card-bg, v.$blackUltraTransparent);
+         text-transform: uppercase;
+         outline: none;
+         @include m.colors(var(--button-color, v.$whiteDark), var(--card-color, v.$blackLight));
+         @include m.autocomplite(var(--card-color, v.$blackLight), var(--button-color, v.$whiteDark));
+         @include m.adaptiveValue('font-size', 16px, 12px);
+      }
+   }
+}

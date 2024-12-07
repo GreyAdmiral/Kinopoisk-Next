@@ -1,6 +1,7 @@
 import { Container } from '@components/Container/Container';
 import { HeaderLink } from '@components/HeaderLink/HeaderLink';
 import { ColorSchemeButton } from '@components/ColorSchemeButton/ColorSchemeButton';
+import { Search } from '@components/Search/Search';
 import styles from './Header.module.scss';
 
 export const Header = () => {
@@ -13,6 +14,8 @@ export const Header = () => {
                </h1>
 
                <div className={styles.header_controls}>
+                  <Search />
+
                   <ColorSchemeButton />
                </div>
             </div>

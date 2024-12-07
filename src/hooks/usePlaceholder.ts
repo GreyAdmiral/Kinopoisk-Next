@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 export const usePlaceholder = (value: string = '') => {
    const ref = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
    const [placeholder, setPlaceholder] = useState<string>(value);
-   const [tempPlaceholder, setTempPlaceholder] = useState<string>('');
+   const [tempPlaceholder, setTempPlaceholder] = useState<string>('\r');
 
    function placeholderChange() {
       setTempPlaceholder(placeholder);

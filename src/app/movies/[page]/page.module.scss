@@ -1,8 +1,0 @@
-.half {
-   max-width: calc(75% - 2px);
-   align-self: flex-start;
-
-   @media all and (max-width: 450px) {
-      max-width: calc(55% - 2px);
-   }
-}

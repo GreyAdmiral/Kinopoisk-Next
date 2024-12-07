@@ -1,6 +1,7 @@
 .header {
-   padding: f.rem(10px);
    height: fit-content;
+   padding: f.rem(10px);
+   margin-bottom: f.rem(10px);
 
    &_body {
       text-align: center;
@@ -18,6 +19,14 @@
    }
 
    &_controls {
+      @include m.flex(space-between, center);
+      // width: 100%;
+      width: fit-content;
       height: fit-content;
+      gap: f.rem(10px);
+
+      @include m.mobile {
+         flex-direction: column;
+      }
    }
 }

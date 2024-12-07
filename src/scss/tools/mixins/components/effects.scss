@@ -53,3 +53,12 @@
 @mixin luximage($color: #e4e4e4) {
    filter: drop-shadow(0 0 f.rem(10px) $color);
 }
+
+@mixin autocomplite($bg: #e4e4e4, $color: #000000) {
+   &:-webkit-autofill,
+   &:-webkit-autofill:hover,
+   &:-webkit-autofill:focus {
+      -webkit-text-fill-color: $color;
+      -webkit-box-shadow: 0 0 0px 40rem $bg inset;
+   }
+}

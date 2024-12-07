@@ -3,6 +3,6 @@ export type Props = {
       page: string;
    };
    searchParams: {
-      search: string;
+      keyword: string;
    };
 };

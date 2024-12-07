@@ -14,27 +14,20 @@ export const DownloadNotification = () => {
    const [isVisible, setIsVisible] = useState<boolean>(false);
    const [checkedMoviesCounter, setCheckedMoviesCounter] = useState<number>(0);
    const [selectedMovies, setSelectedMovies] = useSessionStorageSync('selectedMovies', JSON.stringify([]));
-   const savedMovies: SavedMovies = JSON.parse(selectedMovies);
-   const savedMoviesCounter = savedMovies.length;
 
    const dialogCloseHandler = () => {
       const allCheckbox = document.querySelectorAll('article label[data-checked]');
-      const isAllVisible = allCheckbox.length === checkedMoviesCounter;
-
-      setCheckedMoviesCounter(0);
-      setIsVisible(false);
 
       allCheckbox.forEach((label) => {
          label.dispatchEvent(new CustomEvent('ResetAllCheckbox'));
       });
 
-      if (!isAllVisible) {
-         setSelectedMovies(JSON.stringify([]));
-      }
+      setSelectedMovies(JSON.stringify([]));
    };
 
    const downloadSelectedInfo = function (e: MouseEvent) {
       e.stopPropagation();
+      const savedMovies: SavedMovies = JSON.parse(selectedMovies);
       const text = savedMovies.reduce((acc, [, it], idx, arr) => {
          let string = getCSVLine(it);
 
@@ -49,9 +42,12 @@ export const DownloadNotification = () => {
    };
 
    useEffect(() => {
+      const savedMovies: SavedMovies = JSON.parse(selectedMovies);
+      const savedMoviesCounter = savedMovies.length;
+
       setCheckedMoviesCounter(savedMoviesCounter);
       setIsVisible(!!savedMoviesCounter);
-   }, [savedMoviesCounter]);
+   }, [selectedMovies]);
 
    useEffect(() => {
       function filmsChoiceHandler(e: Event) {

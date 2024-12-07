@@ -8,16 +8,13 @@ import { DownloadNotification } from '@components/DownloadNotification/DownloadN
 import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
 import { Services } from '@services/Kinopoisk';
 import type { Props } from './types';
-// import styles from './page.module.scss';
 
-export default async function MoviesPage({ params: { page = '' }, searchParams: { search } }: Props) {
-   const { total, totalPages, items: movies } = await Services.getMovies(page);
+export default async function MoviesPage({ params: { page = '' }, searchParams: { keyword = '' } }: Props) {
+   const { total, totalPages, items: movies } = await Services.getMovies(page, keyword);
 
    if (!movies || !Number.isInteger(+page) || !Number.isFinite(+page)) {
       notFound();
    }
-
-   console.log('search: ', search); // ! Log
 
    return (
       <>
@@ -36,7 +33,7 @@ export default async function MoviesPage({ params: { page = '' }, searchParams: 
          </MoviesCard>
 
          <QueryShow query={'(min-width: 769px)'}>
-            <Pagination totalPages={totalPages} total={total} page={page} />
+            <Pagination totalPages={totalPages} total={total} page={page} keyword={keyword} />
          </QueryShow>
 
          <DownloadNotification />
