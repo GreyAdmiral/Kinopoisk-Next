@@ -82,6 +82,7 @@
          object-fit: cover;
          object-position: center;
          transition: transform 0.7s ease 0s;
+         touch-action: none;
       }
    }
 }
