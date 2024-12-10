@@ -14,6 +14,7 @@
       --undefined-page-span-shadow: #{v.$comicsRad};
       --card-color: #{v.$blackLight};
       --card-bg: #{v.$blackUltraTransparent};
+      --card-bg-transparent: #{v.$yellowClackTransparent};
       --additional-card-bg: #{v.$blackLightTransparent};
       --button-focus-shadow-color: #{v.$blackUltraTransparent};
       --button-color: #{v.$whiteDark};
@@ -45,6 +46,7 @@
       --undefined-page-span-shadow: #{v.$yellow};
       --card-color: #{v.$gray};
       --card-bg: #{v.$grayMiddle};
+      --card-bg-transparent: #{v.$orangeBlackTransparent};
       --additional-card-bg: #{v.$grayTransparent};
       --button-focus-shadow-color: #{v.$whiteLux};
       --button-color: #{v.$blackLight};

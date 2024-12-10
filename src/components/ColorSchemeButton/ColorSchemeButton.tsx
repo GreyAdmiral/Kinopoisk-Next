@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useLocalStorageSync } from '@hooks/useLocalStorageSync';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { getSchemeIconId } from '@tools/getSchemeIconId';
-import { SCHEMES } from '@tools/costants';
+import { SCHEMES, SPRITE_PATH } from '@tools/costants';
 import styles from './ColorSchemeButton.module.scss';
 
 export const ColorSchemeButton = () => {
@@ -33,7 +33,7 @@ export const ColorSchemeButton = () => {
          aria-label={`Выбрать ${scheme == SCHEMES.LIGHT ? 'тёмную' : 'светлую'} тему`}
       >
          <svg width={buttonsIconSize} height={buttonsIconSize}>
-            <use xlinkHref={`/images/sprite.svg#${getSchemeIconId(scheme)}`} />
+            <use xlinkHref={`${SPRITE_PATH}#${getSchemeIconId(scheme)}`} />
          </svg>
       </button>
    );

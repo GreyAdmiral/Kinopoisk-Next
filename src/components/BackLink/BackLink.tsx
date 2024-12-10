@@ -1,11 +1,11 @@
 'use client';
+import { SPRITE_PATH } from '@tools/costants';
 import type { FC } from 'react';
 import type { BackLinkProps } from './types';
 import styles from './BackLink.module.scss';
 
 export const BackLink: FC<BackLinkProps> = ({ className }) => {
    const buttonTitle = 'Вернуться';
-   const spritePath = '/images/sprite.svg';
    const spriteID = 'back';
    const iconSize = 22;
    const clickHandler = () => {
@@ -17,7 +17,7 @@ export const BackLink: FC<BackLinkProps> = ({ className }) => {
          <span className={styles.back_text}>{buttonTitle}</span>
 
          <svg className={styles.back_icon} width={iconSize} height={iconSize}>
-            <use xlinkHref={`${spritePath}#${spriteID}`} />
+            <use xlinkHref={`${SPRITE_PATH}#${spriteID}`} />
          </svg>
       </button>
    );

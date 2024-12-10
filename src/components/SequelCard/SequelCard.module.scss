@@ -1,0 +1,85 @@
+@mixin card-effect {
+   .sequel_title {
+      opacity: 1;
+   }
+
+   .sequel_image > img {
+      transform: scale(1.15);
+   }
+}
+
+.sequel {
+   position: relative;
+   @include m.flex(null, null, column);
+   min-width: 180px;
+   max-width: 180px;
+   border: 3px solid var(--movie-link-color, v.$orangeBlack);
+
+   &,
+   & * {
+      @extend %noselect;
+      @extend %taphighlight;
+   }
+
+   @include m.hover {
+      @include card-effect;
+   }
+
+   @include m.focused {
+      @include card-effect;
+   }
+
+   &_title {
+      @include m.flex(center, center, column);
+      gap: f.rem(5px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      color: v.$comicsRad;
+      background-color: var(--card-bg-transparent, v.$yellowClackTransparent);
+      text-transform: uppercase;
+      font-weight: bold;
+      opacity: 0;
+      transition:
+         color 0.4s ease 0s,
+         background-color 0.4s ease 0s,
+         opacity 0.8s ease 0s;
+
+      & span {
+         display: block;
+         width: calc(100%);
+         word-wrap: break-word;
+         line-height: 1.5;
+         @include m.adaptiveValue('font-size', 12px, 10px);
+      }
+
+      svg {
+         overflow: hidden;
+         max-width: 100%;
+         max-height: 100%;
+      }
+   }
+
+   &_image {
+      position: relative;
+      width: 100%;
+      height: fit-content;
+      overflow: hidden;
+      @include m.membrane();
+
+      > img {
+         display: block;
+         width: 100%;
+         height: fit-content;
+         max-width: 100%;
+         aspect-ratio: 180/270;
+         object-fit: cover;
+         object-position: center;
+         transition: transform 0.7s ease 0s;
+         touch-action: none;
+      }
+   }
+}

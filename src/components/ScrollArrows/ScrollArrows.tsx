@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { useScrollY } from '@hooks/useScrollY';
 import { getDocumentHeight } from '@tools/getDocumentSizes';
 import { smoothScroll } from '@tools/smoothScroll';
+import { SPRITE_PATH } from '@tools/costants';
 import type { FC } from 'react';
 import type { ScrollArrowsProps } from './type';
 import styles from './ScrollArrows.module.scss';
@@ -41,7 +42,7 @@ export const ScrollArrows: FC<ScrollArrowsProps> = () => {
             height={arrowSize}
             onClick={arrowUpHandler}
          >
-            <use xlinkHref={`/images/sprite.svg#${spriteID}`} />
+            <use xlinkHref={`${SPRITE_PATH}#${spriteID}`} />
          </svg>
 
          <svg
@@ -53,7 +54,7 @@ export const ScrollArrows: FC<ScrollArrowsProps> = () => {
             height={arrowSize}
             onClick={arrowDownHandler}
          >
-            <use xlinkHref={`/images/sprite.svg#${spriteID}`} />
+            <use xlinkHref={`${SPRITE_PATH}#${spriteID}`} />
          </svg>
       </div>
    );

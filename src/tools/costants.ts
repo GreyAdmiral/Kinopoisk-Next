@@ -11,3 +11,5 @@ export const SCHEMES = {
    DARK: 'dark',
    DEFAULT: 'light',
 };
+
+export const SPRITE_PATH = '/images/sprite.svg';

@@ -1,13 +1,15 @@
-import type { FetchOptions, MoviesProps, MovieDescription, Facts, Similars } from '@typesfolder/types';
+import type { FetchOptions, MoviesProps, MovieDescription, Facts, Similars, SEQUEL } from '@typesfolder/types';
 
 let instance = null;
 
 class Kinopoisk {
    private baseUrl: string;
+   private baseUrlOldAPI: string;
    private header: FetchOptions;
 
    constructor() {
       this.baseUrl = process.env.NEXT_PUBLIC_API_URL!;
+      this.baseUrlOldAPI = process.env.NEXT_PUBLIC_OLD_API_URL!;
       this.header = {
          method: 'GET',
          headers: { 'X-API-KEY': process.env.NEXT_PUBLIC_API_KEY!, 'Content-Type': 'application/json' },
@@ -92,6 +94,26 @@ class Kinopoisk {
       }
 
       return similars;
+   }
+
+   async getSequelsSndPrequels(id: string): Promise<SEQUEL[]> {
+      const baseUrl = `${this.baseUrlOldAPI}/${id}/sequels_and_prequels`;
+      let sap = null;
+
+      try {
+         const res = await fetch(baseUrl, this.header);
+
+         if (!res.ok) {
+            throw new Error('Ошибка получения информации о сиквелах и приквелах!');
+         }
+
+         sap = await res.json();
+      } catch (err) {
+         console.error(err);
+         // throw new Error((err as Error).message);
+      }
+
+      return sap;
    }
 }
 

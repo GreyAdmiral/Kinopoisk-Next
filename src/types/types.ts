@@ -137,3 +137,13 @@ export type SmoothScrollProps = {
    left?: number;
    behavior?: ScrollBehavior;
 };
+
+export interface SEQUEL {
+   filmId: string;
+   nameRu: string;
+   nameEn: string;
+   nameOriginal: string;
+   posterUrl: string;
+   posterUrlPreview: string;
+   relationType: string;
+}

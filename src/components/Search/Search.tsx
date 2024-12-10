@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { FormInput } from '@components/FormInput/FormInput';
 import { searchAction } from '@tools/actions';
+import { SPRITE_PATH } from '@tools/costants';
 import styles from './Search.module.scss';
 
 export const Search = () => {
@@ -12,7 +13,7 @@ export const Search = () => {
       <form id="search" name="search" action={searchAction} className={styles.search}>
          <button type="button" className={classNames([styles.search_button, styles.search_button_sort])}>
             <svg width={buttonsIconSize} height={buttonsIconSize}>
-               <use xlinkHref={`/images/sprite.svg#${sortIconID}`} />
+               <use xlinkHref={`${SPRITE_PATH}#${sortIconID}`} />
             </svg>
          </button>
 
@@ -23,10 +24,11 @@ export const Search = () => {
             name="submiter"
             type="submit"
             form="search"
+            aria-label="Поиск"
             className={classNames([styles.search_button, styles.search_button_submit])}
          >
             <svg width={buttonsIconSize} height={buttonsIconSize}>
-               <use xlinkHref={`/images/sprite.svg#${searchIconID}`} />
+               <use xlinkHref={`${SPRITE_PATH}#${searchIconID}`} />
             </svg>
          </button>
       </form>
