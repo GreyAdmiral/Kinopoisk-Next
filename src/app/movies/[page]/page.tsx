@@ -7,7 +7,26 @@ import { MoreButton } from '@components/MoreButton/MoreButton';
 import { DownloadNotification } from '@components/DownloadNotification/DownloadNotification';
 import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
 import { Services } from '@services/Kinopoisk';
+import type { Metadata } from 'next';
 import type { Props } from './types';
+
+export async function generateMetadata({
+   params: { page = '' },
+   searchParams: { keyword = '' },
+}: Props): Promise<Metadata> {
+   let title = `Неофициальный кинопоиск | Страница «${page}»`;
+   let description = `Неофициальный кинопоиск. Страница «${page}».`;
+
+   if (keyword) {
+      title += ` | Поиск по словам «${decodeURIComponent(keyword)}»`;
+      description += ` Поиск по словам «${decodeURIComponent(keyword)}»`;
+   }
+
+   return {
+      title: title,
+      description: description,
+   };
+}
 
 export default async function MoviesPage({ params: { page = '' }, searchParams: { keyword = '' } }: Props) {
    const { total, totalPages, items: movies } = await Services.getMovies(page, keyword);
