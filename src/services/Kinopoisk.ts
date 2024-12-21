@@ -29,7 +29,7 @@ class Kinopoisk {
 
          movies = await res.json();
       } catch (err) {
-         console.error(err);
+         console.error((err as Error).message);
          // throw new Error((err as Error).message);
       }
 
@@ -49,7 +49,7 @@ class Kinopoisk {
 
          movie = await res.json();
       } catch (err) {
-         console.error(err);
+         console.error((err as Error).message);
          // throw new Error((err as Error).message);
       }
 
@@ -69,7 +69,7 @@ class Kinopoisk {
 
          facts = await res.json();
       } catch (err) {
-         console.error(err);
+         console.error((err as Error).message);
          // throw new Error((err as Error).message);
       }
 
@@ -89,7 +89,7 @@ class Kinopoisk {
 
          similars = await res.json();
       } catch (err) {
-         console.error(err);
+         console.error((err as Error).message);
          // throw new Error((err as Error).message);
       }
 
@@ -109,7 +109,7 @@ class Kinopoisk {
 
          sap = await res.json();
       } catch (err) {
-         console.error(err);
+         console.error((err as Error).message);
          // throw new Error((err as Error).message);
       }
 
