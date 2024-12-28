@@ -31,7 +31,6 @@
 
    &_title {
       @include m.flex(center, center, column);
-      gap: f.rem(5px);
       position: absolute;
       top: 0;
       left: 0;
@@ -52,6 +51,7 @@
          display: block;
          width: calc(100%);
          word-wrap: break-word;
+         padding: f.rem(5px) f.rem(10px);
          line-height: 1.5;
          @include m.adaptiveValue('font-size', 12px, 10px);
       }

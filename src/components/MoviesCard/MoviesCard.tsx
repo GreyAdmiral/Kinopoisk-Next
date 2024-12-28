@@ -1,6 +1,6 @@
-import type { PropsWithChildren } from 'react';
+import type { MoviesCardProps } from './types';
 import styles from './MoviesCard.module.scss';
 
-export const MoviesCard = ({ children }: PropsWithChildren) => {
-   return <div className={styles.movies_card}>{children}</div>;
+export const MoviesCard = ({ className, children }: MoviesCardProps) => {
+   return <div className={className ? `${styles.movies_card} ${className}` : styles.movies_card}>{children}</div>;
 };
