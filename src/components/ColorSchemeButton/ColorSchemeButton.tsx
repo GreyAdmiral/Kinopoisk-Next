@@ -10,30 +10,38 @@ export const ColorSchemeButton = () => {
    const buttonsIconSize = 40;
    const [saveScheme, setSaveScheme] = useLocalStorageSync('userScheme', '');
    const isAutoDark = useMediaQuery('(prefers-color-scheme: dark)');
-   const [scheme, setScheme] = useState(saveScheme ? saveScheme : isAutoDark ? SCHEMES.DARK : SCHEMES.LIGHT);
+   const [activeScheme, setActiveScheme] = useState('');
 
    function writeSchemeName() {
-      setSaveScheme(scheme === SCHEMES.DARK ? SCHEMES.LIGHT : SCHEMES.DARK);
-      setScheme(scheme === SCHEMES.DARK ? SCHEMES.LIGHT : SCHEMES.DARK);
+      setSaveScheme(activeScheme === SCHEMES.DARK ? SCHEMES.LIGHT : SCHEMES.DARK);
+      setActiveScheme(activeScheme === SCHEMES.DARK ? SCHEMES.LIGHT : SCHEMES.DARK);
       (document.activeElement as HTMLTemplateElement).blur();
    }
 
    useEffect(() => {
+      const scheme = saveScheme ? saveScheme : isAutoDark ? SCHEMES.DARK : SCHEMES.LIGHT;
+
       if (scheme) {
-         document.documentElement.dataset.theme = scheme;
+         setActiveScheme(scheme);
       }
-   }, [scheme]);
+   }, [isAutoDark, saveScheme]);
+
+   useEffect(() => {
+      if (activeScheme) {
+         document.documentElement.dataset.theme = activeScheme;
+      }
+   }, [activeScheme]);
 
    return (
       <button
          type="button"
          className={styles.scheme_button}
          onClick={writeSchemeName}
-         title={`Выбрать ${scheme == SCHEMES.LIGHT ? 'тёмную' : 'светлую'} тему`}
-         aria-label={`Выбрать ${scheme == SCHEMES.LIGHT ? 'тёмную' : 'светлую'} тему`}
+         title={`Выбрать ${activeScheme == SCHEMES.LIGHT ? 'тёмную' : 'светлую'} тему`}
+         aria-label={`Выбрать ${activeScheme == SCHEMES.LIGHT ? 'тёмную' : 'светлую'} тему`}
       >
          <svg width={buttonsIconSize} height={buttonsIconSize}>
-            <use xlinkHref={`${SPRITE_PATH}#${getSchemeIconId(scheme)}`} />
+            <use xlinkHref={`${SPRITE_PATH}#${getSchemeIconId(activeScheme)}`} />
          </svg>
       </button>
    );
