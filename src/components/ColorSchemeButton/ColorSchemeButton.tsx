@@ -7,10 +7,10 @@ import { SCHEMES, SPRITE_PATH } from '@tools/costants';
 import styles from './ColorSchemeButton.module.scss';
 
 export const ColorSchemeButton = () => {
-   const buttonsIconSize = 40;
+   const buttonsIconSize = 24;
    const [saveScheme, setSaveScheme] = useLocalStorageSync('userScheme', '');
    const isAutoDark = useMediaQuery('(prefers-color-scheme: dark)');
-   const [activeScheme, setActiveScheme] = useState('');
+   const [activeScheme, setActiveScheme] = useState<string>('');
 
    function writeSchemeName() {
       setSaveScheme(activeScheme === SCHEMES.DARK ? SCHEMES.LIGHT : SCHEMES.DARK);

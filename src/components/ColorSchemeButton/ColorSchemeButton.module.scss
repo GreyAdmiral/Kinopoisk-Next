@@ -1,22 +1,18 @@
 .scheme {
    &_button {
-      @extend %centerflex;
-      background: none;
-      color: var(--theme-button-color, v.$amberDark);
-      border-radius: f.rem(5px);
-      overflow: hidden;
-      @include m.luximage(var(--theme-button-color, v.$amberDark));
-      @include m.adaptiveValue('font-size', 49px, 23px);
-
-      svg {
-         max-width: 100%;
-         aspect-ratio: 1 / 1;
-         color: inherit;
-      }
-
+      @extend %bblockstyle;
+      @include m.flex(center);
+      padding: f.rem(5px);
+      min-width: 42px;
+      min-height: 42px;
+      @include m.colors(var(--button-color, v.$whiteDark), var(--card-color, v.$blackLight));
+      @include m.adaptiveValue('font-size', 16px, 12px);
       @include m.focused {
-         box-shadow: 0 0 5px 3px var(--theme-button-color, v.$amberDark);
-         @include m.luximage(var(--theme-button-color, v.$amberDark));
+         color: var(--theme-button-color, v.$amberDark);
+
+         svg {
+            @include m.luximage(var(--theme-button-color, v.$amberDark));
+         }
       }
 
       @include m.mobile {
