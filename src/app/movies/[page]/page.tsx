@@ -45,7 +45,7 @@ export default async function MoviesPage({ params: { page = '' }, searchParams: 
                   ))}
 
                   <QueryShow query={'(max-width: 768.5px)'}>
-                     <MoreButton page={page} totalPages={totalPages} />
+                     <MoreButton page={page} keyword={keyword} totalPages={totalPages} />
                   </QueryShow>
                </>
             )}

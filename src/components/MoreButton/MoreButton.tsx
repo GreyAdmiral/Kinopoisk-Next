@@ -7,7 +7,7 @@ import type { MovieProps } from '@typesfolder/types';
 import type { MoreButtonProps } from './types';
 import styles from './MoreButton.module.scss';
 
-export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages }) => {
+export const MoreButton: FC<MoreButtonProps> = ({ page, keyword, totalPages }) => {
    const buttonTitle = 'Загрузить еще';
    const loadingButtonTitle = 'Загрузка...';
    const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -26,7 +26,7 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages }) => {
       if (activePage > 1 && activePage <= totalPages) {
          setIsLoading(true);
 
-         Services.getMovies(`${activePage}`)
+         Services.getMovies(`${activePage}`, keyword)
             .then((data) => {
                const { items: movies } = data;
 
@@ -43,7 +43,7 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages }) => {
       return () => {
          isCancelled = true;
       };
-   }, [activePage, totalPages]);
+   }, [activePage, keyword, totalPages]);
 
    return (
       <>
