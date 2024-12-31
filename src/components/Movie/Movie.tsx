@@ -78,7 +78,7 @@ export const Movie: FC<Props> = ({ movie }) => {
                </div>
             </div>
 
-            <CustomCheckBox movie={movie} />
+            <CustomCheckBox key={movieTitle + movie.kinopoiskId + movie.year} movie={movie} />
          </div>
       </article>
    );

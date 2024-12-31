@@ -15,7 +15,6 @@ export const Header = () => {
 
                <div className={styles.header_controls}>
                   <Search />
-
                   <ColorSchemeButton />
                </div>
             </div>

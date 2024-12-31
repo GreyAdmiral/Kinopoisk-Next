@@ -4,5 +4,6 @@ export type Props = {
    };
    searchParams: {
       keyword: string;
+      reversed: string;
    };
 };

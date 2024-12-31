@@ -7,12 +7,14 @@ import type { MovieProps } from '@typesfolder/types';
 import type { MoreButtonProps } from './types';
 import styles from './MoreButton.module.scss';
 
-export const MoreButton: FC<MoreButtonProps> = ({ page, keyword, totalPages }) => {
+export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams }) => {
+   const { keyword = '', reversed = '' } = searchParams;
    const buttonTitle = 'Загрузить еще';
    const loadingButtonTitle = 'Загрузка...';
    const [isLoading, setIsLoading] = useState<boolean>(false);
    const [movies, setMovies] = useState<MovieProps[]>([]);
    const [activePage, setActivePage] = useState<number>(+page);
+   const [prevReversed, setPrevReversed] = useState<boolean>(false);
 
    const moreButtonClickHandler = () => {
       if (activePage && activePage < totalPages) {
@@ -21,14 +23,28 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, keyword, totalPages }) =
    };
 
    useEffect(() => {
+      const ifChangeReverse = prevReversed !== !!reversed;
+
+      if (ifChangeReverse) {
+         setMovies((state) => [...state.reverse()]);
+         setPrevReversed(!!reversed);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [reversed]);
+
+   useEffect(() => {
       let isCancelled = false;
 
-      if (activePage > 1 && activePage <= totalPages) {
+      if (activePage > 0 && activePage <= totalPages) {
          setIsLoading(true);
 
          Services.getMovies(`${activePage}`, keyword)
             .then((data) => {
                const { items: movies } = data;
+
+               if (reversed) {
+                  movies.reverse();
+               }
 
                !isCancelled && setMovies((state) => [...state, ...movies]);
             })
@@ -43,6 +59,7 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, keyword, totalPages }) =
       return () => {
          isCancelled = true;
       };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [activePage, keyword, totalPages]);
 
    return (

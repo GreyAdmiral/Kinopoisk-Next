@@ -1,5 +1,8 @@
 export interface MoreButtonProps {
    page: string;
-   keyword: string;
    totalPages: number;
+   searchParams: {
+      keyword: string;
+      reversed: string;
+   };
 }

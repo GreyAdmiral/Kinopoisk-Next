@@ -5,7 +5,7 @@ import type { FC } from 'react';
 import type { PaginationProps } from './types';
 import styles from './Pagination.module.scss';
 
-export const Pagination: FC<PaginationProps> = ({ totalPages, page, keyword }) => {
+export const Pagination: FC<PaginationProps> = ({ totalPages, page, searchParams }) => {
    const nextPageTitle = '❱';
    const backPageTitle = '❰';
    const forwardPageTitle = '►';
@@ -14,10 +14,16 @@ export const Pagination: FC<PaginationProps> = ({ totalPages, page, keyword }) =
    const backPageTitleAttribut = 'Предыдущая страница';
    const forwardPageTitleAttribut = 'Первая страница';
    const backwardPageTitleAttribut = 'Последняя страница';
+   const { keyword = '', reversed = '' } = searchParams;
+
    let queries = new URLSearchParams();
 
    if (keyword) {
       queries.set('keyword', keyword);
+   }
+
+   if (reversed) {
+      queries.set('reversed', reversed);
    }
 
    const queryParams = queries.toString();

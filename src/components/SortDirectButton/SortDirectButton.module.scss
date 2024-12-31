@@ -1,0 +1,13 @@
+.search {
+   &_button {
+      &_sort {
+         border-top-left-radius: 10px;
+         border-bottom-left-radius: 10px;
+
+         &:disabled {
+            cursor: default;
+            color: rgba(117, 117, 117, 0.5);
+         }
+      }
+   }
+}

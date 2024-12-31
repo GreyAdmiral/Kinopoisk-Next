@@ -28,11 +28,16 @@ export async function generateMetadata({
    };
 }
 
-export default async function MoviesPage({ params: { page = '' }, searchParams: { keyword = '' } }: Props) {
+export default async function MoviesPage({ params: { page = '' }, searchParams }: Props) {
+   const { keyword = '', reversed = '' } = searchParams;
    const { total, totalPages, items: movies } = await Services.getMovies(page, keyword);
 
    if (!movies || !Number.isInteger(+page) || !Number.isFinite(+page)) {
       notFound();
+   }
+
+   if (movies && reversed) {
+      movies.reverse();
    }
 
    return (
@@ -40,19 +45,21 @@ export default async function MoviesPage({ params: { page = '' }, searchParams: 
          <MoviesCard>
             {movies && (
                <>
-                  {movies.map((movie, idx) => (
-                     <Movie key={`${movie.kinopoiskId}-${idx}`} movie={movie} />
-                  ))}
+                  <QueryShow query={'(min-width: 769px)'}>
+                     {movies.map((movie, idx) => (
+                        <Movie key={`${movie.kinopoiskId}-${idx}`} movie={movie} />
+                     ))}
+                  </QueryShow>
 
                   <QueryShow query={'(max-width: 768.5px)'}>
-                     <MoreButton page={page} keyword={keyword} totalPages={totalPages} />
+                     <MoreButton page={page} searchParams={searchParams} totalPages={totalPages} />
                   </QueryShow>
                </>
             )}
          </MoviesCard>
 
          <QueryShow query={'(min-width: 769px)'}>
-            <Pagination totalPages={totalPages} total={total} page={page} keyword={keyword} />
+            <Pagination totalPages={totalPages} total={total} page={page} searchParams={searchParams} />
          </QueryShow>
 
          <DownloadNotification />
