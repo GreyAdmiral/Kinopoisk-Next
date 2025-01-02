@@ -1,4 +1,4 @@
-import type { FetchOptions, MoviesProps, MovieDescription, Facts, Similars, SEQUEL } from '@typesfolder/types';
+import type { FetchOptions, MoviesProps, MovieDescription, Facts, Similars, SEQUEL, Reviews } from '@typesfolder/types';
 
 let instance = null;
 
@@ -96,7 +96,7 @@ class Kinopoisk {
       return similars;
    }
 
-   async getSequelsSndPrequels(id: string): Promise<SEQUEL[]> {
+   async getSequelsAndPrequels(id: string): Promise<SEQUEL[]> {
       const baseUrl = `${this.baseUrlOldAPI}/${id}/sequels_and_prequels`;
       let sap = null;
 
@@ -114,6 +114,26 @@ class Kinopoisk {
       }
 
       return sap;
+   }
+
+   async getReviews(id: string): Promise<Reviews> {
+      const baseUrl = `${this.baseUrl}/${id}/reviews`;
+      let reviews = null;
+
+      try {
+         const res = await fetch(baseUrl, this.header);
+
+         if (!res.ok) {
+            throw new Error('Ошибка получения рецензий!');
+         }
+
+         reviews = await res.json();
+      } catch (err) {
+         console.error((err as Error).message);
+         // throw new Error((err as Error).message);
+      }
+
+      return reviews;
    }
 }
 

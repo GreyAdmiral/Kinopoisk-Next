@@ -34,6 +34,7 @@
       --movie-link-color: #{v.$yellowClack};
       --movie-link-hover-color: #{v.$orangeBlack};
       --up-down-arrows-color: #{v.$yellowJuce};
+      --subtitle-color: #{v.$whiteSubtitleLight};
    }
 
    &[data-theme='light'] {
@@ -62,5 +63,6 @@
       --movie-link-color: #{v.$orangeBlack};
       --movie-link-hover-color: #{v.$comicsRad};
       --up-down-arrows-color: #{v.$yellowJuce};
+      --subtitle-color: #{v.$blackSubtitleLight};
    }
 }

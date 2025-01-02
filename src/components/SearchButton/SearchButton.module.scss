@@ -1,0 +1,16 @@
+.search {
+   &_button {
+      &_submit {
+         border-top-right-radius: 10px;
+         border-bottom-right-radius: 10px;
+         @include m.animatebtn();
+
+         svg {
+            display: block;
+            max-width: 100%;
+            aspect-ratio: 1 / 1;
+            height: 100%;
+         }
+      }
+   }
+}

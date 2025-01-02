@@ -1,0 +1,16 @@
+.more {
+   &_reviews {
+      &_button {
+         font-family: Coiny, Verdana, Geneva, Tahoma, sans-serif;
+         color: var(--movie-link-color, v.$orangeBlack);
+         text-transform: uppercase;
+         line-height: 1.25;
+         letter-spacing: 3px;
+         text-align: center;
+         background: none;
+         margin-top: f.rem(10px);
+         @include m.animatebtn();
+         @include m.adaptiveValue('font-size', 20px, 16px);
+      }
+   }
+}

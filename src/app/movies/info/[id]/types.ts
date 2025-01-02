@@ -14,4 +14,5 @@ export type GetMovieProps = {
 export interface MovieLayoutProps extends PropsWithChildren {
    similars: ReactNode;
    sequels: ReactNode;
+   reviews: ReactNode;
 }

@@ -1,0 +1,28 @@
+.reviews {
+   @include m.flex(null, null, column);
+   gap: f.rem(15px);
+   width: 100%;
+   height: fit-content;
+   padding: f.rem(45px) f.rem(5px) f.rem(10px);
+
+   @include m.smalltablet {
+      gap: f.rem(20px);
+   }
+
+   &_title {
+      color: var(--button-color, v.$whiteDark);
+      text-transform: uppercase;
+      font-weight: bold;
+      text-align: center;
+      @include m.adaptiveValue('font-size', 19px, 15px);
+   }
+
+   &_body {
+      @include m.flex(null, center, column);
+      gap: f.rem(20px);
+
+      @include m.smalltablet {
+         gap: f.rem(25px);
+      }
+   }
+}
