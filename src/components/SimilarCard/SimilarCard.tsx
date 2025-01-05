@@ -22,8 +22,7 @@ export const SimilarCard: FC<SimilarCardProps> = ({ similar }) => {
                src={posterUrl || loadingImage}
                width={imageWidth}
                height={imageHeight}
-               unoptimized={true}
-               // quality={100}
+               quality={95}
                placeholder="blur"
                blurDataURL={blurPlaceholderImage}
                loading="lazy"

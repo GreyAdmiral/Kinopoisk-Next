@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import { BackLink } from '@components/BackLink/BackLink';
+import type { FC } from 'react';
+import type { NotFoundResultProps } from './types';
 import styles from './NotFoundResult.module.scss';
 
-export const NotFoundResult = () => {
-   const title = 'Ничего не найдено!';
+export const NotFoundResult: FC<NotFoundResultProps> = ({ message }) => {
+   const title = message || 'Ничего не найдено!';
    const buttonTitle = 'На главную страницу';
 
    return (
@@ -14,6 +16,7 @@ export const NotFoundResult = () => {
             <Link href={'/'} className={styles.not_found_link}>
                {buttonTitle}
             </Link>
+
             <BackLink />
          </div>
       </div>

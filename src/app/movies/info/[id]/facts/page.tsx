@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { FactsList } from '@components/FactsList/FactsList';
 import { BackLink } from '@components/BackLink/BackLink';
+import { NotFoundResult } from '@/components/NotFoundResult/NotFoundResult';
 import { Services } from '@services/Kinopoisk';
 import type { Metadata } from 'next';
 import type { Props } from '../types';
@@ -23,9 +24,9 @@ export default async function MoviePage({ params: { id = '' } }: Props) {
    const bloopersTitle = 'Ляпы:';
    const pageTitle = 'Знаете ли вы что?..';
    const facts = await Services.getFacts(id);
-   const { total, items } = facts;
+   const { items } = facts;
 
-   if (!facts || !total || !items.length || !id) {
+   if (!facts || !id) {
       notFound();
    }
 
@@ -34,11 +35,16 @@ export default async function MoviePage({ params: { id = '' } }: Props) {
 
    return (
       <div className={styles.facts}>
-         <h2 className={styles.facts_title}>{pageTitle}</h2>
+         {items && items.length && (
+            <>
+               <h2 className={styles.facts_title}>{pageTitle}</h2>
+               <FactsList facts={factsArray} title={factsTitle} />
+               <FactsList facts={bloopersArray} title={bloopersTitle} />
+               <BackLink className={styles.facts_back_center} />
+            </>
+         )}
 
-         <FactsList facts={factsArray} title={factsTitle} />
-         <FactsList facts={bloopersArray} title={bloopersTitle} />
-         <BackLink className={styles.facts_back_center} />
+         {!items.length && <NotFoundResult />}
       </div>
    );
 }

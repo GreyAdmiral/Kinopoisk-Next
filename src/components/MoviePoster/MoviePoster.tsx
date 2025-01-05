@@ -20,8 +20,7 @@ export const MoviePoster: FC<MoviePosterProps> = ({ posterUrl, title }) => {
             src={posterUrl || loadingImage}
             width={posterWidth}
             height={posterHeight}
-            unoptimized={true}
-            // quality={100}
+            quality={95}
             placeholder="blur"
             blurDataURL={blurPlaceholderImage}
             priority={true}

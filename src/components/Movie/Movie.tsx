@@ -52,10 +52,9 @@ export const Movie: FC<Props> = ({ movie }) => {
             <div className={styles.movie_image}>
                <Image
                   src={movie.posterUrlPreview || loadingImage}
-                  unoptimized={true}
-                  // quality={100}
+                  quality={95}
                   fill={true}
-                  // sizes="138px"
+                  sizes="360px"
                   placeholder="blur"
                   blurDataURL={blurPlaceholderImage}
                   loading="lazy"
