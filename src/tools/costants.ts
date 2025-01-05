@@ -1,4 +1,4 @@
-import type { CustomSelectOption } from '@/types/types';
+import type { CustomSelectOption, SortedMethod } from '@typesfolder/types';
 
 export const AppRoutes = {
    HOME_ROUTE: '/',
@@ -53,3 +53,6 @@ export const SORT_LIST: CustomSelectOption[] = [
       value: 'ratingImdb',
    },
 ];
+
+export const DEFAULT_SORT_POINT_NUMBER = 1;
+export const defaulSortedMethod: SortedMethod = SORT_LIST[DEFAULT_SORT_POINT_NUMBER - 1].value || '';

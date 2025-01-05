@@ -14,6 +14,8 @@ export const Movie: FC<Props> = ({ movie }) => {
    const linkTitleAttribut = 'Посмотреть подробности';
    const movieTitle = movie.nameRu || movie.nameEn || movie.nameOriginal;
    // const linkAlias = encodeURI(getAlias(movie.nameEn || movie.nameOriginal || movie.nameRu));
+   const blurPlaceholderImage =
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAD68A/GAAAA70lEQVR4AQXBTUvCcADA4Z/7z9xcmbEpdSg6CBYGRUcr6WJvUESfqHN07Jt47hBdBV/AFg2FYTGd2DZzmJiz54ndnpUX51cldvcvSWoqufwGcVlgmlX01CpLmsbD4xMiZ2zeS8MQNRgQX1Gweg6/owGvLxUyxjq2+4VtO8haPIGKxKfdxfpzmUgKruMSxX4QiqDfs2i1A+RwMmM+hsr4nbSvcnNaZHnqE8yTNDpvROGU7FYSueX3MUcuqbUExYsd9jICY66yyOrUm22aHY/vmYec304jRIRuaJROjmg8V/G8IXflawoHhxx/1KjVu/wDycJbrJ7yuz0AAAAASUVORK5CYII=';
    const content = [
       {
          title: 'Год выпуска: ',
@@ -50,9 +52,12 @@ export const Movie: FC<Props> = ({ movie }) => {
             <div className={styles.movie_image}>
                <Image
                   src={movie.posterUrlPreview || loadingImage}
-                  fill={true}
                   unoptimized={true}
-                  placeholder="empty"
+                  // quality={100}
+                  fill={true}
+                  // sizes="138px"
+                  placeholder="blur"
+                  blurDataURL={blurPlaceholderImage}
                   loading="lazy"
                   alt={movie.nameOriginal || alternateText}
                />
