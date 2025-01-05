@@ -15,8 +15,9 @@
          }
       }
 
-      @include m.mobile {
+      @include m.smalltablet {
          order: 1;
+         min-width: 65px;
       }
    }
 }

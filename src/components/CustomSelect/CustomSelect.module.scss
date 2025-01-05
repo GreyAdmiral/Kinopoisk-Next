@@ -1,0 +1,138 @@
+.select {
+   max-width: 100%;
+   min-width: 18em;
+   position: relative;
+   -moz-text-align-last: left;
+   text-align-last: left;
+   position: relative;
+
+   @include m.smalltablet {
+      order: 2;
+   }
+
+   &_current {
+      @extend %bblockstyle;
+      width: 100%;
+      position: relative;
+      padding: f.rem(10px) f.rem(10px) f.rem(10px) f.rem(16px);
+      margin-right: f.rem(20px);
+      color: var(--button-color, v.$blackLight);
+      text-transform: uppercase;
+      cursor: pointer;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      @include m.adaptiveValue('font-size', 16px, 12px);
+
+      &::after {
+         content: '';
+         width: 0;
+         height: 0;
+         position: absolute;
+         right: f.rem(10px);
+         top: 50%;
+         transform: translateY(-50%);
+         border-style: solid;
+         border-width: 5px 5px 0 5px;
+         border-color: var(--button-color, v.$blackLight) transparent transparent transparent;
+         transition: border-color 0.2s ease 0s;
+      }
+
+      &:hover::after {
+         border-color: var(--text-color, v.$black) transparent transparent transparent;
+         transition: border-color 0.2s ease 0s;
+      }
+
+      @include m.focused {
+         @include m.luximage(var(--theme-button-color, v.$amberDark));
+      }
+
+      &:disabled {
+         cursor: default;
+         color: v.$greyDisabledElement;
+
+         &::after {
+            border-color: v.$greyDisabledElement transparent transparent transparent;
+         }
+      }
+   }
+
+   &_list {
+      @extend %bblockstyle;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      margin-top: f.rem(5px);
+      background-color: var(--card-color, v.$blackLight);
+      overflow: hidden;
+      z-index: 100000;
+
+      &_item {
+         display: inline-block;
+         padding: f.rem(10px) f.rem(10px) f.rem(10px) f.rem(16px);
+         border: none;
+         width: 100%;
+         color: var(--button-color, v.$blackLight);
+         background-color: var(--card-color, v.$blackLight);
+         text-transform: uppercase;
+         cursor: pointer;
+         overflow: hidden;
+         white-space: nowrap;
+         text-overflow: ellipsis;
+         @include m.adaptiveValue('font-size', 16px, 12px);
+
+         &[aria-selected='false']:hover {
+            color: var(--theme-button-color, v.$amberDark);
+         }
+
+         &[aria-selected='true'] {
+            color: var(--theme-button-color, v.$amberDark);
+            @include m.neontext(v.$amberDark, var(--theme-button-color, v.$amberDark));
+         }
+
+         @include m.focused {
+            color: var(--theme-button-color, v.$amberDark);
+         }
+      }
+
+      &.select__list--show {
+         display: block;
+      }
+
+      & > *:not(.select_list_item) {
+         display: none;
+      }
+   }
+
+   &_current,
+   &_list_item {
+      > * {
+         display: inline-block;
+         vertical-align: middle;
+      }
+
+      img {
+         display: inline-block;
+         max-width: 100%;
+         height: auto;
+         object-fit: contain;
+      }
+
+      > img {
+         margin: 0 5px;
+      }
+
+      > img:first-child {
+         margin: 0 5px 0 0;
+      }
+
+      > img:last-child {
+         margin: 0 0 0 5px;
+      }
+
+      > img:only-child {
+         margin: 0;
+      }
+   }
+}

@@ -4,8 +4,8 @@
    min-width: 15em;
    overflow: hidden;
 
-   @include m.mobile {
-      order: 2;
+   @include m.smalltablet {
+      order: 3;
    }
 
    &_button {

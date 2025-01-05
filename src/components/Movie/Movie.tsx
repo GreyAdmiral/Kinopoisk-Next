@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { CustomCheckBox } from '@components/CustomCheckBox/CustomCheckBox';
+import { getCountriesString, getGenresString } from '@tools/getStringFromMovieField';
 // import { getAlias } from '@tools/getAlias';
 import type { FC } from 'react';
 import type { Props } from './types';
@@ -8,7 +9,6 @@ import styles from './Movie.module.scss';
 import loadingImage from '@assets/images/loading.svg?url';
 
 export const Movie: FC<Props> = ({ movie }) => {
-   const separator = ' / ';
    const alternateText = 'Постер фильма';
    const linkTitle = 'Подробнее...';
    const linkTitleAttribut = 'Посмотреть подробности';
@@ -21,11 +21,11 @@ export const Movie: FC<Props> = ({ movie }) => {
       },
       {
          title: 'Страна: ',
-         text: movie.countries.map((country) => country.country).join(separator),
+         text: getCountriesString(movie.countries),
       },
       {
          title: 'Жанр: ',
-         text: movie.genres.map((genre) => genre.genre).join(separator),
+         text: getGenresString(movie.genres),
       },
       {
          title: 'Тип: ',

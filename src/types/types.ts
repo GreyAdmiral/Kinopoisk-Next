@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 export type MoviesProps = {
    total: number;
    totalPages: number;
@@ -166,4 +168,12 @@ export interface SEQUEL {
    posterUrl: string;
    posterUrlPreview: string;
    relationType: string;
+}
+
+export type SortedMethod = 'year' | 'title' | 'country' | 'genre' | 'type' | 'ratingKinopoisk' | 'ratingImdb';
+
+export interface CustomSelectOption {
+   id: string;
+   content: string | ReactNode;
+   value: SortedMethod;
 }

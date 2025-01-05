@@ -19,13 +19,12 @@
    }
 
    &_controls {
-      @include m.flex(space-between, center);
-      // width: 100%;
-      width: fit-content;
+      @include m.flex(space-evenly, center);
+      width: 100%;
       height: fit-content;
       gap: f.rem(10px);
 
-      @include m.mobile {
+      @include m.smalltablet {
          flex-direction: column;
       }
    }

@@ -14,7 +14,7 @@ export const Pagination: FC<PaginationProps> = ({ totalPages, page, searchParams
    const backPageTitleAttribut = 'Предыдущая страница';
    const forwardPageTitleAttribut = 'Первая страница';
    const backwardPageTitleAttribut = 'Последняя страница';
-   const { keyword = '', reversed = '' } = searchParams;
+   const { keyword = '', reversed = '', sorted = '' } = searchParams;
 
    let queries = new URLSearchParams();
 
@@ -24,6 +24,10 @@ export const Pagination: FC<PaginationProps> = ({ totalPages, page, searchParams
 
    if (reversed) {
       queries.set('reversed', reversed);
+   }
+
+   if (sorted) {
+      queries.set('sorted', sorted);
    }
 
    const queryParams = queries.toString();

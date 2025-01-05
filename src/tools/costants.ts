@@ -1,3 +1,5 @@
+import type { CustomSelectOption } from '@/types/types';
+
 export const AppRoutes = {
    HOME_ROUTE: '/',
    SEARCH_ROUTE: '/search',
@@ -13,3 +15,41 @@ export const SCHEMES = {
 };
 
 export const SPRITE_PATH = '/images/sprite.svg';
+
+export const SORT_LIST: CustomSelectOption[] = [
+   {
+      id: 'years',
+      content: 'По году выпуска',
+      value: 'year',
+   },
+   {
+      id: 'title',
+      content: 'По названию',
+      value: 'title',
+   },
+   {
+      id: 'country',
+      content: 'По стране',
+      value: 'country',
+   },
+   {
+      id: 'genre',
+      content: 'По жанру',
+      value: 'genre',
+   },
+   {
+      id: 'type',
+      content: 'По типу',
+      value: 'type',
+   },
+   {
+      id: 'reiting-kp',
+      content: 'По рейтингу KP',
+      value: 'ratingKinopoisk',
+   },
+   {
+      id: 'reiting-imdb',
+      content: 'По рейтингу IMDB',
+      value: 'ratingImdb',
+   },
+];

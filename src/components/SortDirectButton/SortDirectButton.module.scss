@@ -6,7 +6,7 @@
 
          &:disabled {
             cursor: default;
-            color: rgba(117, 117, 117, 0.5);
+            color: v.$greyDisabledElement;
          }
       }
    }

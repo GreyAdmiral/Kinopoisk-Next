@@ -6,6 +6,7 @@ import { Pagination } from '@components/Pagination/Pagination';
 import { MoreButton } from '@components/MoreButton/MoreButton';
 import { DownloadNotification } from '@components/DownloadNotification/DownloadNotification';
 import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
+import { getSortedMovies } from '@tools/getSortedMovies';
 import { Services } from '@services/Kinopoisk';
 import type { Metadata } from 'next';
 import type { Props } from './types';
@@ -29,11 +30,15 @@ export async function generateMetadata({
 }
 
 export default async function MoviesPage({ params: { page = '' }, searchParams }: Props) {
-   const { keyword = '', reversed = '' } = searchParams;
+   const { keyword = '', reversed = '', sorted = '' } = searchParams;
    const { total, totalPages, items: movies } = await Services.getMovies(page, keyword);
 
    if (!movies || !Number.isInteger(+page) || !Number.isFinite(+page)) {
       notFound();
+   }
+
+   if (sorted) {
+      getSortedMovies({ method: sorted, movies: movies });
    }
 
    if (movies && reversed) {

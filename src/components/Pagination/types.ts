@@ -1,3 +1,5 @@
+import { SortedMethod } from '@typesfolder/types';
+
 export interface PaginationProps {
    totalPages: number;
    total: number;
@@ -5,5 +7,6 @@ export interface PaginationProps {
    searchParams: {
       keyword: string;
       reversed: string;
+      sorted: SortedMethod;
    };
 }

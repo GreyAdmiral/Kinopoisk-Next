@@ -1,3 +1,5 @@
+import { SortedMethod } from '@typesfolder/types';
+
 export type Props = {
    params: {
       page: string;
@@ -5,5 +7,6 @@ export type Props = {
    searchParams: {
       keyword: string;
       reversed: string;
+      sorted: SortedMethod;
    };
 };
