@@ -6,6 +6,7 @@ import { Pagination } from '@components/Pagination/Pagination';
 import { MoreButton } from '@components/MoreButton/MoreButton';
 import { DownloadNotification } from '@components/DownloadNotification/DownloadNotification';
 import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
+import { NotFoundResult } from '@/components/NotFoundResult/NotFoundResult';
 import { getSortedMovies } from '@tools/getSortedMovies';
 import { Services } from '@services/Kinopoisk';
 import type { Metadata } from 'next';
@@ -61,6 +62,8 @@ export default async function MoviesPage({ params: { page = '' }, searchParams }
                   </QueryShow>
                </>
             )}
+
+            {!movies.length && <NotFoundResult />}
          </MoviesCard>
 
          <QueryShow query={'(min-width: 769px)'}>

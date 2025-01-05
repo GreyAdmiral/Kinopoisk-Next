@@ -14,6 +14,7 @@ export default function NotFoundPage() {
             <Link href={'/'} className={styles.undefined_page_link}>
                {buttonTitle}
             </Link>
+
             <BackLink />
          </div>
       </div>

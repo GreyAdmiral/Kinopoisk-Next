@@ -1,0 +1,57 @@
+.not_found {
+   @include m.flex(center, center, column);
+   gap: f.rem(25px);
+   padding: 0.714em;
+   flex: 1 1 auto;
+   width: 100%;
+   height: 100%;
+   padding: f.rem(25px);
+
+   &_links {
+      @include m.flex(center, center, column);
+      gap: f.rem(5px);
+   }
+
+   &_message {
+      @include m.flex(center);
+      font-family: Coiny, Verdana, Geneva, Tahoma, sans-serif;
+      text-align: center;
+      color: var(--undefined-page-span-color);
+      text-shadow:
+         0 0 0.063em var(--undefined-page-span-shadow),
+         0 0 0.063em var(--undefined-page-span-shadow),
+         0 0 0.063em var(--undefined-page-span-shadow);
+      @include m.adaptiveValue('font-size', 49px, 23px);
+   }
+
+   &_link {
+      @extend %bblockstyle;
+      display: inline-block;
+      font-family: Coiny, Verdana, Geneva, Tahoma, sans-serif;
+      color: var(--theme-button-color, v.$amberDark);
+      background-color: transparent;
+      border-color: var(--theme-button-color, v.$amberDark);
+      padding: f.rem(10px) f.rem(10px) f.rem(5px);
+      text-align: center;
+      text-transform: uppercase;
+      @include m.animatebtn();
+      @include m.adaptiveValue('font-size', 18px, 14px);
+
+      & {
+         transform-origin: center center;
+         transition:
+            all ease-out 255ms,
+            color 0.8s ease 0s,
+            border-color 0.8s ease 0s;
+      }
+
+      @include m.hover {
+         color: var(--info-link-color-hover, v.$orangeBlack);
+         border-color: var(--info-link-color-hover, v.$orangeBlack);
+      }
+
+      @include m.focused {
+         box-shadow: inset 0 0 0.125em 0.125em var(--button-focus-shadow-color, v.$blackUltraTransparent);
+      }
+   }
+}
