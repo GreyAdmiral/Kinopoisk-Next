@@ -13,8 +13,8 @@ export const ScrollArrows: FC<ScrollArrowsProps> = () => {
    const spriteID = 'arrow';
    const arrowSize = 40;
    const documentScrollY = useScrollY();
-   const [isUpArrowHidden, setIsUpArrowHidden] = useState<boolean>(false);
-   const [isDownArrowHidden, setIsDownArrowHidden] = useState<boolean>(true);
+   const [isUpArrowHidden, setIsUpArrowHidden] = useState<boolean>(documentScrollY < 550);
+   const [isDownArrowHidden, setIsDownArrowHidden] = useState<boolean>(false);
 
    const arrowUpHandler = () => {
       smoothScroll({ top: 0 });
@@ -27,8 +27,10 @@ export const ScrollArrows: FC<ScrollArrowsProps> = () => {
    };
 
    useEffect(() => {
-      setIsUpArrowHidden(documentScrollY < 550);
-      setIsDownArrowHidden(documentScrollY + window.innerHeight >= getDocumentHeight() - 325);
+      if (documentScrollY > 0) {
+         setIsUpArrowHidden(documentScrollY < 550);
+         setIsDownArrowHidden(documentScrollY + window.innerHeight >= getDocumentHeight() - 325);
+      }
    }, [documentScrollY]);
 
    return (

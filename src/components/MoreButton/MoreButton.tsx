@@ -1,4 +1,5 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import { Movie } from '@components/Movie/Movie';
 import { Loader } from '@components/Loader/Loader';

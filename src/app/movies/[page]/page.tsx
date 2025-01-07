@@ -64,7 +64,7 @@ export default async function MoviesPage({ params: { page = '' }, searchParams }
                </>
             )}
 
-            {!movies.length && <NotFoundResult />}
+            {!movies.length && keyword && <NotFoundResult />}
          </MoviesCard>
 
          <QueryShow query={'(min-width: 769px)'}>
