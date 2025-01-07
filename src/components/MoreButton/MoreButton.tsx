@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Movie } from '../Movie/Movie';
+import { Movie } from '@components/Movie/Movie';
+import { Loader } from '@components/Loader/Loader';
 import { getSortedMovies } from '@tools/getSortedMovies';
 import { Services } from '@services/Kinopoisk';
 import type { FC } from 'react';
@@ -84,7 +85,7 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
             <Movie key={`${movie.kinopoiskId}-${idx}`} movie={movie} />
          ))}
 
-         {activePage && activePage < totalPages && (
+         {activePage && activePage < totalPages && !!movies.length && (
             <div className={styles.more}>
                <button
                   className={styles.more_button}
@@ -93,6 +94,12 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
                >
                   {isLoading ? loadingButtonTitle : buttonTitle}
                </button>
+            </div>
+         )}
+
+         {activePage && activePage < totalPages && !movies.length && (
+            <div className={styles.more_loader}>
+               <Loader />
             </div>
          )}
       </>

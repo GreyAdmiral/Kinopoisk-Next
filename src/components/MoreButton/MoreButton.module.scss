@@ -22,4 +22,10 @@
          background: var(--movie-link-color, v.$orangeBlack);
       }
    }
+
+   &_loader {
+      @extend %fullwhp;
+      @include m.flex(center);
+      padding: f.rem(5px);
+   }
 }

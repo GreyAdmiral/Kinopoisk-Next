@@ -18,17 +18,11 @@ export const Pagination: FC<PaginationProps> = ({ totalPages, page, searchParams
 
    let queries = new URLSearchParams();
 
-   if (keyword) {
-      queries.set('keyword', keyword);
-   }
-
-   if (reversed) {
-      queries.set('reversed', reversed);
-   }
-
-   if (sorted) {
-      queries.set('sorted', sorted);
-   }
+   Object.entries({ keyword, reversed, sorted }).forEach(([key, value]) => {
+      if (value) {
+         queries.set(key, value);
+      }
+   });
 
    const queryParams = queries.toString();
 
