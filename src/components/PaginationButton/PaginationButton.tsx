@@ -1,5 +1,4 @@
 'use client';
-
 import { useRouter } from 'next/navigation';
 import { AppRoutes } from '@tools/costants';
 import type { FC } from 'react';

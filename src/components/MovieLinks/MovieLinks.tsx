@@ -5,8 +5,9 @@ import type { MovieLinksProps } from './types';
 import styles from './MovieLinks.module.scss';
 
 export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl }) => {
-   const factsLinkRoute = `/movies/info/${id}/facts`;
    const factsLinkTitle = 'Интересные факты';
+   const factsLinkRoute = `/movies/info/${id}/facts`;
+   const playerLinkRoute = `https://flicksbar.mom/film/${id}/`;
    const links = [
       {
          title: 'Подробнее на «Кинопоиск»',
@@ -14,7 +15,7 @@ export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl }) => {
       },
       {
          title: 'Смотреть бесплатно',
-         link: `https://flicksbar.mom/film/${id}/`,
+         link: playerLinkRoute,
       },
    ];
 

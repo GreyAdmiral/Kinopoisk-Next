@@ -8,12 +8,14 @@ import type { Props } from '../types';
 import styles from './page.module.scss';
 
 export async function generateMetadata({ params: { id = '' } }: Props): Promise<Metadata> {
-   const { nameRu, nameEn, nameOriginal } = await Services.getMovie(id);
+   const unknownTitle = 'Неизвестный фильм';
+   const facts = await Services.getMovie(id);
+   const { nameRu, nameEn, nameOriginal } = facts || {};
    const title = nameRu || nameEn || nameOriginal;
 
    return {
-      title: `Неофициальный кинопоиск | Факты о фильме «${title}»`,
-      description: `Неофициальный кинопоиск. Факты о фильме «${title}».`,
+      title: `Неофициальный кинопоиск | Факты о фильме «${title || unknownTitle}»`,
+      description: title ? `Неофициальный кинопоиск. Факты о фильме «${title}».` : '',
    };
 }
 
@@ -23,19 +25,21 @@ export default async function MoviePage({ params: { id = '' } }: Props) {
    const factsTitle = 'Факты:';
    const bloopersTitle = 'Ляпы:';
    const pageTitle = 'Знаете ли вы что?..';
+   const notFoundMessage = 'Фактов не найдено!';
    const facts = await Services.getFacts(id);
    const { items } = facts;
+   const itemsLength = items.length;
 
-   if (!facts || !id) {
+   if (!id) {
       notFound();
    }
 
-   const factsArray = (items && items.filter((fact) => fact.type === factsLabel)) || [];
-   const bloopersArray = (items && items.filter((blooper) => blooper.type === bloopersLabel)) || [];
+   const factsArray = items.filter((fact) => fact.type === factsLabel) || [];
+   const bloopersArray = items.filter((blooper) => blooper.type === bloopersLabel) || [];
 
    return (
       <div className={styles.facts}>
-         {items && items.length && (
+         {!!itemsLength && (
             <>
                <h2 className={styles.facts_title}>{pageTitle}</h2>
                <FactsList facts={factsArray} title={factsTitle} />
@@ -44,7 +48,7 @@ export default async function MoviePage({ params: { id = '' } }: Props) {
             </>
          )}
 
-         {!items.length && <NotFoundResult />}
+         {!itemsLength && <NotFoundResult message={notFoundMessage} />}
       </div>
    );
 }

@@ -1,4 +1,4 @@
-import type { FetchOptions, MoviesProps, MovieDescription, Facts, Similars, SEQUEL, Reviews } from '@typesfolder/types';
+import type { FetchOptions, MoviesProps, MovieDescription, Facts, Similars, Sequel, Reviews } from '@typesfolder/types';
 
 let instance = null;
 
@@ -29,14 +29,14 @@ class Kinopoisk {
 
          movies = await res.json();
       } catch (err) {
-         console.error((err as Error).message);
-         // throw new Error((err as Error).message);
+         // console.error((err as Error).message);
+         return { error: (err as Error).message, total: 0, totalPages: 0, items: [] };
       }
 
       return movies;
    }
 
-   async getMovie(id: string): Promise<MovieDescription> {
+   async getMovie(id: string): Promise<MovieDescription | null> {
       const baseUrl = `${this.baseUrl}/${id}`;
       let movie = null;
 
@@ -49,15 +49,15 @@ class Kinopoisk {
 
          movie = await res.json();
       } catch (err) {
-         console.error((err as Error).message);
-         // throw new Error((err as Error).message);
+         // console.error((err as Error).message);
+         return null;
       }
 
       return movie;
    }
 
    async getFacts(id: string): Promise<Facts> {
-      const baseUrl = `${this.baseUrl}/${id}/facts`;
+      const baseUrl = `${this.baseUrl}1/${id}/facts`;
       let facts = null;
 
       try {
@@ -69,14 +69,14 @@ class Kinopoisk {
 
          facts = await res.json();
       } catch (err) {
-         console.error((err as Error).message);
-         // throw new Error((err as Error).message);
+         // console.error((err as Error).message);
+         return { error: (err as Error).message, total: 0, items: [] };
       }
 
       return facts;
    }
 
-   async getSimilars(id: string): Promise<Similars> {
+   async getSimilars(id: string): Promise<Similars | null> {
       const baseUrl = `${this.baseUrl}/${id}/similars`;
       let similars = null;
 
@@ -89,14 +89,14 @@ class Kinopoisk {
 
          similars = await res.json();
       } catch (err) {
-         console.error((err as Error).message);
-         // throw new Error((err as Error).message);
+         // console.error((err as Error).message);
+         return null;
       }
 
       return similars;
    }
 
-   async getSequelsAndPrequels(id: string): Promise<SEQUEL[]> {
+   async getSequelsAndPrequels(id: string): Promise<Sequel[] | null> {
       const baseUrl = `${this.baseUrlOldAPI}/${id}/sequels_and_prequels`;
       let sap = null;
 
@@ -109,14 +109,14 @@ class Kinopoisk {
 
          sap = await res.json();
       } catch (err) {
-         console.error((err as Error).message);
-         // throw new Error((err as Error).message);
+         // console.error((err as Error).message);
+         return null;
       }
 
       return sap;
    }
 
-   async getReviews(id: string): Promise<Reviews> {
+   async getReviews(id: string): Promise<Reviews | null> {
       const baseUrl = `${this.baseUrl}/${id}/reviews`;
       let reviews = null;
 
@@ -129,8 +129,8 @@ class Kinopoisk {
 
          reviews = await res.json();
       } catch (err) {
-         console.error((err as Error).message);
-         // throw new Error((err as Error).message);
+         // console.error((err as Error).message);
+         return null;
       }
 
       return reviews;

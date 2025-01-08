@@ -8,7 +8,13 @@ import styles from './page.module.scss';
 export default async function ReviewsPage({ params: { id = '' } }: Props) {
    const title = 'Рецензии зрителей';
    const reviews = await Services.getReviews(id);
-   const { total, totalPages, items } = reviews;
+
+   if (!reviews) {
+      return null;
+   }
+
+   const { total, totalPages, items = [] } = reviews || {};
+   const itemsLength = items.length;
    const startContentCount = Math.ceil(total / totalPages);
    let result: Array<Review[]> = [];
 
@@ -24,7 +30,7 @@ export default async function ReviewsPage({ params: { id = '' } }: Props) {
 
    const [startItems, ...otherItems] = result;
 
-   return total && items.length ? (
+   return total && itemsLength ? (
       <section className={styles.reviews}>
          <h2 className={styles.reviews_title}>{title}</h2>
 

@@ -7,7 +7,11 @@ export default async function SequelsPage({ params: { id = '' } }: Props) {
    const title = 'Сиквелы и приквелы';
    const sequels = await Services.getSequelsAndPrequels(id);
 
-   return sequels ? (
+   if (!sequels) {
+      return null;
+   }
+
+   return (
       <section className={styles.sequels_and_prequels}>
          <h2 className={styles.sequels_and_prequels_title}>{title}</h2>
 
@@ -17,5 +21,5 @@ export default async function SequelsPage({ params: { id = '' } }: Props) {
             ))}
          </div>
       </section>
-   ) : null;
+   );
 }

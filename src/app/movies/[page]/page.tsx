@@ -7,6 +7,7 @@ import { MoreButton } from '@components/MoreButton/MoreButton';
 import { DownloadNotification } from '@components/DownloadNotification/DownloadNotification';
 import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
 import { NotFoundResult } from '@/components/NotFoundResult/NotFoundResult';
+import { ErrorComponent } from '@/components/ErrorComponent/ErrorComponent';
 import { getSortedMovies } from '@tools/getSortedMovies';
 import { defaulSortedMethod } from '@tools/costants';
 import { Services } from '@services/Kinopoisk';
@@ -33,24 +34,25 @@ export async function generateMetadata({
 
 export default async function MoviesPage({ params: { page = '' }, searchParams }: Props) {
    const { keyword = '', reversed = '', sorted = defaulSortedMethod } = searchParams;
-   const { total, totalPages, items: movies } = await Services.getMovies(page, keyword);
+   const { total, totalPages, items: movies, error } = await Services.getMovies(page, keyword);
+   const moviesLength = movies.length;
 
-   if (!movies || !Number.isInteger(+page) || !Number.isFinite(+page)) {
+   if (!Number.isInteger(+page) || !Number.isFinite(+page)) {
       notFound();
    }
 
-   if (sorted) {
+   if (moviesLength && sorted) {
       getSortedMovies({ method: sorted, movies: movies });
    }
 
-   if (movies && reversed) {
+   if (moviesLength && reversed) {
       movies.reverse();
    }
 
    return (
       <>
          <MoviesCard>
-            {movies && (
+            {moviesLength && (
                <>
                   <QueryShow query={'(min-width: 769px)'}>
                      {movies.map((movie, idx) => (
@@ -64,15 +66,18 @@ export default async function MoviesPage({ params: { page = '' }, searchParams }
                </>
             )}
 
-            {!movies.length && keyword && <NotFoundResult />}
+            {!moviesLength && keyword && <NotFoundResult />}
+            {error && <ErrorComponent message={error} />}
          </MoviesCard>
 
          <QueryShow query={'(min-width: 769px)'}>
-            <Pagination totalPages={totalPages} total={total} page={page} searchParams={searchParams} />
+            {moviesLength && (
+               <Pagination totalPages={totalPages} total={total} page={page} searchParams={searchParams} />
+            )}
          </QueryShow>
 
          <DownloadNotification />
-         <ScrollArrows />
+         {moviesLength && <ScrollArrows />}
       </>
    );
 }

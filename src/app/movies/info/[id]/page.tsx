@@ -8,20 +8,21 @@ import type { Props } from './types';
 import styles from './page.module.scss';
 
 export async function generateMetadata({ params: { id = '' } }: Props): Promise<Metadata> {
+   const unknownTitle = 'Неизвестный фильм';
    const movie = await Services.getMovie(id);
-   const { nameRu, nameEn, nameOriginal } = movie;
+   const { nameRu, nameEn, nameOriginal } = movie || {};
    const title = nameRu || nameEn || nameOriginal;
 
    return {
-      title: `Неофициальный кинопоиск | «${title}»`,
-      description: `Неофициальный кинопоиск. Страница фильма «${title}».`,
+      title: `Неофициальный кинопоиск | «${title || unknownTitle}»`,
+      description: title ? `Неофициальный кинопоиск. Страница фильма «${title}».` : '',
    };
 }
 
 export default async function MoviePage({ params: { id = '' } }: Props) {
    const movie = await Services.getMovie(id);
 
-   if (!movie || !id) {
+   if (!id || !movie) {
       notFound();
    }
 

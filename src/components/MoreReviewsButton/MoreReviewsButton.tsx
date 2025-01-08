@@ -1,5 +1,4 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import { ReviewCard } from '@/components/ReviewCard/ReviewCard';
 import type { FC } from 'react';

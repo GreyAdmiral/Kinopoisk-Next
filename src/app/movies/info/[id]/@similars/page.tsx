@@ -7,9 +7,15 @@ import styles from './page.module.scss';
 export default async function SimilarsPage({ params: { id = '' } }: Props) {
    const title = 'Похожие фильмы';
    const similars = await Services.getSimilars(id);
-   const { total, items } = similars;
 
-   return +total && items.length ? (
+   if (!similars) {
+      return null;
+   }
+
+   const { total = 0, items = [] } = similars;
+   const itemsLength = items.length;
+
+   return total && itemsLength ? (
       <section className={styles.similars}>
          <h2 className={styles.similars_title}>{title}</h2>
 

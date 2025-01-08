@@ -4,6 +4,7 @@ export type MoviesProps = {
    total: number;
    totalPages: number;
    items: MovieProps[];
+   error?: string;
 };
 
 export type MovieProps = {
@@ -117,6 +118,7 @@ export interface Fact {
 export interface Facts {
    total: number;
    items: Fact[];
+   error?: string;
 }
 
 export interface Similar {
@@ -130,7 +132,7 @@ export interface Similar {
 }
 
 export interface Similars {
-   total: string | number;
+   total: number;
    items: Similar[];
 }
 
@@ -160,7 +162,7 @@ export type SmoothScrollProps = {
    behavior?: ScrollBehavior;
 };
 
-export interface SEQUEL {
+export interface Sequel {
    filmId: string;
    nameRu: string;
    nameEn: string;
