@@ -12,10 +12,9 @@ export const Pagination: FC<PaginationProps> = ({ totalPages, page, searchParams
    const backwardPageTitle = '◄';
    const nextPageTitleAttribut = 'Следующая страница';
    const backPageTitleAttribut = 'Предыдущая страница';
-   const forwardPageTitleAttribut = 'Первая страница';
-   const backwardPageTitleAttribut = 'Последняя страница';
+   const forwardPageTitleAttribut = 'Последняя страница';
+   const backwardPageTitleAttribut = 'Первая страница';
    const { keyword = '', reversed = '', sorted = '' } = searchParams;
-
    let queries = new URLSearchParams();
 
    Object.entries({ keyword, reversed, sorted }).forEach(([key, value]) => {
@@ -61,6 +60,7 @@ export const Pagination: FC<PaginationProps> = ({ totalPages, page, searchParams
                   key={pageKey}
                   href={linkUrl}
                   className={styles.pagination_link}
+                  aria-label={`На страницу ${pageNumber}`}
                   {...(isActive ? { tabIndex: -1 } : {})}
                >
                   {pageNumber}

@@ -7,6 +7,7 @@ import type { FormInputProps } from './types';
 
 export const FormInput: FC<FormInputProps> = ({ name, ...props }) => {
    const placeholderText = 'Поиск';
+   const hiddenInputID = 'queries';
    const queryParams = useSearchParams();
    const keyword = queryParams.get('keyword');
    const [value, setValue] = useState('');
@@ -45,13 +46,21 @@ export const FormInput: FC<FormInputProps> = ({ name, ...props }) => {
 
    return (
       <>
-         <input type="hidden" name="queries" value={queryParams.toString()} />
+         <input
+            type="hidden"
+            name={hiddenInputID}
+            value={queryParams.toString()}
+            id={hiddenInputID}
+            aria-label={placeholderText}
+         />
+
          <input
             ref={inputRef}
             type="text"
             name={name}
             value={value}
             placeholder={placeholder}
+            aria-labelledby={hiddenInputID}
             onChange={changeHandler}
             onKeyDown={keyDownHandler}
             {...props}

@@ -31,6 +31,7 @@ export const SequelCard: FC<SequelsCardProps> = ({ sequel }) => {
                blurDataURL={blurPlaceholderImage}
                loading="lazy"
                alt={sequelTitle || alternateText}
+               aria-hidden={true}
             />
          </div>
 
