@@ -6,10 +6,23 @@
    @include m.adaptiveValue('font-size', 16px, 12px);
 
    &_body {
+      @include m.flex(space-between, center);
+      gap: f.rem(10px);
+      padding: f.rem(5px) 0 f.rem(10px);
+
+      @include m.tablet {
+         flex-direction: column;
+         justify-content: center;
+      }
+   }
+
+   &_developer,
+   &_shool {
       text-transform: uppercase;
       text-align: center;
       text-wrap: balance;
-      padding: f.rem(5px) 0 f.rem(10px);
+      font-family: Coiny, Verdana, Geneva, Tahoma, sans-serif;
+      color: var(--default-text-color, v.$blackLight);
 
       a {
          color: inherit;
