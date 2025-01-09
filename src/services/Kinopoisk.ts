@@ -57,7 +57,7 @@ class Kinopoisk {
    }
 
    async getFacts(id: string): Promise<Facts> {
-      const baseUrl = `${this.baseUrl}1/${id}/facts`;
+      const baseUrl = `${this.baseUrl}/${id}/facts`;
       let facts = null;
 
       try {
