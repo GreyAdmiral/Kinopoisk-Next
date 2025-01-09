@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { CustomCheckBox } from '@components/CustomCheckBox/CustomCheckBox';
 import { getCountriesString, getGenresString } from '@tools/getStringFromMovieField';
+import { BLUR_PLACEHOLDER_IMAGE } from '@tools/costants';
 // import { getAlias } from '@tools/getAlias';
 import type { FC } from 'react';
 import type { Props } from './types';
@@ -14,8 +15,6 @@ export const Movie: FC<Props> = ({ movie }) => {
    const movieTitle = movie.nameRu || movie.nameEn || movie.nameOriginal;
    const linkLabelAttribut = `Информация о фильме ${movieTitle}`;
    // const linkAlias = encodeURI(getAlias(movie.nameEn || movie.nameOriginal || movie.nameRu));
-   const blurPlaceholderImage =
-      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAD68A/GAAAA70lEQVR4AQXBTUvCcADA4Z/7z9xcmbEpdSg6CBYGRUcr6WJvUESfqHN07Jt47hBdBV/AFg2FYTGd2DZzmJiz54ndnpUX51cldvcvSWoqufwGcVlgmlX01CpLmsbD4xMiZ2zeS8MQNRgQX1Gweg6/owGvLxUyxjq2+4VtO8haPIGKxKfdxfpzmUgKruMSxX4QiqDfs2i1A+RwMmM+hsr4nbSvcnNaZHnqE8yTNDpvROGU7FYSueX3MUcuqbUExYsd9jICY66yyOrUm22aHY/vmYec304jRIRuaJROjmg8V/G8IXflawoHhxx/1KjVu/wDycJbrJ7yuz0AAAAASUVORK5CYII=';
    const content = [
       {
          title: 'Год выпуска: ',
@@ -56,7 +55,7 @@ export const Movie: FC<Props> = ({ movie }) => {
                   fill={true}
                   sizes="360px"
                   placeholder="blur"
-                  blurDataURL={blurPlaceholderImage}
+                  blurDataURL={BLUR_PLACEHOLDER_IMAGE}
                   loading="lazy"
                   alt={movie.nameOriginal || alternateText}
                />

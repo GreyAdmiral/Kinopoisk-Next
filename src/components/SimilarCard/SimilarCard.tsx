@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { BLUR_PLACEHOLDER_IMAGE } from '@tools/costants';
 import type { FC } from 'react';
 import type { SimilarCardProps } from './types';
 import styles from './SimilarCard.module.scss';
@@ -12,8 +13,6 @@ export const SimilarCard: FC<SimilarCardProps> = ({ similar }) => {
    const { filmId, nameRu, nameEn, nameOriginal, posterUrl } = similar;
    const linkUrl = `/movies/info/${filmId}`;
    const similarTitle = nameRu || nameEn || nameOriginal;
-   const blurPlaceholderImage =
-      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAD68A/GAAAA70lEQVR4AQXBTUvCcADA4Z/7z9xcmbEpdSg6CBYGRUcr6WJvUESfqHN07Jt47hBdBV/AFg2FYTGd2DZzmJiz54ndnpUX51cldvcvSWoqufwGcVlgmlX01CpLmsbD4xMiZ2zeS8MQNRgQX1Gweg6/owGvLxUyxjq2+4VtO8haPIGKxKfdxfpzmUgKruMSxX4QiqDfs2i1A+RwMmM+hsr4nbSvcnNaZHnqE8yTNDpvROGU7FYSueX3MUcuqbUExYsd9jICY66yyOrUm22aHY/vmYec304jRIRuaJROjmg8V/G8IXflawoHhxx/1KjVu/wDycJbrJ7yuz0AAAAASUVORK5CYII=';
 
    return (
       <article className={styles.similar}>
@@ -24,7 +23,7 @@ export const SimilarCard: FC<SimilarCardProps> = ({ similar }) => {
                height={imageHeight}
                quality={95}
                placeholder="blur"
-               blurDataURL={blurPlaceholderImage}
+               blurDataURL={BLUR_PLACEHOLDER_IMAGE}
                loading="lazy"
                alt={similarTitle || alternateText}
             />
