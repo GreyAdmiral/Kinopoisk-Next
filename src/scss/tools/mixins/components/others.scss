@@ -8,18 +8,6 @@
    background-color: $bgc;
 }
 
-// Видимость
-@mixin opvis($op: 1, $vis: visible) {
-   opacity: $op;
-   visibility: $vis;
-}
-
-// Обрезка по краю
-@mixin ovxy($ox: auto, $oy: $ox) {
-   overflow-x: $ox;
-   overflow-y: $oy;
-}
-
 // Стили фокусировки
 @mixin focused {
    @supports not selector(:focus-visible) {
@@ -42,13 +30,6 @@
          @content;
       }
    }
-}
-
-// mobile viewport bug fix
-@mixin available($property) {
-   #{$property}: -moz-available;
-   #{$property}: -webkit-fill-available;
-   #{$property}: fill-available;
 }
 
 // Адаптивное свойство
@@ -127,28 +108,5 @@
       @media (max-width: $widthToMedia) {
          #{$property}: inherit;
       }
-   }
-}
-
-// Стили для IE9+
-@mixin iestyles {
-   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active), (min-width: 0\0) {
-      @content;
-   }
-}
-
-// Плавный скролл
-@mixin scrollbehavior($scr: smooth, $ovscr: null) {
-   @media (prefers-reduced-motion: no-preference) {
-      scroll-behavior: $scr;
-   }
-
-   overscroll-behavior: $ovscr;
-}
-
-// Стили темной темы
-@mixin isDark {
-   @media (prefers-color-scheme: dark) {
-      @content;
    }
 }

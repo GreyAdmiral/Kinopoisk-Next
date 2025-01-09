@@ -14,16 +14,6 @@
    }
 }
 
-// Серый фильтр
-@mixin grayfilter {
-   transition: all 0.3s ease 0s;
-   filter: grayscale(1);
-
-   @include om.hover {
-      filter: grayscale(0);
-   }
-}
-
 // Эффект пленки над объектом
 @mixin membrane($opacity: 1, $color: black) {
    &::before {
@@ -37,16 +27,6 @@
       z-index: 1;
       pointer-events: none;
    }
-}
-
-// Эффект плодсветки по периметру блока
-@mixin luxbox($color: #e4e4e4) {
-   box-shadow:
-      0 0 f.rem(10px) $color,
-      0 0 f.rem(30px) $color,
-      0 0 f.rem(80px) $color,
-      0 0 f.rem(120px) $color,
-      0 0 f.rem(200px) $color;
 }
 
 // Эффект плодсветки по контуру изображения
