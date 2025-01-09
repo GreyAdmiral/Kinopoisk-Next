@@ -1,5 +1,5 @@
-import { SEQUEL } from '@typesfolder/types';
+import { Sequel } from '@typesfolder/types';
 
 export interface SequelsCardProps {
-   sequel: SEQUEL;
+   sequel: Sequel;
 }
