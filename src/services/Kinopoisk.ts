@@ -17,6 +17,7 @@ class Kinopoisk {
    }
 
    async getMovies(number: string, keyword?: string): Promise<MoviesProps> {
+      const defaultErrorMessage = 'Ошибка получения фильмов!';
       const baseUrl = `${this.baseUrl}?page=${number}${keyword ? `&keyword=${keyword}` : ''}`;
       let movies = [];
 
@@ -24,7 +25,8 @@ class Kinopoisk {
          const res = await fetch(baseUrl, this.header);
 
          if (!res.ok) {
-            throw new Error('Ошибка получения фильмов!');
+            const req = await res.json();
+            throw new Error((req as Error).message || defaultErrorMessage);
          }
 
          movies = await res.json();
@@ -37,6 +39,7 @@ class Kinopoisk {
    }
 
    async getMovie(id: string): Promise<MovieDescription | null> {
+      const defaultErrorMessage = 'Ошибка получения информации о фильме!';
       const baseUrl = `${this.baseUrl}/${id}`;
       let movie = null;
 
@@ -44,7 +47,8 @@ class Kinopoisk {
          const res = await fetch(baseUrl, this.header);
 
          if (!res.ok) {
-            throw new Error('Ошибка получения информации о фильме!');
+            const req = await res.json();
+            throw new Error((req as Error).message || defaultErrorMessage);
          }
 
          movie = await res.json();
@@ -57,6 +61,7 @@ class Kinopoisk {
    }
 
    async getFacts(id: string): Promise<Facts> {
+      const defaultErrorMessage = 'Ошибка получения информации о фактах!';
       const baseUrl = `${this.baseUrl}/${id}/facts`;
       let facts = null;
 
@@ -64,7 +69,8 @@ class Kinopoisk {
          const res = await fetch(baseUrl, this.header);
 
          if (!res.ok) {
-            throw new Error('Ошибка получения информации о фактах!');
+            const req = await res.json();
+            throw new Error((req as Error).message || defaultErrorMessage);
          }
 
          facts = await res.json();
@@ -77,6 +83,7 @@ class Kinopoisk {
    }
 
    async getSimilars(id: string): Promise<Similars | null> {
+      const defaultErrorMessage = 'Ошибка получения информации о фактах!';
       const baseUrl = `${this.baseUrl}/${id}/similars`;
       let similars = null;
 
@@ -84,7 +91,8 @@ class Kinopoisk {
          const res = await fetch(baseUrl, this.header);
 
          if (!res.ok) {
-            throw new Error('Ошибка получения информации о фактах!');
+            const req = await res.json();
+            throw new Error((req as Error).message || defaultErrorMessage);
          }
 
          similars = await res.json();
@@ -97,6 +105,7 @@ class Kinopoisk {
    }
 
    async getSequelsAndPrequels(id: string): Promise<Sequel[] | null> {
+      const defaultErrorMessage = 'Ошибка получения информации о сиквелах и приквелах!';
       const baseUrl = `${this.baseUrlOldAPI}/${id}/sequels_and_prequels`;
       let sap = null;
 
@@ -104,7 +113,8 @@ class Kinopoisk {
          const res = await fetch(baseUrl, this.header);
 
          if (!res.ok) {
-            throw new Error('Ошибка получения информации о сиквелах и приквелах!');
+            const req = await res.json();
+            throw new Error((req as Error).message || defaultErrorMessage);
          }
 
          sap = await res.json();
@@ -117,6 +127,7 @@ class Kinopoisk {
    }
 
    async getReviews(id: string): Promise<Reviews | null> {
+      const defaultErrorMessage = 'Ошибка получения рецензий!';
       const baseUrl = `${this.baseUrl}/${id}/reviews`;
       let reviews = null;
 
@@ -124,7 +135,8 @@ class Kinopoisk {
          const res = await fetch(baseUrl, this.header);
 
          if (!res.ok) {
-            throw new Error('Ошибка получения рецензий!');
+            const req = await res.json();
+            throw new Error((req as Error).message || defaultErrorMessage);
          }
 
          reviews = await res.json();

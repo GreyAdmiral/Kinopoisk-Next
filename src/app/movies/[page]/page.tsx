@@ -35,24 +35,24 @@ export async function generateMetadata({
 export default async function MoviesPage({ params: { page = '' }, searchParams }: Props) {
    const { keyword = '', reversed = '', sorted = defaulSortedMethod } = searchParams;
    const { total, totalPages, items: movies, error } = await Services.getMovies(page, keyword);
-   const moviesLength = movies.length;
+   const isMoviesLength = !!movies.length;
 
    if (!Number.isInteger(+page) || !Number.isFinite(+page)) {
       notFound();
    }
 
-   if (moviesLength && sorted) {
+   if (isMoviesLength && sorted) {
       getSortedMovies({ method: sorted, movies: movies });
    }
 
-   if (moviesLength && reversed) {
+   if (isMoviesLength && reversed) {
       movies.reverse();
    }
 
    return (
       <>
          <MoviesCard>
-            {moviesLength && (
+            {isMoviesLength && (
                <>
                   <QueryShow query={'(min-width: 769px)'}>
                      {movies.map((movie, idx) => (
@@ -66,18 +66,18 @@ export default async function MoviesPage({ params: { page = '' }, searchParams }
                </>
             )}
 
-            {!moviesLength && keyword && <NotFoundResult />}
+            {!isMoviesLength && keyword && <NotFoundResult />}
             {error && <ErrorComponent message={error} />}
          </MoviesCard>
 
          <QueryShow query={'(min-width: 769px)'}>
-            {moviesLength && (
+            {isMoviesLength && (
                <Pagination totalPages={totalPages} total={total} page={page} searchParams={searchParams} />
             )}
          </QueryShow>
 
          <DownloadNotification />
-         {moviesLength && <ScrollArrows />}
+         {isMoviesLength && <ScrollArrows />}
       </>
    );
 }

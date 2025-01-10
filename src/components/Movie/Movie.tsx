@@ -58,6 +58,7 @@ export const Movie: FC<Props> = ({ movie }) => {
                   blurDataURL={BLUR_PLACEHOLDER_IMAGE}
                   loading="lazy"
                   alt={movie.nameOriginal || alternateText}
+                  // key={movie.kinopoiskId + movie.nameRu + movie.nameEn + movie.nameOriginal}
                />
             </div>
 

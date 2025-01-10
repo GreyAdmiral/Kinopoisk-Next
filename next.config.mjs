@@ -31,9 +31,6 @@ const nextConfig = {
    },
    // output: 'export',
    distDir: './dist',
-   experimental: {
-      missingSuspenseWithCSRBailout: false,
-   },
    async redirects() {
       return [
          {
