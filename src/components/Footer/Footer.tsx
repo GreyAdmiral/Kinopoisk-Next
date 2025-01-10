@@ -13,19 +13,19 @@ export const Footer = () => {
       <footer className={styles.footer}>
          <Container className={styles.footer}>
             <div className={styles.footer_body}>
-               <span className={styles.footer_shool}>
+               <div className={styles.footer_shool}>
                   Благодарность школе{' '}
                   <a href={shoolLink} title={shoolLinkTitleAttribut} target="_blank">
                      {shoolName}
                   </a>
-               </span>
+               </div>
 
-               <span className={styles.footer_developer}>
+               <div className={styles.footer_developer}>
                   &copy;{' '}
                   <a href={developerlink} title={devLinkTitleAttribut}>
                      {developerNickName}
                   </a>
-               </span>
+               </div>
             </div>
          </Container>
       </footer>
