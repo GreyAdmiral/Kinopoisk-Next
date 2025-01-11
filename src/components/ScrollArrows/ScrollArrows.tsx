@@ -30,6 +30,9 @@ export const ScrollArrows: FC<ScrollArrowsProps> = () => {
       if (documentScrollY > 0) {
          setIsUpArrowHidden(documentScrollY < 550);
          setIsDownArrowHidden(documentScrollY + window.innerHeight >= getDocumentHeight() - 325);
+      } else if (documentScrollY === 0) {
+         setIsUpArrowHidden(true);
+         setIsDownArrowHidden(false);
       }
    }, [documentScrollY]);
 
