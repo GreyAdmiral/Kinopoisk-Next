@@ -2,7 +2,7 @@
    position: fixed;
    left: f.rem(10px);
    bottom: f.rem(10px);
-   min-width: fit-content;
+   min-width: max-content;
    border-radius: 5px;
    transition: all 0.8s ease 0s;
    z-index: 25;
@@ -20,6 +20,7 @@
    }
 
    &_body {
+      width: 100%;
       color: var(--notification-color, v.$comicsRad);
       background-color: var(--notification-bg, v.$amberDark);
       border: 1px solid var(--notification-border, v.$comicsRad);
