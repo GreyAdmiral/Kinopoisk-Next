@@ -3,16 +3,22 @@ import type { FetchOptions, MoviesProps, MovieDescription, Facts, Similars, Sequ
 let instance = null;
 
 class Kinopoisk {
-   private baseUrl: string;
-   private baseUrlOldAPI: string;
-   private header: FetchOptions;
+   private baseUrl: string = process.env.NEXT_PUBLIC_API_URL!;
+   private baseUrlOldAPI: string = process.env.NEXT_PUBLIC_OLD_API_URL!;
+   #keys: string[] = process.env.NEXT_PUBLIC_API_KEYS!.split('|');
+   private keyCounter: number = 0;
 
-   constructor() {
-      this.baseUrl = process.env.NEXT_PUBLIC_API_URL!;
-      this.baseUrlOldAPI = process.env.NEXT_PUBLIC_OLD_API_URL!;
-      this.header = {
+   getKey(): string {
+      const key = this.#keys[this.keyCounter];
+      this.keyCounter = this.keyCounter + 1 >= this.#keys.length ? 0 : this.keyCounter + 1;
+
+      return key;
+   }
+
+   getHeader(key: string): FetchOptions {
+      return {
          method: 'GET',
-         headers: { 'X-API-KEY': process.env.NEXT_PUBLIC_API_KEY!, 'Content-Type': 'application/json' },
+         headers: { 'X-API-KEY': key, 'Content-Type': 'application/json' },
       };
    }
 
@@ -22,7 +28,7 @@ class Kinopoisk {
       let movies = [];
 
       try {
-         const res = await fetch(baseUrl, this.header);
+         const res = await fetch(baseUrl, this.getHeader(this.getKey()));
 
          if (!res.ok) {
             const req = await res.json();
@@ -44,7 +50,7 @@ class Kinopoisk {
       let movie = null;
 
       try {
-         const res = await fetch(baseUrl, this.header);
+         const res = await fetch(baseUrl, this.getHeader(this.getKey()));
 
          if (!res.ok) {
             const req = await res.json();
@@ -66,7 +72,7 @@ class Kinopoisk {
       let facts = null;
 
       try {
-         const res = await fetch(baseUrl, this.header);
+         const res = await fetch(baseUrl, this.getHeader(this.getKey()));
 
          if (!res.ok) {
             const req = await res.json();
@@ -88,7 +94,7 @@ class Kinopoisk {
       let similars = null;
 
       try {
-         const res = await fetch(baseUrl, this.header);
+         const res = await fetch(baseUrl, this.getHeader(this.getKey()));
 
          if (!res.ok) {
             const req = await res.json();
@@ -110,7 +116,7 @@ class Kinopoisk {
       let sap = null;
 
       try {
-         const res = await fetch(baseUrl, this.header);
+         const res = await fetch(baseUrl, this.getHeader(this.getKey()));
 
          if (!res.ok) {
             const req = await res.json();
@@ -132,7 +138,7 @@ class Kinopoisk {
       let reviews = null;
 
       try {
-         const res = await fetch(baseUrl, this.header);
+         const res = await fetch(baseUrl, this.getHeader(this.getKey()));
 
          if (!res.ok) {
             const req = await res.json();
