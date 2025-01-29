@@ -18,7 +18,9 @@ class Kinopoisk {
    getHeader(key: string): FetchOptions {
       return {
          method: 'GET',
+         // cache: 'force-cache',
          headers: { 'X-API-KEY': key, 'Content-Type': 'application/json' },
+         next: { revalidate: 3600 },
       };
    }
 

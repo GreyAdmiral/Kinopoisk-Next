@@ -107,7 +107,12 @@ export type SelectedMovie = {
 
 export type SavedMovies = Array<[string, SelectedMovie]>;
 
-export type FetchOptions = { method: string; headers: HeadersInit };
+export type FetchOptions = {
+   method: string;
+   cache?: RequestCache;
+   headers: HeadersInit;
+   next?: { revalidate: number };
+};
 
 export interface Fact {
    text: string;
