@@ -27,12 +27,17 @@ export const ScrollArrows: FC<ScrollArrowsProps> = () => {
    };
 
    useEffect(() => {
-      if (documentScrollY > 0) {
-         setIsUpArrowHidden(documentScrollY < 550);
-         setIsDownArrowHidden(documentScrollY + window.innerHeight >= getDocumentHeight() - 325);
-      } else if (documentScrollY === 0) {
+      if (window.innerWidth - document.body.offsetWidth) {
+         if (documentScrollY > 0) {
+            setIsUpArrowHidden(documentScrollY < 550);
+            setIsDownArrowHidden(documentScrollY + window.innerHeight >= getDocumentHeight() - 325);
+         } else if (documentScrollY === 0) {
+            setIsUpArrowHidden(true);
+            setIsDownArrowHidden(false);
+         }
+      } else {
          setIsUpArrowHidden(true);
-         setIsDownArrowHidden(false);
+         setIsDownArrowHidden(true);
       }
    }, [documentScrollY]);
 

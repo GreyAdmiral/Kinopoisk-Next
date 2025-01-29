@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { MovieInfo } from '@/components/MovieInfo/MovieInfo';
 import { MovieLinks } from '@/components/MovieLinks/MovieLinks';
 import { MoviePoster } from '@components/MoviePoster/MoviePoster';
+import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
 import { Services } from '@services/Kinopoisk';
 import type { Metadata } from 'next';
 import type { Props } from './types';
@@ -30,15 +31,18 @@ export default async function MoviePage({ params: { id = '' } }: Props) {
    const title = nameRu || nameEn || nameOriginal;
 
    return (
-      <div className={styles.movie}>
-         <div className={styles.movie_left_sidebar}>
-            <MoviePoster posterUrl={posterUrl} title={title} />
+      <>
+         <div className={styles.movie}>
+            <div className={styles.movie_left_sidebar}>
+               <MoviePoster posterUrl={posterUrl} title={title} />
+            </div>
+            <div className={styles.movie_content}>
+               <MovieInfo movie={movie} />
+               <MovieLinks id={id} webUrl={webUrl} />
+            </div>
          </div>
 
-         <div className={styles.movie_content}>
-            <MovieInfo movie={movie} />
-            <MovieLinks id={id} webUrl={webUrl} />
-         </div>
-      </div>
+         <ScrollArrows />
+      </>
    );
 }
