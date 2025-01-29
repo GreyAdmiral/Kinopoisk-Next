@@ -27,7 +27,7 @@ export const ScrollArrows: FC<ScrollArrowsProps> = () => {
    };
 
    useEffect(() => {
-      if (window.innerWidth - document.body.offsetWidth) {
+      if (getDocumentHeight() >= window.innerHeight + 550) {
          if (documentScrollY > 0) {
             setIsUpArrowHidden(documentScrollY < 550);
             setIsDownArrowHidden(documentScrollY + window.innerHeight >= getDocumentHeight() - 325);
