@@ -29,6 +29,21 @@
       @include card-effect;
    }
 
+   &:active {
+      .sequel_title {
+         span {
+            @include m.luxtext(
+               var(--movie-link-hover-color, v.$comicsRad),
+               var(--movie-link-hover-color, v.$comicsRad)
+            );
+         }
+
+         svg {
+            @include m.luximage(var(--movie-link-hover-color, v.$comicsRad));
+         }
+      }
+   }
+
    &_title {
       @extend %fullwhp;
       @include m.flex(center, center, column);
@@ -44,7 +59,8 @@
       transition:
          color 0.4s ease 0s,
          background-color 0.4s ease 0s,
-         opacity 0.8s ease 0s;
+         opacity 0.8s ease 0s,
+         text-shadow 0.4s ease 0s;
 
       & span {
          display: block;
@@ -52,6 +68,10 @@
          word-wrap: break-word;
          padding: f.rem(5px) f.rem(10px);
          line-height: 1.5;
+         transition:
+            color 0.4s ease 0s,
+            opacity 0.8s ease 0s,
+            text-shadow 0.4s ease 0s;
          @include m.adaptiveValue('font-size', 12px, 10px);
       }
 
@@ -59,6 +79,7 @@
          overflow: hidden;
          max-width: 100%;
          max-height: 100%;
+         transition: filter 0.4s ease 0s;
       }
    }
 

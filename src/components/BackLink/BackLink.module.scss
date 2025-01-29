@@ -12,6 +12,7 @@
    &_text {
       padding-top: f.rem(6px);
       color: inherit;
+      transition: text-shadow 0.4s ease 0s;
    }
 
    &_icon {
@@ -19,5 +20,16 @@
       height: auto;
       color: inherit;
       overflow: hidden;
+      transition: filter 0.4s ease 0s;
+   }
+
+   &:active {
+      .back_text {
+         @include m.luxtext(var(--movie-link-hover-color, v.$comicsRad), var(--movie-link-hover-color, v.$comicsRad));
+      }
+
+      .back_icon {
+         @include m.luximage(var(--movie-link-hover-color, v.$comicsRad));
+      }
    }
 }

@@ -1,5 +1,6 @@
 @use '../../vars/' as vars;
 @use './others.scss' as o;
+@use './strokeshadows.scss' as ss;
 
 @mixin movielink() {
    padding: 0.278em;
@@ -8,7 +9,9 @@
    text-transform: uppercase;
    font-size: inherit;
    letter-spacing: 3px;
-   transition: color 0.8s ease 0s;
+   transition:
+      color 0.8s ease 0s,
+      text-shadow 0.4s ease 0s;
 
    @include o.hover {
       color: var(--movie-link-hover-color, vars.$comicsRad);
@@ -16,5 +19,12 @@
 
    @include o.focused {
       color: var(--info-link-color-hover, vars.$orangeBlack);
+   }
+
+   &:active {
+      @include ss.luxtext(
+         var(--movie-link-hover-color, vars.$comicsRad),
+         var(--movie-link-hover-color, vars.$comicsRad)
+      );
    }
 }
