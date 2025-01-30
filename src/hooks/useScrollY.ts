@@ -9,16 +9,12 @@ export function useScrollY() {
    const getServerSnapshot = () => 0;
 
    const subscribe = useCallback((cb: () => void) => {
-      const handler = () => {
-         cb();
-      };
+      const handler = throttle(cb, 200);
 
-      const memoHandler = throttle(handler, 200);
-
-      window.addEventListener('scroll', memoHandler);
+      window.addEventListener('scroll', handler);
 
       return () => {
-         window.removeEventListener('scroll', memoHandler);
+         window.removeEventListener('scroll', handler);
       };
    }, []);
 

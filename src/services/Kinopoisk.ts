@@ -5,13 +5,14 @@ let instance = null;
 class Kinopoisk {
    private baseUrl: string = process.env.NEXT_PUBLIC_API_URL!;
    private baseUrlOldAPI: string = process.env.NEXT_PUBLIC_OLD_API_URL!;
-   #keys: string[] = process.env.NEXT_PUBLIC_API_KEYS!.split('|');
    private keyCounter: number = 0;
+   #keys: string[] = process.env.NEXT_PUBLIC_API_KEYS!.split('|');
 
    getKey(): string {
       const key = this.#keys[this.keyCounter];
-      this.keyCounter = this.keyCounter + 1 >= this.#keys.length ? 0 : this.keyCounter + 1;
+      const keysLength = this.#keys.length;
 
+      this.keyCounter = keysLength ? (this.keyCounter + 1) % keysLength : 0;
       return key;
    }
 

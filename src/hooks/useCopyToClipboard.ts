@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 export function useCopyToClipboard(resetInterval: number | null = null) {
    const [isCopied, setCopied] = useState(false);
 
-   const handleCopy = useCallback((text: string) => {
+   const handleCopy = useCallback((text: string | number) => {
       if (typeof text === 'string' || typeof text == 'number') {
          navigator.clipboard
             .writeText(text.toString())
