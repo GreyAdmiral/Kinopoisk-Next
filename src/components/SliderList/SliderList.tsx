@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import type { FC } from 'react';
 import type { SliderListProps, State } from './types';
 import styles from './SliderList.module.scss';
@@ -12,7 +12,7 @@ export const SliderList: FC<SliderListProps> = ({ className, children }) => {
       scrollLeft: null,
    });
 
-   const mouseDownHandler = (e: MouseEvent) => {
+   const mouseDownHandler = useCallback((e: MouseEvent) => {
       e.stopPropagation();
       const { current: state } = stateRef;
       const { current: list } = listRef;
@@ -22,18 +22,18 @@ export const SliderList: FC<SliderListProps> = ({ className, children }) => {
          state.startX = e.pageX - list.offsetLeft;
          state.scrollLeft = list.scrollLeft;
       }
-   };
+   }, []);
 
-   const mouseUpHandler = (e: MouseEvent) => {
+   const mouseUpHandler = useCallback((e: MouseEvent) => {
       e.stopPropagation();
       const { current: state } = stateRef;
 
       if (state.isDragging) {
          state.isDragging = false;
       }
-   };
+   }, []);
 
-   const mouseMoveHandler = (e: MouseEvent) => {
+   const mouseMoveHandler = useCallback((e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
       const { current: state } = stateRef;
@@ -48,9 +48,9 @@ export const SliderList: FC<SliderListProps> = ({ className, children }) => {
          const walkX = (x - state.startX!) * 1;
          list.scrollLeft = state.scrollLeft! - walkX;
       }
-   };
+   }, []);
 
-   const wheelHandler = (e: WheelEvent) => {
+   const wheelHandler = useCallback((e: WheelEvent) => {
       e.preventDefault();
       e.stopPropagation();
       const { current: list } = listRef;
@@ -58,7 +58,7 @@ export const SliderList: FC<SliderListProps> = ({ className, children }) => {
       if (list) {
          list.scrollLeft += e.deltaY;
       }
-   };
+   }, []);
 
    useEffect(() => {
       const { current: list } = listRef;
@@ -80,7 +80,7 @@ export const SliderList: FC<SliderListProps> = ({ className, children }) => {
             list.removeEventListener('wheel', wheelHandler);
          }
       };
-   }, []);
+   }, [mouseDownHandler, mouseMoveHandler, mouseUpHandler, wheelHandler]);
 
    return (
       <ul

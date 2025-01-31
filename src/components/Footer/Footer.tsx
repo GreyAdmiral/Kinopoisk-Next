@@ -2,12 +2,12 @@ import { Container } from '@components/Container/Container';
 import styles from './Footer.module.scss';
 
 export const Footer = () => {
-   const developerlink = 'https://github.com/GreyAdmiral';
-   const shoolLink = 'https://rs.school/';
+   const developerLink = 'https://github.com/GreyAdmiral';
+   const schoolLink = 'https://rs.school/';
    const devLinkTitleAttribut = 'Открыть репозиторий разработчика';
-   const shoolLinkTitleAttribut = 'Открыть сайт школы';
-   const developerNickName = 'B!n@r!0n';
-   const shoolName = 'RSScool';
+   const schoolLinkTitleAttribut = 'Открыть сайт школы';
+   const developerNickname = 'B!n@r!0n';
+   const schoolName = 'RSScool';
 
    return (
       <footer className={styles.footer}>
@@ -15,15 +15,15 @@ export const Footer = () => {
             <div className={styles.footer_body}>
                <div className={styles.footer_shool}>
                   Благодарность школе{' '}
-                  <a href={shoolLink} title={shoolLinkTitleAttribut} target="_blank">
-                     {shoolName}
+                  <a href={schoolLink} title={schoolLinkTitleAttribut} target="_blank">
+                     {schoolName}
                   </a>
                </div>
 
                <div className={styles.footer_developer}>
                   &copy;{' '}
-                  <a href={developerlink} title={devLinkTitleAttribut}>
-                     {developerNickName}
+                  <a href={developerLink} title={devLinkTitleAttribut}>
+                     {developerNickname}
                   </a>
                </div>
             </div>

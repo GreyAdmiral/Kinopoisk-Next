@@ -2,10 +2,10 @@ export function getDocumentWidth() {
    return Math.max(
       document.body.scrollWidth,
       document.documentElement.scrollWidth,
-      document.body.scrollWidth,
-      document.documentElement.scrollWidth,
-      document.body.scrollWidth,
-      document.documentElement.scrollWidth
+      document.body.clientWidth,
+      document.documentElement.clientWidth,
+      document.body.offsetWidth,
+      document.documentElement.offsetWidth
    );
 }
 

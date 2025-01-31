@@ -75,7 +75,7 @@ export const CustomSelect: FC<CustomSelectProps> = ({
             document.body.removeEventListener('keydown', keydownHandler);
          }
       };
-   });
+   }, [isOpen, keydownHandler]);
 
    useEffect(() => {
       const params = new URLSearchParams(queries);

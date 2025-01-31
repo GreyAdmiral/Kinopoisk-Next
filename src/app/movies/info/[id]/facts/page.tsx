@@ -34,8 +34,8 @@ export default async function MoviePage({ params: { id = '' } }: Props) {
       notFound();
    }
 
-   const factsArray = items.filter((fact) => fact.type === factsLabel) || [];
-   const bloopersArray = items.filter((blooper) => blooper.type === bloopersLabel) || [];
+   const factsArray = items.filter((fact) => fact.type === factsLabel);
+   const bloopersArray = items.filter((blooper) => blooper.type === bloopersLabel);
 
    return (
       <div className={styles.facts}>

@@ -6,5 +6,5 @@ import type { QueryShowProps } from './types';
 export const QueryShow: FC<QueryShowProps> = ({ query, children }) => {
    const isQuery = useMediaQuery(query);
 
-   return <>{isQuery ? children : null}</>;
+   return isQuery ? children : null;
 };

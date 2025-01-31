@@ -7,8 +7,6 @@ export const DialogNotification: FC<CustomNotificationProps> = ({ isOpenNotifica
    const notificationRef = useRef<HTMLDialogElement>(null);
 
    useEffect(() => {
-      // notificationRef.current?.toggleAttribute('open', isOpenNotification);
-
       if (isOpenNotification) {
          notificationRef.current?.show();
       } else {

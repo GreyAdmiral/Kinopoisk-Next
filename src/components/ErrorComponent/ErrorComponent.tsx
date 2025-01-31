@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import { BackLink } from '@components/BackLink/BackLink';
 import { ReloadButton } from '@components/ReloadButton/ReloadButton';
 import type { FC } from 'react';
 import type { ErrorComponentProps } from './types';
 import styles from './ErrorComponent.module.scss';
 
-export const ErrorComponent: FC<ErrorComponentProps> = ({ message }) => {
+export const ErrorComponent: FC<ErrorComponentProps> = memo(function ErrorComponent({ message }) {
    const title = message || 'Произошла ошибка!';
 
    return (
@@ -17,4 +18,4 @@ export const ErrorComponent: FC<ErrorComponentProps> = ({ message }) => {
          </div>
       </div>
    );
-};
+});

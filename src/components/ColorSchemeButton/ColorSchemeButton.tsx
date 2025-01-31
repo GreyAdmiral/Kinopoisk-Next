@@ -13,8 +13,10 @@ export const ColorSchemeButton = () => {
    const [activeScheme, setActiveScheme] = useState<string>('');
 
    function writeSchemeName() {
-      setSaveScheme(activeScheme === SCHEMES.DARK ? SCHEMES.LIGHT : SCHEMES.DARK);
-      setActiveScheme(activeScheme === SCHEMES.DARK ? SCHEMES.LIGHT : SCHEMES.DARK);
+      const newScheme = activeScheme === SCHEMES.DARK ? SCHEMES.LIGHT : SCHEMES.DARK;
+
+      setSaveScheme(newScheme);
+      setActiveScheme(newScheme);
       (document.activeElement as HTMLTemplateElement).blur();
    }
 

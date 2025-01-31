@@ -13,7 +13,7 @@ export default async function ReviewsPage({ params: { id = '' } }: Props) {
       return null;
    }
 
-   const { total, totalPages, items = [] } = reviews || {};
+   const { total, totalPages, items = [] } = reviews;
    const itemsLength = items.length;
    const startContentCount = Math.ceil(total / totalPages);
    let result: Array<Review[]> = [];

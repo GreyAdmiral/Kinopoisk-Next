@@ -4,17 +4,21 @@ import type { FactsListProps } from './types';
 import styles from './FactsList.module.scss';
 
 export const FactsList: FC<FactsListProps> = ({ facts, title }) => {
-   return facts.length ? (
+   if (!facts.length) {
+      return null;
+   }
+
+   return (
       <section className={styles.facts}>
          <h2 className={styles.facts_title}>{title}</h2>
 
          <ul className={styles.facts_list}>
-            {facts.map((it) => (
-               <li key={it.text.slice(0, 225)} className={styles.facts_list_item}>
-                  {getTextClearedOfTags(it.text)}
+            {facts.map(({ text }, idx) => (
+               <li key={idx} className={styles.facts_list_item}>
+                  {getTextClearedOfTags(text)}
                </li>
             ))}
          </ul>
       </section>
-   ) : null;
+   );
 };
