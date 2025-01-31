@@ -1,12 +1,12 @@
-type ErrorsType = Record<number | string, string>;
+type ErrorsType = Record<number | string, string | null>;
 
 const ERRORS: ErrorsType = {
-   401: 'Wrong token.',
-   402: 'Request limit exceeded.',
-   403: 'Request limit exceeded.',
-   404: 'Request limit exceeded.',
-   429: 'Too many requests.',
-   default: 'Looks like there was a problem.',
+   401: 'Неправильный токен.',
+   402: 'Превышен лимит запросов.',
+   403: 'Превышен лимит запросов.',
+   404: 'Превышен лимит запросов.',
+   429: 'Слишком много запросов.',
+   default: null,
 } as const;
 
 export function getErrorInfo(code: keyof typeof ERRORS) {

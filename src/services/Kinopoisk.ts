@@ -1,3 +1,4 @@
+import { getErrorInfo } from '@tools/getErrorInfo';
 import type { FetchOptions, MoviesProps, MovieDescription, Facts, Similars, Sequel, Reviews } from '@typesfolder/types';
 
 let instance = null;
@@ -34,8 +35,9 @@ class Kinopoisk {
          const res = await fetch(baseUrl, this.getHeader(this.getKey()));
 
          if (!res.ok) {
+            const knownError = getErrorInfo(res.status);
             const req = await res.json();
-            throw new Error((req as Error).message || defaultErrorMessage);
+            throw new Error(knownError || (req as Error).message || defaultErrorMessage);
          }
 
          movies = await res.json();
@@ -56,8 +58,9 @@ class Kinopoisk {
          const res = await fetch(baseUrl, this.getHeader(this.getKey()));
 
          if (!res.ok) {
+            const knownError = getErrorInfo(res.status);
             const req = await res.json();
-            throw new Error((req as Error).message || defaultErrorMessage);
+            throw new Error(knownError || (req as Error).message || defaultErrorMessage);
          }
 
          movie = await res.json();
@@ -78,8 +81,9 @@ class Kinopoisk {
          const res = await fetch(baseUrl, this.getHeader(this.getKey()));
 
          if (!res.ok) {
+            const knownError = getErrorInfo(res.status);
             const req = await res.json();
-            throw new Error((req as Error).message || defaultErrorMessage);
+            throw new Error(knownError || (req as Error).message || defaultErrorMessage);
          }
 
          facts = await res.json();
@@ -100,8 +104,9 @@ class Kinopoisk {
          const res = await fetch(baseUrl, this.getHeader(this.getKey()));
 
          if (!res.ok) {
+            const knownError = getErrorInfo(res.status);
             const req = await res.json();
-            throw new Error((req as Error).message || defaultErrorMessage);
+            throw new Error(knownError || (req as Error).message || defaultErrorMessage);
          }
 
          similars = await res.json();
@@ -122,8 +127,9 @@ class Kinopoisk {
          const res = await fetch(baseUrl, this.getHeader(this.getKey()));
 
          if (!res.ok) {
+            const knownError = getErrorInfo(res.status);
             const req = await res.json();
-            throw new Error((req as Error).message || defaultErrorMessage);
+            throw new Error(knownError || (req as Error).message || defaultErrorMessage);
          }
 
          sap = await res.json();
@@ -144,8 +150,9 @@ class Kinopoisk {
          const res = await fetch(baseUrl, this.getHeader(this.getKey()));
 
          if (!res.ok) {
+            const knownError = getErrorInfo(res.status);
             const req = await res.json();
-            throw new Error((req as Error).message || defaultErrorMessage);
+            throw new Error(knownError || (req as Error).message || defaultErrorMessage);
          }
 
          reviews = await res.json();
