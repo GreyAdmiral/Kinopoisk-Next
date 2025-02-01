@@ -12,6 +12,7 @@
       filter: drop-shadow(f.rem(-4) f.rem(4) f.rem(5px) v.$blackUltraTransparent);
       pointer-events: none;
       overflow: hidden;
+      z-index: 100;
 
       &_arrow {
          max-width: 100%;

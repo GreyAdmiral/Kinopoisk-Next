@@ -13,7 +13,9 @@
       }
 
       :not([class$='facts']) + & {
-         max-width: calc(100% - 314px);
+         @include m.oversmalltablet {
+            max-width: calc(100% - 314px);
+         }
       }
 
       [class$='facts'] + & {
@@ -34,6 +36,10 @@
          gap: f.rem(10px);
          flex-wrap: wrap;
          width: 100%;
+
+         @include m.smalltablet {
+            justify-content: center;
+         }
       }
 
       &_title {
@@ -41,6 +47,10 @@
          font-weight: bold;
          line-height: 1.3;
          @include m.adaptiveValue('font-size', 19px, 15px);
+
+         @include m.smalltablet {
+            text-align: center;
+         }
       }
    }
 }

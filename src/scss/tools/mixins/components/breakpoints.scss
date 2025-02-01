@@ -34,3 +34,9 @@
       @content;
    }
 }
+
+@mixin oversmalltablet {
+   @media (min-width: (769px)) {
+      @content;
+   }
+}
