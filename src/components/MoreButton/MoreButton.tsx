@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Movie } from '@components/Movie/Movie';
 import { Loader } from '@components/Loader/Loader';
+import { getCensoredFilms } from '@tools/getCensoredFilms';
 import { getSortedMovies } from '@tools/getSortedMovies';
 import { Services } from '@services/Kinopoisk';
 import type { FC } from 'react';
@@ -53,7 +54,9 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
 
          Services.getMovies(`${activePage}`, keyword)
             .then((data) => {
-               const { items: movies } = data;
+               let { items: movies } = data;
+
+               movies = getCensoredFilms(movies);
 
                if (sorted) {
                   getSortedMovies({ method: sorted, movies: movies });
