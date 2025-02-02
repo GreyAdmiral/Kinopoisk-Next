@@ -8,6 +8,7 @@ import { DownloadNotification } from '@components/DownloadNotification/DownloadN
 import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
 import { NotFoundResult } from '@/components/NotFoundResult/NotFoundResult';
 import { ErrorComponent } from '@/components/ErrorComponent/ErrorComponent';
+import { getCensoredFilms } from '@/tools/getCensoredFilms';
 import { getSortedMovies } from '@tools/getSortedMovies';
 import { defaulSortedMethod } from '@tools/costants';
 import { Services } from '@services/Kinopoisk';
@@ -19,12 +20,14 @@ export async function generateMetadata({
    searchParams: { keyword = '' },
 }: Props): Promise<Metadata> {
    let title = `Неофициальный кинопоиск | Страница «${page}»`;
-   let description = `Неофициальный кинопоиск. Страница «${page}».`;
+   let description = `Неофициальный кинопоиск.`;
 
    if (keyword) {
       title += ` | Поиск по словам «${decodeURIComponent(keyword)}»`;
-      description += ` Поиск по словам «${decodeURIComponent(keyword)}»`;
+      description += ` Поиск по словам «${decodeURIComponent(keyword)}».`;
    }
+
+   description += ` Страница «${page}».`;
 
    return {
       title: title,
@@ -34,19 +37,23 @@ export async function generateMetadata({
 
 export default async function MoviesPage({ params: { page = '' }, searchParams }: Props) {
    const { keyword = '', reversed = '', sorted = defaulSortedMethod } = searchParams;
-   const { total, totalPages, items: movies, error } = await Services.getMovies(page, keyword);
+   let { total, totalPages, items: movies, error } = await Services.getMovies(page, keyword);
    const isMoviesLength = !!movies.length;
 
    if (!Number.isInteger(+page) || !Number.isFinite(+page)) {
       notFound();
    }
 
-   if (isMoviesLength && sorted) {
-      getSortedMovies({ method: sorted, movies: movies });
-   }
+   if (isMoviesLength) {
+      movies = getCensoredFilms(movies);
 
-   if (isMoviesLength && reversed) {
-      movies.reverse();
+      if (sorted) {
+         getSortedMovies({ method: sorted, movies: movies });
+      }
+
+      if (reversed) {
+         movies.reverse();
+      }
    }
 
    return (

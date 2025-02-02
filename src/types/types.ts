@@ -73,11 +73,11 @@ export type MoviesState = {
    isError: boolean;
 };
 
-type country = {
+export type country = {
    country: string;
 };
 
-type genre = {
+export type genre = {
    genre: string;
 };
 
