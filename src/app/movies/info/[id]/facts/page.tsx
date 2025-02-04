@@ -15,7 +15,7 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
 
    return {
       title: `Неофициальный кинопоиск | Факты о фильме «${title || unknownTitle}»`,
-      description: title ? `Неофициальный кинопоиск. Факты о фильме «${title}».` : '',
+      description: `Самые интересные факты и «ляпы» со съемок фильма «${title || unknownTitle}».`,
    };
 }
 

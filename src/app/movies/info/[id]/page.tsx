@@ -11,12 +11,17 @@ import styles from './page.module.scss';
 export async function generateMetadata({ params: { id = '' } }: Props): Promise<Metadata> {
    const unknownTitle = 'Неизвестный фильм';
    const movie = await Services.getMovie(id);
-   const { nameRu, nameEn, nameOriginal } = movie || {};
+   const { nameRu, nameEn, nameOriginal, description, shortDescription } = movie || {};
    const title = nameRu || nameEn || nameOriginal;
+   let defaultDescription = `Неофициальный кинопоиск.`;
+
+   if (title) {
+      defaultDescription += ` Страница «${title}»`;
+   }
 
    return {
       title: `Неофициальный кинопоиск | «${title || unknownTitle}»`,
-      description: title ? `Неофициальный кинопоиск. Страница фильма «${title}».` : '',
+      description: description || shortDescription || defaultDescription,
    };
 }
 
@@ -36,6 +41,7 @@ export default async function MoviePage({ params: { id = '' } }: Props) {
             <div className={styles.movie_left_sidebar}>
                <MoviePoster posterUrl={posterUrl} title={title} />
             </div>
+
             <div className={styles.movie_content}>
                <MovieInfo movie={movie} />
                <MovieLinks id={id} webUrl={webUrl} />

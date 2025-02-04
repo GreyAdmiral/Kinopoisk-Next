@@ -20,14 +20,11 @@ export async function generateMetadata({
    searchParams: { keyword = '' },
 }: Props): Promise<Metadata> {
    let title = `Неофициальный кинопоиск | Страница «${page}»`;
-   let description = `Неофициальный кинопоиск.`;
+   let description = `Неофициальный кинопоиск - ищите фильмы по ключевым словам и наслаждайтесь просмотром совершенно бесплатно!`;
 
    if (keyword) {
       title += ` | Поиск по словам «${decodeURIComponent(keyword)}»`;
-      description += ` Поиск по словам «${decodeURIComponent(keyword)}».`;
    }
-
-   description += ` Страница «${page}».`;
 
    return {
       title: title,
