@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { BackLink } from '../BackLink/BackLink';
+import { BackLink } from '@components/BackLink/BackLink';
+import { getFreeLinks } from '@tools/getFreeLinks';
 import type { FC } from 'react';
 import type { MovieLinksProps } from './types';
 import styles from './MovieLinks.module.scss';
@@ -7,15 +8,19 @@ import styles from './MovieLinks.module.scss';
 export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl }) => {
    const factsLinkTitle = 'Интересные факты';
    const factsLinkRoute = `/movies/info/${id}/facts`;
-   const playerLinkRoute = `https://flicksbar.mom/film/${id}/`;
+   const { freeLink, mirrorLink } = getFreeLinks(id);
    const links = [
       {
          title: 'Подробнее на «Кинопоиск»',
          link: webUrl,
       },
       {
-         title: 'Смотреть бесплатно',
-         link: playerLinkRoute,
+         title: 'Смотреть бесплатно (зеркало 1)',
+         link: freeLink,
+      },
+      {
+         title: 'Смотреть бесплатно (зеркало 2)',
+         link: mirrorLink,
       },
    ];
 

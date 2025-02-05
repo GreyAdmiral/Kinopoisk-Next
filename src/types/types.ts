@@ -103,6 +103,7 @@ export type SelectedMovie = {
    genres: string;
    link: string;
    freeLink: string;
+   mirrorLink: string;
 };
 
 export type SavedMovies = Array<[string, SelectedMovie]>;
