@@ -3,7 +3,6 @@ import type { MovieProps, SelectedMovie } from '@typesfolder/types';
 
 export function getSelectedInfo(movie: MovieProps): SelectedMovie {
    const separator = ' / ';
-   const { freeLink, mirrorLink } = getFreeLinks(movie.kinopoiskId);
 
    return {
       id: movie.kinopoiskId,
@@ -14,7 +13,6 @@ export function getSelectedInfo(movie: MovieProps): SelectedMovie {
       countries: movie.countries.map((country) => country.country).join(separator),
       genres: movie.genres.map((genre) => genre.genre).join(separator),
       link: `${window.location.origin}/movies/info/${movie.kinopoiskId}`,
-      freeLink,
-      mirrorLink,
+      ...getFreeLinks(movie.kinopoiskId),
    };
 }

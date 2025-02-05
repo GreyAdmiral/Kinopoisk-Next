@@ -8,20 +8,15 @@ import styles from './MovieLinks.module.scss';
 export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl }) => {
    const factsLinkTitle = 'Интересные факты';
    const factsLinkRoute = `/movies/info/${id}/facts`;
-   const { freeLink, mirrorLink } = getFreeLinks(id);
    const links = [
       {
          title: 'Подробнее на «Кинопоиск»',
          link: webUrl,
       },
-      {
-         title: 'Смотреть бесплатно (зеркало 1)',
-         link: freeLink,
-      },
-      {
-         title: 'Смотреть бесплатно (зеркало 2)',
-         link: mirrorLink,
-      },
+      ...Object.values(getFreeLinks(id)).map((value, idx) => ({
+         title: `Смотреть бесплатно (зеркало ${idx + 1})`,
+         link: value,
+      })),
    ];
 
    return webUrl ? (
