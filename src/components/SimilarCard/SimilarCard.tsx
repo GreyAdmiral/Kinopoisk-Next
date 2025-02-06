@@ -10,7 +10,7 @@ export const SimilarCard: FC<SimilarCardProps> = ({ similar }) => {
    const alternateText = 'Постер фильма';
    const imageWidth = 228;
    const imageHeight = 328;
-   const { filmId, nameRu, nameEn, nameOriginal, posterUrl } = similar;
+   const { filmId, nameRu, nameEn, nameOriginal, posterUrl, posterUrlPreview } = similar;
    const linkUrl = `/movies/info/${filmId}`;
    const similarTitle = nameRu || nameEn || nameOriginal;
 
@@ -18,13 +18,14 @@ export const SimilarCard: FC<SimilarCardProps> = ({ similar }) => {
       <article className={styles.similar}>
          <div className={styles.similar_image}>
             <Image
-               src={posterUrl || loadingImage}
+               src={posterUrlPreview || posterUrl || loadingImage}
                width={imageWidth}
                height={imageHeight}
-               quality={95}
+               // quality={95} // * Включить на нормальном хостнге
                placeholder="blur"
                blurDataURL={BLUR_PLACEHOLDER_IMAGE}
                loading="lazy"
+               unoptimized={true} // * Выключить на нормальном хостнге
                alt={similarTitle || alternateText}
             />
          </div>

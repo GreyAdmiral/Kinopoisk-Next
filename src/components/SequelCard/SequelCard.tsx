@@ -13,7 +13,7 @@ export const SequelCard: FC<SequelsCardProps> = ({ sequel }) => {
    const imageHeight = 300;
    const iconWidth = 115;
    const iconHeight = 100;
-   const { filmId, nameRu, nameEn, nameOriginal, posterUrlPreview } = sequel;
+   const { filmId, nameRu, nameEn, nameOriginal, posterUrl, posterUrlPreview } = sequel;
    const sequelTitle = nameRu || nameEn || nameOriginal;
    const linkUrl = `/movies/info/${filmId}`;
 
@@ -21,13 +21,14 @@ export const SequelCard: FC<SequelsCardProps> = ({ sequel }) => {
       <Link href={linkUrl} className={styles.sequel} passHref>
          <div className={styles.sequel_image}>
             <Image
-               src={posterUrlPreview || loadingImage}
+               src={posterUrlPreview || posterUrl || loadingImage}
                width={imageWidth}
                height={imageHeight}
-               quality={95}
+               // quality={95} // * Включить на нормальном хостнге
                placeholder="blur"
                blurDataURL={BLUR_PLACEHOLDER_IMAGE}
                loading="lazy"
+               unoptimized={true} // * Выключить на нормальном хостнге
                alt={sequelTitle || alternateText}
                aria-hidden={true}
             />

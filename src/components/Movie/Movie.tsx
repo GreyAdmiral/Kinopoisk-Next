@@ -50,13 +50,14 @@ export const Movie: FC<Props> = ({ movie }) => {
          <div className={styles.movie_body}>
             <div className={styles.movie_image}>
                <Image
-                  src={movie.posterUrlPreview || loadingImage}
-                  quality={95}
+                  src={movie.posterUrlPreview || movie.posterUrl || loadingImage}
+                  // quality={95} // * Включить на нормальном хостнге
                   fill={true}
                   sizes="360px"
                   placeholder="blur"
                   blurDataURL={BLUR_PLACEHOLDER_IMAGE}
                   loading="lazy"
+                  unoptimized={true} // * Выключить на нормальном хостнге
                   alt={movie.nameOriginal || alternateText}
                   // key={movie.kinopoiskId + movie.nameRu + movie.nameEn + movie.nameOriginal}
                />

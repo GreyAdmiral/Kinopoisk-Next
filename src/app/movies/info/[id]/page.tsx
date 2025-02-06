@@ -32,14 +32,14 @@ export default async function MoviePage({ params: { id = '' } }: Props) {
       notFound();
    }
 
-   const { nameRu, nameEn, nameOriginal, posterUrl, webUrl } = movie;
+   const { nameRu, nameEn, nameOriginal, posterUrl, posterUrlPreview, webUrl } = movie;
    const title = nameRu || nameEn || nameOriginal;
 
    return (
       <>
          <div className={styles.movie}>
             <div className={styles.movie_left_sidebar}>
-               <MoviePoster posterUrl={posterUrl} title={title} />
+               <MoviePoster posterUrl={posterUrl || posterUrlPreview} title={title} />
             </div>
 
             <div className={styles.movie_content}>

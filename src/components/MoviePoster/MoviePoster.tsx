@@ -23,6 +23,7 @@ export const MoviePoster: FC<MoviePosterProps> = ({ posterUrl, title }) => {
             placeholder="blur"
             blurDataURL={BLUR_PLACEHOLDER_IMAGE}
             priority={true}
+            // unoptimized={true}
             alt={validatedTitle || alternateText}
          />
       </div>
