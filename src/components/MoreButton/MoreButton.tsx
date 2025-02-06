@@ -18,7 +18,7 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
    const [movies, setMovies] = useState<MovieProps[]>([]);
    const [activePage, setActivePage] = useState<number>(+page);
    const [prevReversed, setPrevReversed] = useState<boolean>(false);
-   const [prevSorted, setPrevSorted] = useState<SortedMethod | string>('');
+   const [prevSorted, setPrevSorted] = useState<SortedMethod | string>(sorted);
 
    const moreButtonClickHandler = () => {
       if (activePage && activePage < totalPages) {
