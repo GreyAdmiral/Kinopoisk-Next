@@ -59,7 +59,7 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
                movies = getCensoredFilms(movies);
 
                if (sorted) {
-                  getSortedMovies({ method: sorted, movies: movies });
+                  movies = getSortedMovies({ method: sorted, movies: movies });
                }
 
                if (reversed) {
