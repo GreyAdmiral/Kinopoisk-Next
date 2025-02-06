@@ -1,6 +1,6 @@
 'use client';
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
 import classNames from 'classnames';
 import { SPRITE_PATH } from '@tools/costants';
 import type { FC } from 'react';
@@ -12,10 +12,10 @@ export const SortDirectButton: FC<SortDirectButtonProps> = ({ className }) => {
    const sortReversedIconID = 'sort-reversed';
    const infoLabel = '/movies/info/';
    const buttonsIconSize = 20;
-   const [isReverseDirection, setIsReverseDirection] = useState<boolean>(false);
-   const [isReversed, setIsReversed] = useState<boolean>(false);
    const path = usePathname();
    const router = useRouter();
+   const searchParams = useSearchParams();
+   const [isReverseDirection, setIsReverseDirection] = useState<boolean>(Boolean(searchParams.get('reversed')));
    const isInfo = path.includes(infoLabel);
 
    const sortDirectionButtonHandler = () => {
@@ -30,21 +30,6 @@ export const SortDirectButton: FC<SortDirectButtonProps> = ({ className }) => {
       setIsReverseDirection((state) => !state);
       router.push(`${path}${params.size ? `?${params.toString()}` : ''}`);
    };
-
-   // eslint-disable-next-line react-hooks/exhaustive-deps
-   useEffect(() => {
-      const params = new URLSearchParams(location.search);
-      const isReversed = params.has('reversed');
-
-      setIsReversed(isReversed);
-   }, []);
-
-   useEffect(() => {
-      if (isReverseDirection && !isReversed) {
-         setIsReverseDirection(false);
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, []);
 
    return (
       <button
