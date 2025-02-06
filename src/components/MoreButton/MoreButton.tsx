@@ -67,7 +67,15 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
                   movies.reverse();
                }
 
-               !isCancelled && setMovies((state) => [...state, ...movies]);
+               if (!isCancelled) {
+                  setMovies((state) => {
+                     if (activePage === 1) {
+                        return [...movies];
+                     } else {
+                        return [...state, ...movies];
+                     }
+                  });
+               }
             })
             .catch((err: Error) => {
                !isCancelled && console.error(err.message);
