@@ -1,6 +1,6 @@
 'use client';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { SPRITE_PATH } from '@tools/costants';
 import type { FC } from 'react';
@@ -14,8 +14,7 @@ export const SortDirectButton: FC<SortDirectButtonProps> = ({ className }) => {
    const buttonsIconSize = 20;
    const path = usePathname();
    const router = useRouter();
-   const searchParams = useSearchParams();
-   const [isReverseDirection, setIsReverseDirection] = useState<boolean>(Boolean(searchParams.get('reversed')));
+   const [isReverseDirection, setIsReverseDirection] = useState<boolean>(false);
    const isInfo = path.includes(infoLabel);
 
    const sortDirectionButtonHandler = () => {
@@ -30,6 +29,11 @@ export const SortDirectButton: FC<SortDirectButtonProps> = ({ className }) => {
       setIsReverseDirection((state) => !state);
       router.push(`${path}${params.size ? `?${params.toString()}` : ''}`);
    };
+
+   useEffect(() => {
+      const searchParams = new URLSearchParams(location.search);
+      setIsReverseDirection(Boolean(searchParams.get('reversed')));
+   }, []);
 
    return (
       <button
