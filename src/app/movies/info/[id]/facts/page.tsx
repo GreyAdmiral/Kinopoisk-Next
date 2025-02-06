@@ -26,20 +26,20 @@ export default async function MoviePage({ params: { id = '' } }: Props) {
    const bloopersTitle = 'Ляпы:';
    const pageTitle = 'Знаете ли вы что?..';
    const notFoundMessage = 'Фактов не найдено!';
-   const facts = await Services.getFacts(id);
-   const { items } = facts;
-   const itemsLength = items.length;
 
    if (!id) {
       notFound();
    }
 
+   const facts = await Services.getFacts(id);
+   const { items } = facts;
+   const isItems = Boolean(items.length);
    const factsArray = items.filter((fact) => fact.type === factsLabel);
    const bloopersArray = items.filter((blooper) => blooper.type === bloopersLabel);
 
    return (
       <div className={styles.facts}>
-         {!!itemsLength && (
+         {isItems && (
             <>
                <h2 className={styles.facts_title}>{pageTitle}</h2>
                <FactsList facts={factsArray} title={factsTitle} />
@@ -48,7 +48,7 @@ export default async function MoviePage({ params: { id = '' } }: Props) {
             </>
          )}
 
-         {!itemsLength && <NotFoundResult message={notFoundMessage} />}
+         {!isItems && <NotFoundResult message={notFoundMessage} />}
       </div>
    );
 }

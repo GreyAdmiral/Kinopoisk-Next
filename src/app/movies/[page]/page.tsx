@@ -35,7 +35,7 @@ export async function generateMetadata({
 export default async function MoviesPage({ params: { page = '' }, searchParams }: Props) {
    const { keyword = '', reversed = '', sorted = defaulSortedMethod } = searchParams;
    let { total, totalPages, items: movies, error } = await Services.getMovies(page, keyword);
-   const isMoviesLength = !!movies.length;
+   const isMoviesLength = Boolean(movies.length);
 
    if (!Number.isInteger(+page) || !Number.isFinite(+page)) {
       notFound();

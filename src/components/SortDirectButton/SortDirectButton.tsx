@@ -36,7 +36,7 @@ export const SortDirectButton: FC<SortDirectButtonProps> = ({ className }) => {
          type="button"
          {...(isInfo ? {} : { title: `Сортировать по ${isReverseDirection ? 'возрастанию' : 'убыванию'}` })}
          {...(isInfo ? {} : { ['aria-label']: `Сортировать по ${isReverseDirection ? 'возрастанию' : 'убыванию'}` })}
-         className={classNames([styles.search_button_sort, { [className]: !!className }])}
+         className={classNames([styles.search_button_sort, { [className]: Boolean(className) }])}
          onClick={sortDirectionButtonHandler}
          disabled={isInfo}
       >

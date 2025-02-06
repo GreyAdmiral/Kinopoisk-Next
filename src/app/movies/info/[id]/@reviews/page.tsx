@@ -14,7 +14,7 @@ export default async function ReviewsPage({ params: { id = '' } }: Props) {
    }
 
    const { total, totalPages, items = [] } = reviews;
-   const itemsLength = items.length;
+   const isItems = Boolean(items.length);
    const startContentCount = Math.ceil(total / totalPages);
    let result: Array<Review[]> = [];
 
@@ -30,7 +30,7 @@ export default async function ReviewsPage({ params: { id = '' } }: Props) {
 
    const [startItems, ...otherItems] = result;
 
-   return total && itemsLength ? (
+   return total && isItems ? (
       <section className={styles.reviews}>
          <h2 className={styles.reviews_title}>{title}</h2>
 
@@ -39,7 +39,7 @@ export default async function ReviewsPage({ params: { id = '' } }: Props) {
                <ReviewCard key={it.kinopoiskId + it.title + it.date} review={it} />
             ))}
 
-            {!!otherItems.length && <MoreReviewsButton reviews={otherItems} />}
+            {Boolean(otherItems.length) && <MoreReviewsButton reviews={otherItems} />}
          </div>
       </section>
    ) : null;

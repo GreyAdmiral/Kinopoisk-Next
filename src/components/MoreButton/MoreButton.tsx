@@ -27,11 +27,12 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
    };
 
    useEffect(() => {
-      const ifChangeReverse = prevReversed !== !!reversed;
+      const isReversed = Boolean(reversed);
+      const ifChangeReverse = prevReversed !== isReversed;
 
       if (ifChangeReverse) {
          setMovies((state) => [...state.reverse()]);
-         setPrevReversed(!!reversed);
+         setPrevReversed(isReversed);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [reversed]);
@@ -88,7 +89,7 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
             <Movie key={`${movie.kinopoiskId}-${idx}`} movie={movie} />
          ))}
 
-         {activePage && activePage < totalPages && !!movies.length && (
+         {activePage && activePage < totalPages && Boolean(movies.length) && (
             <div className={styles.more}>
                <button
                   className={styles.more_button}

@@ -46,7 +46,7 @@ export const DownloadNotification = () => {
       const savedMoviesCounter = savedMovies.length;
 
       setCheckedMoviesCounter(savedMoviesCounter);
-      setIsVisible(!!savedMoviesCounter);
+      setIsVisible(Boolean(savedMoviesCounter));
    }, [selectedMovies]);
 
    useEffect(() => {
@@ -56,7 +56,7 @@ export const DownloadNotification = () => {
          const checkedMoviesLength = checkedMovies.length;
 
          setCheckedMoviesCounter(checkedMoviesLength);
-         setIsVisible(!!checkedMoviesLength);
+         setIsVisible(Boolean(checkedMoviesLength));
       }
 
       document.body.addEventListener('FilmsChoice', filmsChoiceHandler);
@@ -67,7 +67,7 @@ export const DownloadNotification = () => {
    }, []);
 
    return isVisible ? (
-      <DialogNotification isOpenNotification={!!checkedMoviesCounter}>
+      <DialogNotification isOpenNotification={Boolean(checkedMoviesCounter)}>
          <div className={styles.notification_text}>{`Выбрано фильмов: ${checkedMoviesCounter}`}</div>
 
          <div className={styles.notification_buttons}>

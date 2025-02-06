@@ -15,7 +15,7 @@ export const SearchButton: FC<SearchButtonProps> = ({ className }) => {
          type="submit"
          form="search"
          aria-label="Поиск"
-         className={classNames([styles.search_button_submit, { [className]: !!className }])}
+         className={classNames([styles.search_button_submit, { [className]: Boolean(className) }])}
       >
          <svg width={buttonsIconSize} height={buttonsIconSize}>
             <use xlinkHref={`${SPRITE_PATH}#${searchIconID}`} />
