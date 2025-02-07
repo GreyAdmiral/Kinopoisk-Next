@@ -24,11 +24,11 @@ export const SequelCard: FC<SequelsCardProps> = ({ sequel }) => {
                src={posterUrlPreview || posterUrl || loadingImage}
                width={imageWidth}
                height={imageHeight}
-               // quality={95} // * Включить на нормальном хостнге
+               // quality={95} // * Включить на нормальном хостинге
                placeholder="blur"
                blurDataURL={BLUR_PLACEHOLDER_IMAGE}
                loading="lazy"
-               unoptimized={true} // * Выключить на нормальном хостнге
+               unoptimized={true} // * Выключить на нормальном хостинге
                alt={sequelTitle || alternateText}
                aria-hidden={true}
             />

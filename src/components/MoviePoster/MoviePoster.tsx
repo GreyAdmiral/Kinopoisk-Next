@@ -19,11 +19,11 @@ export const MoviePoster: FC<MoviePosterProps> = ({ posterUrl, title }) => {
             src={posterUrl || loadingImage}
             width={posterWidth}
             height={posterHeight}
-            quality={95}
+            // quality={95} // * Включить на нормальном хостинге
             placeholder="blur"
             blurDataURL={BLUR_PLACEHOLDER_IMAGE}
             priority={true}
-            // unoptimized={true}
+            unoptimized={true} // * Выключить на нормальном хостинге
             alt={validatedTitle || alternateText}
          />
       </div>
