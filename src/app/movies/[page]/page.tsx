@@ -8,6 +8,7 @@ import { DownloadNotification } from '@components/DownloadNotification/DownloadN
 import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
 import { NotFoundResult } from '@/components/NotFoundResult/NotFoundResult';
 import { ErrorComponent } from '@/components/ErrorComponent/ErrorComponent';
+import { LoadedComponent } from '@/components/LoadedComponent/LoadedComponent';
 import { getCensoredFilms } from '@/tools/getCensoredFilms';
 import { getSortedMovies } from '@tools/getSortedMovies';
 import { defaulSortedMethod } from '@tools/costants';
@@ -45,7 +46,7 @@ export default async function MoviesPage({ params: { page = '' }, searchParams }
       movies = getCensoredFilms(movies);
 
       if (sorted) {
-         getSortedMovies({ method: sorted, movies: movies });
+         movies = getSortedMovies({ method: sorted, movies: movies });
       }
 
       if (reversed) {
@@ -62,6 +63,8 @@ export default async function MoviesPage({ params: { page = '' }, searchParams }
                      {movies.map((movie, idx) => (
                         <Movie key={`${movie.kinopoiskId}-${idx}`} movie={movie} />
                      ))}
+
+                     <LoadedComponent />
                   </QueryShow>
 
                   <QueryShow query={'(max-width: 768.5px)'}>

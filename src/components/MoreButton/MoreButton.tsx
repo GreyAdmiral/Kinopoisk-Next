@@ -9,6 +9,7 @@ import type { FC } from 'react';
 import type { MovieProps, SortedMethod } from '@typesfolder/types';
 import type { MoreButtonProps } from './types';
 import styles from './MoreButton.module.scss';
+import { LoadedComponent } from '@/components/LoadedComponent/LoadedComponent';
 
 export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams }) => {
    const { keyword = '', reversed = '', sorted = '' } = searchParams;
@@ -46,6 +47,10 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [sorted]);
+
+   useEffect(() => {
+      document.documentElement.toggleAttribute('data-submite', isLoading);
+   }, [isLoading]);
 
    useEffect(() => {
       let isCancelled = false;
@@ -96,6 +101,8 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
          {movies.map((movie, idx) => (
             <Movie key={`${movie.kinopoiskId}-${idx}`} movie={movie} />
          ))}
+
+         <LoadedComponent />
 
          {activePage && activePage < totalPages && Boolean(movies.length) && (
             <div className={styles.more}>
