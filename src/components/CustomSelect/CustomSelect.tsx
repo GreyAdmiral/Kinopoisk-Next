@@ -18,14 +18,20 @@ export const CustomSelect: FC<CustomSelectProps> = ({
 }) => {
    const infoLabel = '/movies/info/';
    const defaultNotActivePointTitle = notActivePointTitle || '---';
-   const defaultPoint = list.length && defaultPointNumber ? list[defaultPointNumber - 1] : null;
+   const queries = useSearchParams();
+   const sorted = queries.get('sorted');
+   const activeIndex = list.findIndex(({ value }) => value === sorted);
+   const defaultPoint = ~activeIndex
+      ? list[activeIndex]
+      : list.length && defaultPointNumber
+        ? list[defaultPointNumber - 1]
+        : null;
    const hiddenTabIndex = 1;
    const listID = useId();
    const selectRef = useRef(null);
    const [activePoint, setActivePoint] = useState<CustomSelectOption | null>(defaultPoint);
    const [isOpen, setIsOpen] = useState<boolean>(false);
    const path = usePathname();
-   const queries = useSearchParams();
    const router = useRouter();
    const isInfo = path.includes(infoLabel);
 
