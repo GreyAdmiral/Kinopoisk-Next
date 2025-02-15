@@ -20,12 +20,17 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
    const [activePage, setActivePage] = useState<number>(+page);
    const [prevReversed, setPrevReversed] = useState<boolean>(Boolean(sorted));
    const [prevSorted, setPrevSorted] = useState<SortedMethod | string>(sorted);
+   const [prevKeyword, setPrevKeyword] = useState<string>(keyword);
 
    const moreButtonClickHandler = () => {
       if (activePage && activePage < totalPages) {
          setActivePage(activePage + 1);
       }
    };
+
+   useEffect(() => {
+      document.documentElement.toggleAttribute('data-submite', isLoading);
+   }, [isLoading]);
 
    useEffect(() => {
       const isReversed = Boolean(reversed);
@@ -49,14 +54,14 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
    }, [sorted]);
 
    useEffect(() => {
-      document.documentElement.toggleAttribute('data-submite', isLoading);
-   }, [isLoading]);
-
-   useEffect(() => {
       let isCancelled = false;
 
       if (activePage > 0 && activePage <= totalPages) {
          setIsLoading(true);
+
+         if (keyword !== prevKeyword) {
+            setActivePage(1);
+         }
 
          Services.getMovies(`${activePage}`, keyword)
             .then((data) => {
@@ -74,12 +79,16 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
 
                if (!isCancelled) {
                   setMovies((state) => {
-                     if (activePage === 1) {
+                     if (activePage === 1 || keyword !== prevKeyword) {
                         return [...movies];
                      } else {
                         return [...state, ...movies];
                      }
                   });
+
+                  if (keyword !== prevKeyword) {
+                     setPrevKeyword(keyword);
+                  }
                }
             })
             .catch((err: Error) => {
