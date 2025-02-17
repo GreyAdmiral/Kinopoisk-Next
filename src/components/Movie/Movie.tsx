@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { CustomCheckBox } from '@components/CustomCheckBox/CustomCheckBox';
-import { getCountriesString, getGenresString } from '@tools/getStringFromMovieField';
+import { getStringFromValue } from '@/tools/getStringFromValue';
 import { BLUR_PLACEHOLDER_IMAGE } from '@tools/costants';
 // import { getAlias } from '@tools/getAlias';
 import type { FC } from 'react';
@@ -22,11 +22,11 @@ export const Movie: FC<Props> = ({ movie }) => {
       },
       {
          title: 'Страна: ',
-         text: getCountriesString(movie.countries),
+         text: getStringFromValue(movie.countries, 'country'),
       },
       {
          title: 'Жанр: ',
-         text: getGenresString(movie.genres),
+         text: getStringFromValue(movie.genres, 'genre'),
       },
       {
          title: 'Тип: ',

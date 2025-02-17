@@ -1,5 +1,5 @@
 import type { MovieProps, SortedMethod } from '@typesfolder/types';
-import { getCountriesString, getGenresString } from './getStringFromMovieField';
+import { getStringFromValue } from './getStringFromValue';
 
 interface Arguments {
    method: SortedMethod;
@@ -23,7 +23,7 @@ export function getSortedMovies({ method, movies }: Arguments): MovieProps[] {
       case 'country':
          result = movies.sort((a, b) =>
             a.countries && b.countries
-               ? getCountriesString(a.countries).localeCompare(getCountriesString(b.countries))
+               ? getStringFromValue(a.countries, 'country').localeCompare(getStringFromValue(b.countries, 'country'))
                : getBooleanSortedNumber(a.countries, b.countries)
          );
          break;
@@ -31,7 +31,7 @@ export function getSortedMovies({ method, movies }: Arguments): MovieProps[] {
       case 'genre':
          result = movies.sort((a, b) =>
             a.genres && b.genres
-               ? getGenresString(a.genres).localeCompare(getGenresString(b.genres))
+               ? getStringFromValue(a.genres, 'genre').localeCompare(getStringFromValue(b.genres, 'genre'))
                : getBooleanSortedNumber(a.genres, b.genres)
          );
          break;
