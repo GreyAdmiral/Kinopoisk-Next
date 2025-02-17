@@ -1,6 +1,7 @@
 'use client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { QueryShow } from '@/components/QueryShow/QueryShow';
 import { useClickOutside } from '@hooks/useClickOutside';
 import type { FC, SyntheticEvent } from 'react';
 import type { CustomSelectProps } from './types';
@@ -124,21 +125,33 @@ export const CustomSelect: FC<CustomSelectProps> = ({
 
          {isOpen && (
             <div id={listID} role="listbox" className={styles.select_list}>
-               {list.map(({ id, content, value }) => (
-                  <button
-                     key={content + value}
-                     id={`${listID}-#-option-#-${id}`}
-                     type="button"
-                     role="option"
-                     aria-selected={activePoint?.id === id}
-                     data-value={value}
-                     {...(activePoint?.id === id ? { tabIndex: -1 } : {})}
-                     className={styles.select_list_item}
-                     onClick={CustomSelectItemClickHandler}
-                  >
-                     {content || ''}
-                  </button>
-               ))}
+               {list.map(({ id, content, value, breakpoint }) => {
+                  const getButton = (key?: string) => {
+                     return (
+                        <button
+                           key={key}
+                           id={`${listID}-#-option-#-${id}`}
+                           type="button"
+                           role="option"
+                           aria-selected={activePoint?.id === id}
+                           data-value={value}
+                           {...(activePoint?.id === id ? { tabIndex: -1 } : {})}
+                           className={styles.select_list_item}
+                           onClick={CustomSelectItemClickHandler}
+                        >
+                           {content || ''}
+                        </button>
+                     );
+                  };
+
+                  return breakpoint ? (
+                     <QueryShow query={breakpoint} key={content + value}>
+                        {getButton()}
+                     </QueryShow>
+                  ) : (
+                     getButton(content + value)
+                  );
+               })}
             </div>
          )}
       </div>

@@ -46,11 +46,13 @@ export const SORT_LIST: CustomSelectOption[] = [
       id: 'reiting-kp',
       content: 'По рейтингу KP',
       value: 'ratingKinopoisk',
+      breakpoint: '(min-width: 450px)',
    },
    {
       id: 'reiting-imdb',
       content: 'По рейтингу IMDB',
       value: 'ratingImdb',
+      breakpoint: '(min-width: 450px)',
    },
 ];
 

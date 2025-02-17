@@ -184,4 +184,5 @@ export interface CustomSelectOption {
    id: string;
    content: string | ReactNode;
    value: SortedMethod;
+   breakpoint?: string;
 }
