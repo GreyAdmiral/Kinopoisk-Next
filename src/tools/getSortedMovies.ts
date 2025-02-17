@@ -1,5 +1,5 @@
-import type { MovieProps, SortedMethod } from '@typesfolder/types';
 import { getStringFromValue } from './getStringFromValue';
+import type { MovieProps, SortedMethod } from '@typesfolder/types';
 
 interface Arguments {
    method: SortedMethod;
@@ -7,9 +7,12 @@ interface Arguments {
 }
 
 function getBooleanSortedNumber(a: unknown, b: unknown): number {
-   if (a && !b) {
+   const isNumberA = !Number.isNaN(Number(a));
+   const isNumberB = !Number.isNaN(Number(b));
+
+   if (isNumberA && !isNumberB) {
       return 1;
-   } else if (!a && b) {
+   } else if (!isNumberA && isNumberB) {
       return -1;
    }
 
@@ -17,11 +20,13 @@ function getBooleanSortedNumber(a: unknown, b: unknown): number {
 }
 
 export function getSortedMovies({ method, movies }: Arguments): MovieProps[] {
-   let result: MovieProps[] = [];
+   const notEmptyArray = (method: SortedMethod) => movies.filter((it) => (it as Record<string, unknown>)[method]);
+   const emptyArray = (method: SortedMethod) => movies.filter((it) => !(it as Record<string, unknown>)[method]);
+   let result: MovieProps[] = [...emptyArray(method), ...notEmptyArray(method)];
 
    switch (method) {
       case 'country':
-         result = movies.sort((a, b) =>
+         result = result.sort((a, b) =>
             a.countries && b.countries
                ? getStringFromValue(a.countries, 'country').localeCompare(getStringFromValue(b.countries, 'country'))
                : getBooleanSortedNumber(a.countries, b.countries)
@@ -29,7 +34,7 @@ export function getSortedMovies({ method, movies }: Arguments): MovieProps[] {
          break;
 
       case 'genre':
-         result = movies.sort((a, b) =>
+         result = result.sort((a, b) =>
             a.genres && b.genres
                ? getStringFromValue(a.genres, 'genre').localeCompare(getStringFromValue(b.genres, 'genre'))
                : getBooleanSortedNumber(a.genres, b.genres)
@@ -37,7 +42,7 @@ export function getSortedMovies({ method, movies }: Arguments): MovieProps[] {
          break;
 
       case 'ratingImdb':
-         result = movies.sort((a, b) =>
+         result = result.sort((a, b) =>
             a.ratingImdb && b.ratingImdb
                ? +a.ratingImdb - +b.ratingImdb
                : getBooleanSortedNumber(a.ratingImdb, b.ratingImdb)
@@ -45,7 +50,7 @@ export function getSortedMovies({ method, movies }: Arguments): MovieProps[] {
          break;
 
       case 'ratingKinopoisk':
-         result = movies.sort((a, b) =>
+         result = result.sort((a, b) =>
             a.ratingKinopoisk && b.ratingKinopoisk
                ? +a.ratingKinopoisk - +b.ratingKinopoisk
                : getBooleanSortedNumber(a.ratingKinopoisk, b.ratingKinopoisk)
@@ -53,7 +58,7 @@ export function getSortedMovies({ method, movies }: Arguments): MovieProps[] {
          break;
 
       case 'title':
-         result = movies.sort((a, b) => {
+         result = result.sort((a, b) => {
             const aTitle = a.nameRu || a.nameEn || a.nameOriginal;
             const bTitle = b.nameRu || b.nameEn || b.nameOriginal;
 
@@ -62,20 +67,19 @@ export function getSortedMovies({ method, movies }: Arguments): MovieProps[] {
          break;
 
       case 'type':
-         result = movies.sort((a, b) =>
+         result = result.sort((a, b) =>
             a.type && b.type ? a.type.localeCompare(b.type) : getBooleanSortedNumber(a.type, b.type)
          );
          break;
 
       case 'year':
-         result = movies.sort((a, b) =>
+         result = result.sort((a, b) =>
             a.year && b.year ? +a.year - +b.year : getBooleanSortedNumber(a.year, b.year)
          );
          break;
 
       default:
-         result = movies;
-         break;
+         return movies;
    }
 
    return result;
