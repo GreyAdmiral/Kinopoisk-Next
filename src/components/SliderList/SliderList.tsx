@@ -51,11 +51,12 @@ export const SliderList: FC<SliderListProps> = ({ className, children }) => {
    }, []);
 
    const wheelHandler = useCallback((e: WheelEvent) => {
-      e.preventDefault();
       e.stopPropagation();
+      const { shiftKey } = e;
       const { current: list } = listRef;
 
-      if (list) {
+      if (list && shiftKey) {
+         e.preventDefault();
          list.scrollLeft += e.deltaY;
       }
    }, []);
@@ -68,7 +69,7 @@ export const SliderList: FC<SliderListProps> = ({ className, children }) => {
          list.addEventListener('pointerup', mouseUpHandler);
          list.addEventListener('pointermove', mouseMoveHandler);
          list.addEventListener('pointerleave', mouseUpHandler);
-         list.addEventListener('wheel', wheelHandler);
+         list.addEventListener('wheel', wheelHandler, { passive: false });
       }
 
       return () => {
