@@ -1,4 +1,6 @@
 'use client';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { SPRITE_PATH } from '@tools/costants';
 import type { FC } from 'react';
 import type { BackLinkProps } from './types';
@@ -8,9 +10,19 @@ export const BackLink: FC<BackLinkProps> = ({ className }) => {
    const buttonTitle = 'Вернуться';
    const spriteID = 'back';
    const iconSize = 22;
+   const router = useRouter();
+   const [isHasHistory, setIsHasHistory] = useState<boolean>(false);
    const clickHandler = () => {
-      window.history.back();
+      router.back();
    };
+
+   useEffect(() => {
+      setIsHasHistory(window.history.length > 1);
+   }, []);
+
+   if (!isHasHistory) {
+      return null;
+   }
 
    return (
       <button className={`${styles.back}${className ? ' ' + className : ''}`} onClick={clickHandler}>
