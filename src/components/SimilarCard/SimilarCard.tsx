@@ -27,6 +27,7 @@ export const SimilarCard: FC<SimilarCardProps> = ({ similar }) => {
                loading="lazy"
                unoptimized={true} // * Выключить на нормальном хостинге
                alt={similarTitle || alternateText}
+               draggable={false}
             />
          </div>
 
