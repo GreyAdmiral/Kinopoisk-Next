@@ -112,6 +112,7 @@ export const CustomSelect: FC<CustomSelectProps> = ({
          <button
             type="button"
             role="combobox"
+            aria-haspopup="listbox"
             aria-controls={listID}
             aria-expanded={isOpen}
             aria-label={`${isOpen ? 'Закрыть' : 'Открыть'} список выбора`}
