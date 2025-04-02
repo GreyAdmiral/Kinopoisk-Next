@@ -115,7 +115,6 @@ export const CustomSelect: FC<CustomSelectProps> = ({
             aria-haspopup="listbox"
             aria-controls={listID}
             aria-expanded={isOpen}
-            aria-label={`${isOpen ? 'Закрыть' : 'Открыть'} список выбора`}
             {...(activePoint ? { 'aria-activedescendant': `${listID}-#-option-#-${activePoint.id}` } : {})}
             disabled={isInfo}
             className={styles.select_current}
