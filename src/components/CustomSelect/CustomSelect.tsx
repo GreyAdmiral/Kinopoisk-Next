@@ -22,11 +22,7 @@ export const CustomSelect: FC<CustomSelectProps> = ({
    const queries = useSearchParams();
    const sorted = queries.get('sorted');
    const activeIndex = list.findIndex(({ value }) => value === sorted);
-   const defaultPoint = ~activeIndex
-      ? list[activeIndex]
-      : list.length && defaultPointNumber
-        ? list[defaultPointNumber - 1]
-        : null;
+   const defaultPoint = ~activeIndex ? list[activeIndex] : list.length && defaultPointNumber ? list[defaultPointNumber - 1] : null;
    const hiddenTabIndex = 1;
    const listID = useId();
    const selectRef = useRef(null);

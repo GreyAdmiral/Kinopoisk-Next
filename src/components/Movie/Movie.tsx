@@ -40,9 +40,7 @@ export const Movie: FC<Props> = ({ movie }) => {
             <h2 className={styles.movie_title}>{movieTitle}</h2>
 
             <div className={styles.movie_rating}>
-               {movie.ratingKinopoisk && (
-                  <span className={styles.movie_rating_kip}>{`kp ${movie.ratingKinopoisk || 0}`}</span>
-               )}
+               {movie.ratingKinopoisk && <span className={styles.movie_rating_kip}>{`kp ${movie.ratingKinopoisk || 0}`}</span>}
                {movie.ratingImdb && <span className={styles.movie_rating_imdb}>{`imdb ${movie.ratingImdb || 0}`}</span>}
             </div>
          </div>

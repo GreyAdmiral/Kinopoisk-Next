@@ -3,3 +3,8 @@
    width: 100%;
    height: 100%;
 }
+
+@mixin square($size: fit-content) {
+   width: $size;
+   height: $size;
+}

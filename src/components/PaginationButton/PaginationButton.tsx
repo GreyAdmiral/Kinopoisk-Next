@@ -13,11 +13,7 @@ export const PaginationButton: FC<PaginationButtonProps> = ({ page, queryParams,
    };
 
    return (
-      <button
-         className={`${styles.pagination_button}${className ? ' ' + className : ''}`}
-         {...props}
-         onClick={clickHandler}
-      >
+      <button className={`${styles.pagination_button}${className ? ' ' + className : ''}`} {...props} onClick={clickHandler}>
          {children}
       </button>
    );

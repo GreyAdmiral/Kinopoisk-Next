@@ -18,9 +18,8 @@ $checkedFocusedShadow: v.$yellow;
    @include m.adaptiveValue('font-size', $checksize, $checksize * 0.8);
 
    [type='checkbox'] {
+      @include m.square(1px);
       position: absolute;
-      width: 1px;
-      height: 1px;
       opacity: 0;
       overflow: hidden;
       clip: rect(0, 0, 0, 0);
@@ -87,9 +86,8 @@ $checkedFocusedShadow: v.$yellow;
          content: '';
          align-self: flex-start;
          flex: 0 0 f.em($checksize, $checksize);
-         width: f.em($checksize, $checksize);
-         height: f.em($checksize, $checksize);
          border: 1px solid $border;
+         @include m.square(f.em($checksize, $checksize));
       }
    }
 }

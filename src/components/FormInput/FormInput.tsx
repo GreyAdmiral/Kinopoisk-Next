@@ -22,10 +22,7 @@ export const FormInput: FC<FormInputProps> = ({ name, ...props }) => {
    const keyDownHandler = (e: SyntheticEvent) => {
       e.stopPropagation();
 
-      if (
-         (e.nativeEvent as KeyboardEvent).code === 'Enter' ||
-         (e.nativeEvent as KeyboardEvent).code === 'NumpadEnter'
-      ) {
+      if ((e.nativeEvent as KeyboardEvent).code === 'Enter' || (e.nativeEvent as KeyboardEvent).code === 'NumpadEnter') {
          e.preventDefault();
          const form = (e.target as HTMLInputElement).form;
 
@@ -46,13 +43,7 @@ export const FormInput: FC<FormInputProps> = ({ name, ...props }) => {
 
    return (
       <>
-         <input
-            type="hidden"
-            name={hiddenInputID}
-            value={queryParams.toString()}
-            id={hiddenInputID}
-            aria-label={placeholderText}
-         />
+         <input type="hidden" name={hiddenInputID} value={queryParams.toString()} id={hiddenInputID} aria-label={placeholderText} />
 
          <input
             ref={inputRef}

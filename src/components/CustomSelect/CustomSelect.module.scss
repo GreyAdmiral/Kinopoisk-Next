@@ -26,8 +26,7 @@
 
       &::after {
          content: '';
-         width: 0;
-         height: 0;
+         @include m.square(0);
          position: absolute;
          right: f.rem(10px);
          top: 50%;

@@ -84,11 +84,7 @@ export const SliderList: FC<SliderListProps> = ({ className, children }) => {
    }, [mouseDownHandler, mouseMoveHandler, mouseUpHandler, wheelHandler]);
 
    return (
-      <ul
-         ref={listRef}
-         style={{ overflow: 'hidden' }}
-         className={`${styles.slider}${className ? ' ' + className : ''}`}
-      >
+      <ul ref={listRef} style={{ overflow: 'hidden' }} className={`${styles.slider}${className ? ' ' + className : ''}`}>
          {children}
       </ul>
    );

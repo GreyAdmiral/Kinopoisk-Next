@@ -9,8 +9,8 @@
 }
 
 .sequel {
-   position: relative;
    @include m.flex(null, null, column);
+   position: relative;
    min-width: 180px;
    max-width: 180px;
    border: 3px solid var(--movie-link-color, v.$orangeBlack);
@@ -32,10 +32,7 @@
    &:active {
       .sequel_title {
          span {
-            @include m.luxtext(
-               var(--movie-link-hover-color, v.$comicsRad),
-               var(--movie-link-hover-color, v.$comicsRad)
-            );
+            @include m.luxtext(var(--movie-link-hover-color, v.$comicsRad), var(--movie-link-hover-color, v.$comicsRad));
          }
 
          svg {

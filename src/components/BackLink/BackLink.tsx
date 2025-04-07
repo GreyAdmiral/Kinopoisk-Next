@@ -17,9 +17,7 @@ export const BackLink: FC<BackLinkProps> = ({ className }) => {
    };
 
    useEffect(() => {
-      setIsHasHistory(
-         window.history.length > 1 && window.history.state.__PRIVATE_NEXTJS_INTERNALS_TREE[1].children.length > 2
-      );
+      setIsHasHistory(window.history.length > 1 && window.history.state.__PRIVATE_NEXTJS_INTERNALS_TREE[1].children.length > 2);
    }, []);
 
    if (!isHasHistory) {

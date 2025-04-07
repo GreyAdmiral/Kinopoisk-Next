@@ -11,10 +11,7 @@
          @include m.adaptiveValue('font-size', 20px, 16px);
 
          &:active {
-            @include m.luxtext(
-               var(--movie-link-hover-color, v.$comicsRad),
-               var(--movie-link-hover-color, v.$comicsRad)
-            );
+            @include m.luxtext(var(--movie-link-hover-color, v.$comicsRad), var(--movie-link-hover-color, v.$comicsRad));
          }
       }
 

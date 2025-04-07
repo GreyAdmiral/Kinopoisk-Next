@@ -43,9 +43,7 @@ export function getSortedMovies({ method, movies }: Arguments): MovieProps[] {
 
       case 'ratingImdb':
          result = result.sort((a, b) =>
-            a.ratingImdb && b.ratingImdb
-               ? +a.ratingImdb - +b.ratingImdb
-               : getBooleanSortedNumber(a.ratingImdb, b.ratingImdb)
+            a.ratingImdb && b.ratingImdb ? +a.ratingImdb - +b.ratingImdb : getBooleanSortedNumber(a.ratingImdb, b.ratingImdb)
          );
          break;
 
@@ -67,15 +65,11 @@ export function getSortedMovies({ method, movies }: Arguments): MovieProps[] {
          break;
 
       case 'type':
-         result = result.sort((a, b) =>
-            a.type && b.type ? a.type.localeCompare(b.type) : getBooleanSortedNumber(a.type, b.type)
-         );
+         result = result.sort((a, b) => (a.type && b.type ? a.type.localeCompare(b.type) : getBooleanSortedNumber(a.type, b.type)));
          break;
 
       case 'year':
-         result = result.sort((a, b) =>
-            a.year && b.year ? +a.year - +b.year : getBooleanSortedNumber(a.year, b.year)
-         );
+         result = result.sort((a, b) => (a.year && b.year ? +a.year - +b.year : getBooleanSortedNumber(a.year, b.year)));
          break;
 
       default:

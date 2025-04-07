@@ -22,9 +22,6 @@
    }
 
    &:active {
-      @include ss.luxtext(
-         var(--movie-link-hover-color, vars.$comicsRad),
-         var(--movie-link-hover-color, vars.$comicsRad)
-      );
+      @include ss.luxtext(var(--movie-link-hover-color, vars.$comicsRad), var(--movie-link-hover-color, vars.$comicsRad));
    }
 }

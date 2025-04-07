@@ -39,10 +39,7 @@ export const ScrollArrows: FC<ScrollArrowsProps> = () => {
    return (
       <div className={styles.scroll_buttons}>
          <svg
-            className={classNames([
-               styles.scroll_buttons_arrow,
-               { [styles.scroll_buttons_arrow_hidden]: isUpArrowHidden },
-            ])}
+            className={classNames([styles.scroll_buttons_arrow, { [styles.scroll_buttons_arrow_hidden]: isUpArrowHidden }])}
             width={arrowSize}
             height={arrowSize}
             onClick={arrowUpHandler}
@@ -51,10 +48,7 @@ export const ScrollArrows: FC<ScrollArrowsProps> = () => {
          </svg>
 
          <svg
-            className={classNames([
-               styles.scroll_buttons_arrow,
-               { [styles.scroll_buttons_arrow_hidden]: isDownArrowHidden },
-            ])}
+            className={classNames([styles.scroll_buttons_arrow, { [styles.scroll_buttons_arrow_hidden]: isDownArrowHidden }])}
             width={arrowSize}
             height={arrowSize}
             onClick={arrowDownHandler}

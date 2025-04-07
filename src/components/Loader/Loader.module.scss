@@ -13,9 +13,8 @@
 }
 
 .spinner {
+   @include m.square(1em);
    display: inline-block;
-   width: 1em;
-   height: 1em;
    color: inherit;
    vertical-align: middle;
    pointer-events: none;

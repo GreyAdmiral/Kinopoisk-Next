@@ -16,10 +16,7 @@ import { Services } from '@services/Kinopoisk';
 import type { Metadata } from 'next';
 import type { Props } from './types';
 
-export async function generateMetadata({
-   params: { page = '' },
-   searchParams: { keyword = '' },
-}: Props): Promise<Metadata> {
+export async function generateMetadata({ params: { page = '' }, searchParams: { keyword = '' } }: Props): Promise<Metadata> {
    let title = `Неофициальный кинопоиск | Страница «${page}»`;
    let description = `Неофициальный кинопоиск - ищите фильмы по ключевым словам и наслаждайтесь просмотром совершенно бесплатно!`;
 
@@ -78,9 +75,7 @@ export default async function MoviesPage({ params: { page = '' }, searchParams }
          </MoviesCard>
 
          <QueryShow query={'(min-width: 769px)'}>
-            {isMoviesLength && (
-               <Pagination totalPages={totalPages} total={total} page={page} searchParams={searchParams} />
-            )}
+            {isMoviesLength && <Pagination totalPages={totalPages} total={total} page={page} searchParams={searchParams} />}
          </QueryShow>
 
          <DownloadNotification />

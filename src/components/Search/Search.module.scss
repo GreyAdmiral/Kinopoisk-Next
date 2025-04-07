@@ -14,6 +14,7 @@
       min-width: 40px;
       @include m.colors(var(--button-color, v.$whiteDark), var(--card-color, v.$blackLight));
       @include m.adaptiveValue('font-size', 16px, 12px);
+
       @include m.focused {
          color: var(--theme-button-color, v.$amberDark);
 
