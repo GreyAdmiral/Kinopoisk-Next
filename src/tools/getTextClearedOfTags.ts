@@ -1,7 +1,7 @@
 export function getTextClearedOfTags(text: string) {
    return text
       .replaceAll(/<[^>]*>/gi, '')
-      .replace(/&nbsp;/g, ' ')
+      .replace(/&nbsp;|&#160;/g, ' ')
       .replace(/&quot;|&#34;/g, '"')
       .replace(/&amp;|&#38;/g, '&')
       .replace(/&lt;|&#60;/g, '<')
