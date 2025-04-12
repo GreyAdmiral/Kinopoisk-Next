@@ -4,4 +4,11 @@
    width: fit-content;
    max-width: 100%;
    overflow: hidden !important;
+   cursor: grab;
+
+   img,
+   svg {
+      user-select: none;
+      touch-action: none !important;
+   }
 }

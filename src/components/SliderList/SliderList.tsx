@@ -5,7 +5,7 @@ import type { SliderListProps, State } from './types';
 import styles from './SliderList.module.scss';
 
 export const SliderList: FC<SliderListProps> = ({ className, children }) => {
-   const listRef = useRef<HTMLUListElement>(null);
+   const listRef = useRef<HTMLDivElement>(null);
    const stateRef = useRef<State>({
       isDragging: false,
       startX: null,
@@ -65,6 +65,21 @@ export const SliderList: FC<SliderListProps> = ({ className, children }) => {
       const { current: list } = listRef;
 
       if (list) {
+         const images: NodeListOf<HTMLImageElement> = list.querySelectorAll(':scope img');
+
+         if (images.length) {
+            images.forEach((image) => {
+               image.style.userSelect = 'none';
+               image.style.touchAction = 'none';
+            });
+         }
+      }
+   }, []);
+
+   useEffect(() => {
+      const { current: list } = listRef;
+
+      if (list) {
          list.addEventListener('pointerdown', mouseDownHandler);
          list.addEventListener('pointerup', mouseUpHandler);
          list.addEventListener('pointermove', mouseMoveHandler);
@@ -84,8 +99,12 @@ export const SliderList: FC<SliderListProps> = ({ className, children }) => {
    }, [mouseDownHandler, mouseMoveHandler, mouseUpHandler, wheelHandler]);
 
    return (
-      <ul ref={listRef} style={{ overflow: 'hidden' }} className={`${styles.slider}${className ? ' ' + className : ''}`}>
+      <div
+         ref={listRef}
+         style={{ overflow: 'hidden', cursor: 'grab' }}
+         className={`${styles.slider}${className ? ' ' + className : ''}`}
+      >
          {children}
-      </ul>
+      </div>
    );
 };
