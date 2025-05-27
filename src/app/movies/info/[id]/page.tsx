@@ -20,7 +20,7 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
    }
 
    return {
-      title: `Неофициальный кинопоиск | «${title || unknownTitle}»`,
+      title: `${title || unknownTitle} | Неофициальный кинопоиск`,
       description: description || shortDescription || defaultDescription,
    };
 }
