@@ -7,7 +7,18 @@ import { BLUR_PLACEHOLDER_IMAGE } from '@tools/costants';
 import type { FC } from 'react';
 import type { Props } from './types';
 import styles from './Movie.module.scss';
+import videotypes from '@data/videotypes.json';
 import loadingImage from '@assets/images/loading.svg?url';
+
+const videoTypesTranslator = new Proxy(videotypes, {
+   get(target: Record<string, string>, prop: string) {
+      if (prop in target) {
+         return target[prop];
+      } else {
+         return prop ?? '';
+      }
+   },
+});
 
 export const Movie: FC<Props> = ({ movie }) => {
    const alternateText = 'Постер фильма';
@@ -30,7 +41,7 @@ export const Movie: FC<Props> = ({ movie }) => {
       },
       {
          title: 'Тип: ',
-         text: movie.type,
+         text: videoTypesTranslator[movie.type],
       },
    ];
 

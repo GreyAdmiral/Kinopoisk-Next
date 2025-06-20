@@ -46,6 +46,7 @@
          "@services/*": ["./src/services/*"],
          "@hooks/*": ["./src/hooks/*"],
          "@tools/*": ["./src/tools/*"],
+         "@data/*": ["./src/data/*"],
          "@assets/*": ["./src/assets/*"],
          "@interfaces/*": ["./src/interfaces/*"],
          "@typesfolder/*": ["./src/types/*"]
