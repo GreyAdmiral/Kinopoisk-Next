@@ -52,6 +52,7 @@
       background-color: var(--card-bg-transparent, v.$yellowClackTransparent);
       text-transform: uppercase;
       font-weight: bold;
+      text-wrap: balance;
       opacity: 0;
       transition:
          color 0.4s ease 0s,

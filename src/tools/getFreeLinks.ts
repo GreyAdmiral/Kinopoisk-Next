@@ -1,13 +1,9 @@
 export function getFreeLinks(id: string) {
-   const freeLink = `https://flcksbr.top/film/${id}/`;
-   const freeLinkTwo = `https://n1.kinosave.buzz/film/${id}/`;
-   const mirrorLink = `https://vavada-pro.com/#${id}`;
-   const mirrorLinkTwo = `https://www.kinopoisk.cx/film/${id}/`;
+   const mirrorLinkOne = `https://api.embess.ws/embed/kp/${id}/`;
+   const mirrorLinkTwo = `https://iframe.cloud/iframe/${id}/`;
+   const mirrorLinkThree = `https://api.luxembd.ws/embed/${id}/`;
+   const intermediateMirrorOne = `https://ww1.frkp.cc/film/${id}/`;
+   const intermediateMirrorTwo = `https://flcksbr.top/film/${id}/`;
 
-   return {
-      freeLink,
-      freeLinkTwo,
-      mirrorLink,
-      mirrorLinkTwo,
-   };
+   return { mirrorLinkOne, mirrorLinkTwo, mirrorLinkThree, intermediateMirrorOne, intermediateMirrorTwo };
 }

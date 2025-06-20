@@ -102,8 +102,11 @@ export type SelectedMovie = {
    countries: string;
    genres: string;
    link: string;
-   freeLink: string;
-   mirrorLink: string;
+   mirrorLinkOne: string;
+   mirrorLinkTwo: string;
+   mirrorLinkThree: string;
+   intermediateMirrorOne: string;
+   intermediateMirrorTwo: string;
 };
 
 export type SavedMovies = Array<[string, SelectedMovie]>;
