@@ -22,10 +22,13 @@
    &_frame {
       max-width: 100%;
       height: auto;
-      min-width: 255px;
+      min-width: fit-content;
       min-height: 225px;
-      aspect-ratio: 1120/610;
       object-fit: cover;
+
+      @include m.oversmalltablet {
+         aspect-ratio: 1120/610;
+      }
    }
 
    &_back {
