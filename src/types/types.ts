@@ -102,9 +102,9 @@ export type SelectedMovie = {
    countries: string;
    genres: string;
    link: string;
-   mirrorLinkOne: string;
-   mirrorLinkTwo: string;
-   mirrorLinkThree: string;
+   linkOne: string;
+   linkTwo: string;
+   linkThree: string;
    intermediateMirrorOne: string;
    intermediateMirrorTwo: string;
 };

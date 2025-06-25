@@ -1,4 +1,5 @@
 import { getFreeLinks } from './getFreeLinks';
+import { getFreeLinksForPlayer } from './getFreeLinksForPlayer';
 import type { MovieProps, SelectedMovie } from '@typesfolder/types';
 
 export function getSelectedInfo(movie: MovieProps): SelectedMovie {
@@ -13,6 +14,7 @@ export function getSelectedInfo(movie: MovieProps): SelectedMovie {
       countries: movie.countries.map((country) => country.country).join(separator),
       genres: movie.genres.map((genre) => genre.genre).join(separator),
       link: `${window.location.origin}/movies/info/${movie.kinopoiskId}`,
+      ...getFreeLinksForPlayer(movie.kinopoiskId),
       ...getFreeLinks(movie.kinopoiskId),
    };
 }
