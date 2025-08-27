@@ -26,6 +26,7 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
 }
 
 export default async function MoviePage({ params: { id = '' } }: Props) {
+   const schemeTypeAttr = 'https://schema.org/Movie';
    const movie = await Services.getMovie(id);
 
    if (!id || !movie) {
@@ -37,7 +38,7 @@ export default async function MoviePage({ params: { id = '' } }: Props) {
 
    return (
       <>
-         <div className={styles.movie}>
+         <div className={styles.movie} itemScope itemType={schemeTypeAttr}>
             <div className={styles.movie_left_sidebar}>
                <MoviePoster posterUrl={posterUrl || posterUrlPreview} title={title} />
             </div>

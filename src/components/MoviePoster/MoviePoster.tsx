@@ -25,6 +25,7 @@ export const MoviePoster: FC<MoviePosterProps> = ({ posterUrl, title }) => {
             priority={true}
             unoptimized={true} // * Выключить на нормальном хостинге
             alt={validatedTitle || alternateText}
+            itemProp="image"
          />
       </div>
    );

@@ -17,7 +17,7 @@ export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl }) => {
    }));
 
    return webUrl ? (
-      <article className={styles.movie_content_links}>
+      <div className={styles.movie_content_links}>
          <Link href={factsLinkRoute} className={styles.movie_content_link}>
             {factsLinkTitle}
          </Link>
@@ -27,18 +27,18 @@ export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl }) => {
          </a>
 
          {linksForPlayer.map((value, idx) => (
-            <Link key={value} href={`/movies/info/${id}/player/${idx + 1}`} className={styles.movie_content_link}>
+            <Link key={value} href={`/movies/info/${id}/player/${idx + 1}`} className={styles.movie_content_link} itemProp="url">
                {`Смотреть бесплатно (плеер ${idx + 1})`}
             </Link>
          ))}
 
          {links.map((it) => (
-            <a key={it.link} className={styles.movie_content_link} href={it.link} target="_blank">
+            <a key={it.link} className={styles.movie_content_link} href={it.link} target="_blank" itemProp="url">
                {it.title}
             </a>
          ))}
 
          <BackLink className={styles.movie_content_back} />
-      </article>
+      </div>
    ) : null;
 };

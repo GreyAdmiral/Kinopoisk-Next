@@ -1,4 +1,5 @@
 import { isExists } from '@tools/isExist';
+import { brandTitle } from '@tools/costants';
 import type { FC } from 'react';
 import type { MovieInfoProps } from './types';
 import styles from './MovieInfo.module.scss';
@@ -30,10 +31,12 @@ export const MovieInfo: FC<MovieInfoProps> = ({ movie }) => {
       {
          title: 'Страна:',
          text: countries.map((country) => country.country).join(separator),
+         schemeProp: 'locationCreated',
       },
       {
          title: 'Жанр:',
          text: genres.map((genre) => genre.genre).join(separator),
+         schemeProp: 'genre',
       },
       {
          title: 'Слоган:',
@@ -46,17 +49,24 @@ export const MovieInfo: FC<MovieInfoProps> = ({ movie }) => {
       {
          title: 'Описание:',
          text: description,
+         schemeProp: 'description',
       },
       {
          title: 'Возраст:',
          text: ratingAgeLimits ? ratingAgeLimits.toString().replace(/age(\d+)/i, '$1+') : '',
+         schemeProp: 'contentRating',
       },
    ];
 
    return movie ? (
       <article className={styles.movie_info}>
+         <meta itemProp="brand" content={brandTitle}></meta>
+         <meta itemProp="isAccessibleForFree" content="true"></meta>
+
          <div className={styles.movie_info_wrapper}>
-            <h2 className={styles.movie_info_title}>{validatedTitle}</h2>
+            <h2 className={styles.movie_info_title} itemProp="name">
+               {validatedTitle}
+            </h2>
 
             <div className={styles.movie_info_rating}>
                {ratingKinopoisk && <span className={styles.movie_info_rating_kip}>{`kp ${ratingKinopoisk || 0}`}</span>}
@@ -68,7 +78,7 @@ export const MovieInfo: FC<MovieInfoProps> = ({ movie }) => {
             it.text ? (
                <div key={it.title} className={styles.movie_info_text_row}>
                   <span className={styles.movie_info_subtitle}>{it.title}</span>
-                  {it.text}
+                  <span {...(it.schemeProp ? { itemProp: it.schemeProp } : {})}>{it.text}</span>
                </div>
             ) : null
          )}

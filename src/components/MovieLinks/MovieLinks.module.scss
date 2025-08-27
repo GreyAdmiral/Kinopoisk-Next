@@ -8,7 +8,7 @@
       &_link {
          color: var(--footer-link-color, v.$amberDark);
          @extend %link-effects;
-         @include m.adaptiveValue('font-size', 20px, 16px);
+         @include m.adaptiveValue('font-size', 20px, 15px);
 
          &:active {
             @include m.luxtext(var(--movie-link-hover-color, v.$comicsRad), var(--movie-link-hover-color, v.$comicsRad));

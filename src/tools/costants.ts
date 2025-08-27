@@ -1,5 +1,7 @@
 import type { CustomSelectOption, SortedMethod } from '@typesfolder/types';
 
+export const brandTitle = 'Неофициальный Кинопоиск';
+
 export const AppRoutes = {
    HOME_ROUTE: '/',
    SEARCH_ROUTE: '/search',

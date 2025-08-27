@@ -65,13 +65,15 @@
             @include m.adaptiveValue('font-size', 18px, 14px);
 
             & span {
-               font-weight: bold;
-               line-height: 1.3;
-               color: var(--button-color, v.$whiteDark);
-               @include m.adaptiveValue('font-size', 19px, 15px);
+               &:first-of-type {
+                  font-weight: bold;
+                  line-height: 1.3;
+                  color: var(--button-color, v.$whiteDark);
+                  @include m.adaptiveValue('font-size', 19px, 15px);
 
-               @include m.smalltablet {
-                  word-wrap: break-word;
+                  @include m.smalltablet {
+                     word-wrap: break-word;
+                  }
                }
             }
          }
