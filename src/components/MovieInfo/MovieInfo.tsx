@@ -6,6 +6,7 @@ import styles from './MovieInfo.module.scss';
 
 export const MovieInfo: FC<MovieInfoProps> = ({ movie }) => {
    const separator = ' / ';
+   const noDescriptionText = 'Описание отсутствует';
    const notFoundTitle = 'Не найдено';
    const {
       nameRu,
@@ -62,6 +63,7 @@ export const MovieInfo: FC<MovieInfoProps> = ({ movie }) => {
       <article className={styles.movie_info}>
          <meta itemProp="brand" content={brandTitle}></meta>
          <meta itemProp="isAccessibleForFree" content="true"></meta>
+         <meta itemProp="description" content={description || shortDescription || noDescriptionText}></meta>
 
          <div className={styles.movie_info_wrapper}>
             <h2 className={styles.movie_info_title} itemProp="name">
