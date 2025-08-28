@@ -1,11 +1,13 @@
 import { BackLink } from '@components/BackLink/BackLink';
 import { getFreeLinksForPlayer } from '@tools/getFreeLinksForPlayer';
 import { Services } from '@services/Kinopoisk';
+import { brandTitle } from '@tools/costants';
 import type { Metadata } from 'next';
 import type { Props } from '../../types';
 import styles from './page.module.scss';
 
 export async function generateMetadata({ params: { id = '' } }: Props): Promise<Metadata> {
+   const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/info/${id}`;
    const unknownTitle = 'Неизвестный фильм';
    const movie = await Services.getMovie(id);
    const { nameRu, nameEn, nameOriginal, description, shortDescription } = movie || {};
@@ -19,6 +21,12 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
    return {
       title: `Смотреть бесплатно ${title || unknownTitle} | Неофициальный кинопоиск`,
       description: description || shortDescription || defaultDescription,
+      openGraph: {
+         siteName: brandTitle,
+         type: 'website',
+         locale: 'ru',
+         url: pageUrl,
+      },
    };
 }
 

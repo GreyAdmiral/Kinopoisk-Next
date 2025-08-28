@@ -11,12 +11,14 @@ import { ErrorComponent } from '@/components/ErrorComponent/ErrorComponent';
 import { LoadedComponent } from '@/components/LoadedComponent/LoadedComponent';
 import { getCensoredFilms } from '@/tools/getCensoredFilms';
 import { getSortedMovies } from '@tools/getSortedMovies';
-import { defaulSortedMethod } from '@tools/costants';
+import { brandTitle, defaulSortedMethod } from '@tools/costants';
 import { Services } from '@services/Kinopoisk';
 import type { Metadata } from 'next';
 import type { Props } from './types';
 
 export async function generateMetadata({ params: { page = '' }, searchParams: { keyword = '' } }: Props): Promise<Metadata> {
+   const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/${page}`;
+   const hotScreenShot = `https://mini.s-shot.ru/?${pageUrl}`;
    let title = `Неофициальный кинопоиск | Страница «${page}»`;
    let description = `Неофициальный кинопоиск - ищите фильмы по ключевым словам и наслаждайтесь просмотром совершенно бесплатно!`;
 
@@ -27,6 +29,17 @@ export async function generateMetadata({ params: { page = '' }, searchParams: { 
    return {
       title: title,
       description: description,
+      openGraph: {
+         images: [
+            {
+               url: `${hotScreenShot}`,
+            },
+         ],
+         siteName: brandTitle,
+         type: 'website',
+         locale: 'ru',
+         url: pageUrl,
+      },
    };
 }
 

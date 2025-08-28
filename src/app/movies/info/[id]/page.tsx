@@ -4,14 +4,17 @@ import { MovieLinks } from '@/components/MovieLinks/MovieLinks';
 import { MoviePoster } from '@components/MoviePoster/MoviePoster';
 import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
 import { Services } from '@services/Kinopoisk';
+import { brandTitle } from '@tools/costants';
 import type { Metadata } from 'next';
 import type { Props } from './types';
 import styles from './page.module.scss';
 
 export async function generateMetadata({ params: { id = '' } }: Props): Promise<Metadata> {
+   const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/info/${id}`;
+   const hotScreenShot = `https://mini.s-shot.ru/?${pageUrl}`;
    const unknownTitle = 'Неизвестный фильм';
    const movie = await Services.getMovie(id);
-   const { nameRu, nameEn, nameOriginal, description, shortDescription } = movie || {};
+   const { nameRu, nameEn, nameOriginal, description, shortDescription, posterUrl, posterUrlPreview } = movie || {};
    const title = nameRu || nameEn || nameOriginal;
    let defaultDescription = `Неофициальный кинопоиск.`;
 
@@ -22,6 +25,17 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
    return {
       title: `${title || unknownTitle} | Неофициальный кинопоиск`,
       description: description || shortDescription || defaultDescription,
+      openGraph: {
+         images: [
+            {
+               url: `${posterUrl || posterUrlPreview || hotScreenShot}`,
+            },
+         ],
+         siteName: brandTitle,
+         type: 'website',
+         locale: 'ru',
+         url: pageUrl,
+      },
    };
 }
 
