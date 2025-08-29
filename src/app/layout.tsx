@@ -27,6 +27,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
             <link rel="icon" href="./favicon.ico" sizes="any" />
             <link rel="icon" href="./icon.png" type="image/png" sizes="32x32" />
             <link rel="apple-touch-icon" href="./apple-icon.png" type="image/png" sizes="32x32" />
+            <meta name="google-site-verification" content="VdP2Dd5WH3Hq5s7VyyfX19eu0T2OEOE-onUIAzCwXzs" />
          </head>
 
          <body>
