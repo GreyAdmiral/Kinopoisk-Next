@@ -35,6 +35,12 @@
    }
 }
 
+@mixin minimobile {
+   @media (max-width: (374.5px)) {
+      @content;
+   }
+}
+
 @mixin oversmalltablet {
    @media (min-width: (769px)) {
       @content;
