@@ -3,7 +3,7 @@ import { FactsList } from '@components/FactsList/FactsList';
 import { BackLink } from '@components/BackLink/BackLink';
 import { NotFoundResult } from '@/components/NotFoundResult/NotFoundResult';
 import { Services } from '@services/Kinopoisk';
-import { brandTitle } from '@/tools/costants';
+import { brandTitle } from '@tools/costants';
 import type { Metadata } from 'next';
 import type { Props } from '../types';
 import styles from './page.module.scss';
@@ -12,15 +12,17 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
    const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/info/${id}`;
    const unknownTitle = 'Неизвестный фильм';
    const facts = await Services.getMovie(id);
-   const { nameRu, nameEn, nameOriginal } = facts || {};
-   const title = nameRu || nameEn || nameOriginal;
+   const { nameRu, nameEn, nameOriginal, year } = facts || {};
+   const title = nameRu || nameEn || nameOriginal || unknownTitle;
+   const yearString = year ? ` (${year})` : '';
 
    return {
-      title: `Факты о фильме «${title || unknownTitle}» | Неофициальный кинопоиск`,
-      description: `Самые интересные факты и «ляпы» со съемок фильма «${title || unknownTitle}».`,
+      title: `${title}${yearString} факты о фильме`,
+      description: `Самые интересные факты и «ляпы» со съемок фильма «${title}».`,
       openGraph: {
          siteName: brandTitle,
-         type: 'website',
+         title: `${title}${yearString} факты о фильме`,
+         type: 'video.movie',
          locale: 'ru',
          url: pageUrl,
       },

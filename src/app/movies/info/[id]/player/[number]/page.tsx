@@ -10,20 +10,18 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
    const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/info/${id}`;
    const unknownTitle = 'Неизвестный фильм';
    const movie = await Services.getMovie(id);
-   const { nameRu, nameEn, nameOriginal, description, shortDescription } = movie || {};
-   const title = nameRu || nameEn || nameOriginal;
-   let defaultDescription = `Неофициальный кинопоиск.`;
-
-   if (title) {
-      defaultDescription += ` Смотреть бесплатно «${title}»`;
-   }
+   const { nameRu, nameEn, nameOriginal, description, shortDescription, year } = movie || {};
+   const title = nameRu || nameEn || nameOriginal || unknownTitle;
+   const yearString = year ? ` (${year})` : '';
+   const defaultDescription = `Смотреть онлайн ${title}${yearString}`;
 
    return {
-      title: `Смотреть бесплатно ${title || unknownTitle} | Неофициальный кинопоиск`,
+      title: `${title}${yearString} смотреть онлайн бесплатно`,
       description: description || shortDescription || defaultDescription,
       openGraph: {
          siteName: brandTitle,
-         type: 'website',
+         title: `${title}${yearString} смотреть онлайн бесплатно на «${brandTitle}»`,
+         type: 'video.movie',
          locale: 'ru',
          url: pageUrl,
       },

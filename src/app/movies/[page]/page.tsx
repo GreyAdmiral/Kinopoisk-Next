@@ -19,12 +19,8 @@ import type { Props } from './types';
 export async function generateMetadata({ params: { page = '' }, searchParams: { keyword = '' } }: Props): Promise<Metadata> {
    const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/${page}`;
    const hotScreenShot = `https://mini.s-shot.ru/?${pageUrl}`;
-   let title = `Неофициальный кинопоиск | Страница «${page}»`;
-   let description = `Неофициальный кинопоиск - ищите фильмы по ключевым словам и наслаждайтесь просмотром совершенно бесплатно!`;
-
-   if (keyword) {
-      title += ` | Поиск по словам «${decodeURIComponent(keyword)}»`;
-   }
+   const description = `${brandTitle} - ищите фильмы по ключевым словам и наслаждайтесь просмотром совершенно бесплатно!`;
+   const title = keyword ? `${brandTitle} | Поиск по словам «${decodeURIComponent(keyword)}»` : brandTitle;
 
    return {
       title: title,
@@ -36,6 +32,7 @@ export async function generateMetadata({ params: { page = '' }, searchParams: { 
             },
          ],
          siteName: brandTitle,
+         title: title,
          type: 'website',
          locale: 'ru',
          url: pageUrl,

@@ -14,16 +14,13 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
    const hotScreenShot = `https://mini.s-shot.ru/?${pageUrl}`;
    const unknownTitle = 'Неизвестный фильм';
    const movie = await Services.getMovie(id);
-   const { nameRu, nameEn, nameOriginal, description, shortDescription, posterUrl, posterUrlPreview } = movie || {};
-   const title = nameRu || nameEn || nameOriginal;
-   let defaultDescription = `Неофициальный кинопоиск.`;
-
-   if (title) {
-      defaultDescription += ` Страница «${title}»`;
-   }
+   const { nameRu, nameEn, nameOriginal, description, shortDescription, year, posterUrl, posterUrlPreview } = movie || {};
+   const title = nameRu || nameEn || nameOriginal || unknownTitle;
+   const yearString = year ? ` (${year})` : '';
+   const defaultDescription = `Смотреть онлайн ${title}${yearString}`;
 
    return {
-      title: `${title || unknownTitle} | Неофициальный кинопоиск`,
+      title: `${title}${yearString} смотреть онлайн бесплатно`,
       description: description || shortDescription || defaultDescription,
       openGraph: {
          images: [
@@ -32,7 +29,8 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
             },
          ],
          siteName: brandTitle,
-         type: 'website',
+         title: `${title}${yearString} смотреть онлайн бесплатно на «${brandTitle}»`,
+         type: 'video.movie',
          locale: 'ru',
          url: pageUrl,
       },
