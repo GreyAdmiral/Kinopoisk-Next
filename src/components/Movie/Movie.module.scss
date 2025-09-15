@@ -10,6 +10,10 @@
       pointer-events: none;
    }
 
+   &:not(:last-child) {
+      border-bottom: 1px inset var(--card-bg, v.$blackUltra);
+   }
+
    &_header {
       @extend %centerflex;
       justify-content: space-between;
@@ -141,9 +145,5 @@
    &_link {
       @include m.movielink();
       width: fit-content;
-   }
-
-   &:not(:last-child) {
-      border-bottom: 1px inset var(--card-bg, v.$blackUltra);
    }
 }
