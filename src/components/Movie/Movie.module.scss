@@ -5,13 +5,13 @@
    padding: 0.357em 0 0.714em 0;
    transition: filter 0.4s ease 0s;
 
+   &:not(:last-child) {
+      border-bottom: 1px inset var(--card-bg, v.$blackUltra);
+   }
+
    [data-submite] & {
       filter: grayscale(1);
       pointer-events: none;
-   }
-
-   &:not(:last-child) {
-      border-bottom: 1px inset var(--card-bg, v.$blackUltra);
    }
 
    &_header {

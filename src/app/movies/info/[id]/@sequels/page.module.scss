@@ -12,22 +12,22 @@
          padding-right: f.rem(5px);
       }
 
-      :not([class$='facts']):not([class$='player']) + & {
+      :not([class*='facts']):not([class*='player']) + & {
          @include m.oversmalltablet {
             max-width: calc(100% - 314px);
          }
       }
 
-      [class$='facts'] + &,
-      [class$='player'] + & {
-         [class$='sequels_and_prequels_title'] {
+      [class*='facts'] + &,
+      [class*='player'] + & {
+         [class*='sequels_and_prequels_title'] {
             color: var(--button-color, v.$whiteDark);
             text-transform: none;
             text-align: center;
             padding-top: f.rem(30px);
          }
 
-         [class$='sequels_and_prequels_body'] {
+         [class*='sequels_and_prequels_body'] {
             justify-content: center;
          }
       }
