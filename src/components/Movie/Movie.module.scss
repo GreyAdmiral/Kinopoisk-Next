@@ -57,6 +57,10 @@
       min-width: max-content;
       @include m.adaptiveValue('font-size', 12px, 8px);
 
+      @media all and (max-width: 450px) {
+         display: none;
+      }
+
       span {
          text-transform: uppercase;
       }
@@ -75,10 +79,6 @@
          padding: 0.417em 0.833em;
          text-align: center;
          min-width: max-content;
-      }
-
-      @media all and (max-width: 450px) {
-         display: none;
       }
    }
 
@@ -143,7 +143,7 @@
    }
 
    &_link {
-      @include m.movielink();
       width: fit-content;
+      @include m.movielink();
    }
 }

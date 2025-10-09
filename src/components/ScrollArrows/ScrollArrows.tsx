@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { useScrollY } from '@hooks/useScrollY';
 import { getDocumentHeight } from '@tools/getDocumentSizes';
 import { smoothScroll } from '@tools/smoothScroll';
@@ -39,7 +39,7 @@ export const ScrollArrows: FC<ScrollArrowsProps> = () => {
    return (
       <div className={styles.scroll_buttons}>
          <svg
-            className={classNames([styles.scroll_buttons_arrow, { [styles.scroll_buttons_arrow_hidden]: isUpArrowHidden }])}
+            className={clsx([styles.scroll_buttons_arrow, { [styles.scroll_buttons_arrow_hidden]: isUpArrowHidden }])}
             width={arrowSize}
             height={arrowSize}
             onClick={arrowUpHandler}
@@ -48,7 +48,7 @@ export const ScrollArrows: FC<ScrollArrowsProps> = () => {
          </svg>
 
          <svg
-            className={classNames([styles.scroll_buttons_arrow, { [styles.scroll_buttons_arrow_hidden]: isDownArrowHidden }])}
+            className={clsx([styles.scroll_buttons_arrow, { [styles.scroll_buttons_arrow_hidden]: isDownArrowHidden }])}
             width={arrowSize}
             height={arrowSize}
             onClick={arrowDownHandler}

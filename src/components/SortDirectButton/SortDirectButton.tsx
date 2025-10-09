@@ -1,7 +1,7 @@
 'use client';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { SPRITE_PATH } from '@tools/costants';
 import type { FC } from 'react';
 import type { SortDirectButtonProps } from './types';
@@ -40,7 +40,7 @@ export const SortDirectButton: FC<SortDirectButtonProps> = ({ className }) => {
          type="button"
          {...(isInfo ? {} : { title: `Сортировать по ${isReverseDirection ? 'возрастанию' : 'убыванию'}` })}
          {...(isInfo ? {} : { ['aria-label']: `Сортировать по ${isReverseDirection ? 'возрастанию' : 'убыванию'}` })}
-         className={classNames([styles.search_button_sort, { [className]: Boolean(className) }])}
+         className={clsx([styles.search_button_sort, { [className]: Boolean(className) }])}
          onClick={sortDirectionButtonHandler}
          disabled={isInfo}
       >

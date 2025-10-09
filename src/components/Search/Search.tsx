@@ -1,6 +1,6 @@
 'use client';
 import { FormEventHandler, Suspense, useEffect, useState } from 'react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { Loader } from '@components/Loader/Loader';
 import { FormInput } from '@components/FormInput/FormInput';
 import { SortDirectButton } from '@components/SortDirectButton/SortDirectButton';
@@ -52,7 +52,7 @@ export const Search = () => {
             type="submit"
             form="search"
             aria-label="Поиск"
-            className={classNames([styles.search_button_submit, styles.search_button])}
+            className={clsx([styles.search_button_submit, styles.search_button])}
             disabled={isSubmite || undefined}
          >
             <svg width={buttonsIconSize} height={buttonsIconSize}>
