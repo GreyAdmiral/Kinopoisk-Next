@@ -28,6 +28,7 @@ export const MovieInfo: FC<MovieInfoProps> = ({ movie }) => {
       {
          title: 'Год производства:',
          text: year,
+         schemeProp: 'releaseDate',
       },
       {
          title: 'Страна:',
@@ -42,6 +43,7 @@ export const MovieInfo: FC<MovieInfoProps> = ({ movie }) => {
       {
          title: 'Слоган:',
          text: slogan,
+         schemeProp: 'slogan',
       },
       {
          title: 'Аннотация:',
