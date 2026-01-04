@@ -189,3 +189,20 @@ export interface CustomSelectOption {
    value: SortedMethod;
    breakpoint?: string;
 }
+
+export interface Frames {
+   data: Frame[];
+}
+
+export interface Frame {
+   type: string;
+   iframeUrl: string;
+   translations: Translation[];
+}
+
+interface Translation {
+   id: string;
+   name: string;
+   quality: string;
+   iframeUrl: string;
+}

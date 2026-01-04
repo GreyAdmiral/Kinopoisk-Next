@@ -1,11 +1,12 @@
 import { getErrorInfo } from '@tools/getErrorInfo';
-import type { FetchOptions, MoviesProps, MovieDescription, Facts, Similars, Sequel, Reviews } from '@typesfolder/types';
+import type { FetchOptions, MoviesProps, MovieDescription, Facts, Similars, Sequel, Reviews, Frames } from '@typesfolder/types';
 
 let instance = null;
 
 class Kinopoisk {
    private baseUrl: string = process.env.NEXT_PUBLIC_API_URL!;
    private baseUrlOldAPI: string = process.env.NEXT_PUBLIC_OLD_API_URL!;
+   private baseUrlFramesAPI: string = process.env.NEXT_PUBLIC_PLAYERS_API_URL!;
    private keyCounter: number = 0;
    #keys: string[] = process.env.NEXT_PUBLIC_API_KEYS!.split('|');
 
@@ -162,6 +163,28 @@ class Kinopoisk {
       }
 
       return reviews;
+   }
+
+   async getFrames(id: string): Promise<Frames> {
+      const url = `${this.baseUrlFramesAPI}?kinopoisk=${id}`;
+      const defaultErrorMessage = 'Ошибка получения фреймов!';
+      let frames = null;
+
+      try {
+         const res = await fetch(url);
+
+         if (!res.ok) {
+            const req = await res.json();
+            throw new Error((req as Error).message || defaultErrorMessage);
+         }
+
+         frames = await res.json();
+      } catch (err) {
+         // console.error((err as Error).message);
+         return { data: [] };
+      }
+
+      return frames;
    }
 }
 

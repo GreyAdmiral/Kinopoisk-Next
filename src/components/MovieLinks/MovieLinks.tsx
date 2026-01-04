@@ -1,16 +1,18 @@
 import Link from 'next/link';
 import { BackLink } from '@components/BackLink/BackLink';
+import { URLToken } from '@services/URLToken';
 import { getFreeLinks } from '@tools/getFreeLinks';
 import { getFreeLinksForPlayer } from '@tools/getFreeLinksForPlayer';
 import type { FC } from 'react';
 import type { MovieLinksProps } from './types';
 import styles from './MovieLinks.module.scss';
 
-export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl }) => {
+export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl, frames = [] }) => {
    const factsLinkTitle = 'Интересные факты';
    const officialLinkTitle = 'Подробнее на «Кинопоиск»';
    const factsLinkRoute = `/movies/info/${id}/facts`;
-   const linksForPlayer = Object.values(getFreeLinksForPlayer(id));
+   const linksValues = Object.values(getFreeLinksForPlayer(id));
+   const linksForPlayer = [linksValues[0], ...frames, ...linksValues.slice(1)];
    const links = Object.values(getFreeLinks(id)).map((value, idx) => ({
       title: `Смотреть бесплатно (зеркало ${idx + 1})`,
       link: value,
@@ -27,7 +29,12 @@ export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl }) => {
          </a>
 
          {linksForPlayer.map((value, idx) => (
-            <Link key={value} href={`/movies/info/${id}/player/${idx + 1}`} className={styles.movie_content_link} itemProp="url">
+            <Link
+               key={value}
+               href={`/movies/info/${id}/player?token=${URLToken.encrypt(value)}`}
+               className={styles.movie_content_link}
+               itemProp="url"
+            >
                {`Смотреть бесплатно (плеер ${idx + 1})`}
             </Link>
          ))}

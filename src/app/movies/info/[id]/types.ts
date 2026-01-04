@@ -6,6 +6,9 @@ export type Props = {
       id: string;
       number?: number;
    };
+   searchParams: {
+      token: string;
+   };
 };
 
 export type GetMovieProps = {

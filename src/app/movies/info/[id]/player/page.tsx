@@ -1,9 +1,9 @@
 import { BackLink } from '@components/BackLink/BackLink';
-import { getFreeLinksForPlayer } from '@tools/getFreeLinksForPlayer';
 import { Services } from '@services/Kinopoisk';
+import { URLToken } from '@services/URLToken';
 import { brandTitle } from '@tools/costants';
 import type { Metadata } from 'next';
-import type { Props } from '../../types';
+import type { Props } from '../types';
 import styles from './page.module.scss';
 
 export async function generateMetadata({ params: { id = '' } }: Props): Promise<Metadata> {
@@ -28,10 +28,8 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
    };
 }
 
-export default async function PlayerPage({ params: { id = '', number = 1 } }: Props) {
-   const links = Object.values(getFreeLinksForPlayer(id));
-   const playerNumber = Math.max(1, Math.min(links.length, +number));
-   const url = links.at(playerNumber - 1);
+export default async function PlayerPage({ searchParams: { token = '' } }: Props) {
+   const url = URLToken.decrypt(token);
    const width = 1120;
    const height = 610;
 
