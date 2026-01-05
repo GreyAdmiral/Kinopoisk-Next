@@ -35,7 +35,7 @@ export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl, frames = [] }) => 
                className={styles.movie_content_link}
                itemProp="url"
             >
-               {`Смотреть бесплатно (плеер ${idx + 1})`}
+               {`Смотреть бесплатно (ссылка ${idx + 1})`}
             </Link>
          ))}
 
