@@ -4,7 +4,6 @@ export type Props = {
    params: {
       page: string;
       id: string;
-      number?: number;
    };
    searchParams: {
       token: string;

@@ -27,7 +27,7 @@ class Kinopoisk {
       };
    }
 
-   async getMovies(number: string, keyword?: string): Promise<MoviesProps> {
+   async getMovies(number: string = '', keyword: string = ''): Promise<MoviesProps> {
       const defaultErrorMessage = 'Ошибка получения фильмов!';
       const baseUrl = `${this.baseUrl}?page=${number}${keyword ? `&keyword=${keyword}` : ''}`;
       let movies = [];
@@ -50,7 +50,7 @@ class Kinopoisk {
       return movies;
    }
 
-   async getMovie(id: string): Promise<MovieDescription | null> {
+   async getMovie(id: string = ''): Promise<MovieDescription | null> {
       const defaultErrorMessage = 'Ошибка получения информации о фильме!';
       const baseUrl = `${this.baseUrl}/${id}`;
       let movie = null;
@@ -73,7 +73,7 @@ class Kinopoisk {
       return movie;
    }
 
-   async getFacts(id: string): Promise<Facts> {
+   async getFacts(id: string = ''): Promise<Facts> {
       const defaultErrorMessage = 'Ошибка получения информации о фактах!';
       const baseUrl = `${this.baseUrl}/${id}/facts`;
       let facts = null;
@@ -96,7 +96,7 @@ class Kinopoisk {
       return facts;
    }
 
-   async getSimilars(id: string): Promise<Similars | null> {
+   async getSimilars(id: string = ''): Promise<Similars | null> {
       const defaultErrorMessage = 'Ошибка получения информации о фактах!';
       const baseUrl = `${this.baseUrl}/${id}/similars`;
       let similars = null;
@@ -119,7 +119,7 @@ class Kinopoisk {
       return similars;
    }
 
-   async getSequelsAndPrequels(id: string): Promise<Sequel[] | null> {
+   async getSequelsAndPrequels(id: string = ''): Promise<Sequel[] | null> {
       const defaultErrorMessage = 'Ошибка получения информации о сиквелах и приквелах!';
       const baseUrl = `${this.baseUrlOldAPI}/${id}/sequels_and_prequels`;
       let sap = null;
@@ -142,7 +142,7 @@ class Kinopoisk {
       return sap;
    }
 
-   async getReviews(id: string): Promise<Reviews | null> {
+   async getReviews(id: string = ''): Promise<Reviews | null> {
       const defaultErrorMessage = 'Ошибка получения рецензий!';
       const baseUrl = `${this.baseUrl}/${id}/reviews`;
       let reviews = null;
@@ -165,7 +165,7 @@ class Kinopoisk {
       return reviews;
    }
 
-   async getFrames(id: string): Promise<Frames> {
+   async getFrames(id: string = ''): Promise<Frames> {
       const url = `${this.baseUrlFramesAPI}?kinopoisk=${id}`;
       const defaultErrorMessage = 'Ошибка получения фреймов!';
       let frames = null;
