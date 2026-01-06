@@ -1,7 +1,6 @@
 export function getFreeLinksForPlayer(id: string) {
-   const linkOne = `https://iframe.cloud/iframe/${id}/`;
-   const linkTwo = `https://api.embess.ws/embed/kp/${id}/`;
-   const linkThree = `https://api.luxembd.ws/embed/kp/${id}/`;
+   const freeLinkOne = `https://ddbb.lol/?id=${id}&n=0`;
+   const freeLinkTwo = `https://iframe.cloud/iframe/${id}/`;
 
-   return { linkOne, linkTwo, linkThree };
+   return { freeLinkOne, freeLinkTwo };
 }

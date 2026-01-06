@@ -3,6 +3,7 @@ import { BackLink } from '@components/BackLink/BackLink';
 import { URLToken } from '@services/URLToken';
 import { getFreeLinks } from '@tools/getFreeLinks';
 import { getFreeLinksForPlayer } from '@tools/getFreeLinksForPlayer';
+import { getSpareLinksForPlayer } from '@tools/getSpareLinksForPlayer';
 import type { FC } from 'react';
 import type { MovieLinksProps } from './types';
 import styles from './MovieLinks.module.scss';
@@ -12,7 +13,8 @@ export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl, frames = [] }) => 
    const officialLinkTitle = 'Подробнее на «Кинопоиск»';
    const factsLinkRoute = `/movies/info/${id}/facts`;
    const linksValues = Object.values(getFreeLinksForPlayer(id));
-   const linksForPlayer = [linksValues[0], ...frames, ...linksValues.slice(1)];
+   const spareValues = Object.values(getSpareLinksForPlayer(id));
+   const linksForPlayer = [...linksValues, ...frames, ...spareValues];
    const links = Object.values(getFreeLinks(id)).map((value, idx) => ({
       title: `Смотреть бесплатно (зеркало ${idx + 1})`,
       link: value,
