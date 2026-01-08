@@ -6,6 +6,7 @@
 
 html {
    @extend %smoothscroll;
+   @include mix.thinScrollbar();
 }
 
 body {

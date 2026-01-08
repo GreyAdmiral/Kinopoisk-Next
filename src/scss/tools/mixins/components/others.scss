@@ -110,3 +110,10 @@
       }
    }
 }
+
+// Тонкий скроллбар
+@mixin thinScrollbar() {
+   @supports (scrollbar-width: auto) {
+      scrollbar-width: thin;
+   }
+}
