@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { BackLink } from '@components/BackLink/BackLink';
 import { URLToken } from '@services/URLToken';
-import { getFreeLinks } from '@tools/getFreeLinks';
 import { getFreeLinksForPlayer } from '@tools/getFreeLinksForPlayer';
 import { getSpareLinksForPlayer } from '@tools/getSpareLinksForPlayer';
 import { getTorrentSearchLink } from '@tools/getTorrentSearchLink';
@@ -18,10 +17,6 @@ export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl, title, year, frame
    const linksValues = Object.values(getFreeLinksForPlayer(id));
    const spareValues = Object.values(getSpareLinksForPlayer(id));
    const linksForPlayer = [...linksValues, ...frames, ...spareValues];
-   const links = Object.values(getFreeLinks(id)).map((value, idx) => ({
-      title: `Смотреть бесплатно (зеркало ${idx + 1})`,
-      link: value,
-   }));
 
    return webUrl ? (
       <div className={styles.movie_content_links}>
@@ -42,12 +37,6 @@ export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl, title, year, frame
             >
                {`Смотреть бесплатно (ссылка ${idx + 1})`}
             </Link>
-         ))}
-
-         {links.map((it) => (
-            <a key={it.link} className={styles.movie_content_link} href={it.link} target="_blank" itemProp="url">
-               {it.title}
-            </a>
          ))}
 
          <a key={title + year} className={styles.movie_content_link} href={torrentSearchUrl} target="_blank" itemProp="url">
