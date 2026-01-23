@@ -48,7 +48,7 @@ export default async function MoviePage({ params: { id = '' } }: Props) {
       notFound();
    }
 
-   const { nameRu, nameEn, nameOriginal, posterUrl, posterUrlPreview, webUrl } = movie;
+   const { nameRu, nameEn, nameOriginal, posterUrl, posterUrlPreview, webUrl, year } = movie;
    const title = nameRu || nameEn || nameOriginal;
 
    return (
@@ -60,7 +60,7 @@ export default async function MoviePage({ params: { id = '' } }: Props) {
 
             <div className={styles.movie_content}>
                <MovieInfo movie={movie} />
-               <MovieLinks id={id} webUrl={webUrl} frames={framesLinks} />
+               <MovieLinks id={id} webUrl={webUrl} title={title} year={year} frames={framesLinks} />
             </div>
          </div>
 

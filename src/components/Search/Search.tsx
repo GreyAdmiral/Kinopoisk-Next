@@ -42,7 +42,7 @@ export const Search = () => {
       <form id="search" name="search" onSubmit={submitHandler} className={styles.search}>
          <SortDirectButton className={styles.search_button} />
 
-         <Suspense fallback={<Loader />}>
+         <Suspense key={searchIconID} fallback={<Loader />}>
             <FormInput name="keyword" className={styles.search_input_field} />
          </Suspense>
 

@@ -6,7 +6,7 @@ import { DEFAULT_SORT_POINT_NUMBER, SORT_LIST } from '@tools/costants';
 export const ChoiceSorting = () => {
    return (
       <>
-         <Suspense fallback={<Loader />}>
+         <Suspense key={DEFAULT_SORT_POINT_NUMBER.toString().repeat(5)} fallback={<Loader />}>
             <CustomSelect list={SORT_LIST} defaultPointNumber={DEFAULT_SORT_POINT_NUMBER} />
          </Suspense>
       </>

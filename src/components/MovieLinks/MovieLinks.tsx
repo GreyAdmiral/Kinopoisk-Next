@@ -4,14 +4,17 @@ import { URLToken } from '@services/URLToken';
 import { getFreeLinks } from '@tools/getFreeLinks';
 import { getFreeLinksForPlayer } from '@tools/getFreeLinksForPlayer';
 import { getSpareLinksForPlayer } from '@tools/getSpareLinksForPlayer';
+import { getTorrentSearchLink } from '@tools/getTorrentSearchLink';
 import type { FC } from 'react';
 import type { MovieLinksProps } from './types';
 import styles from './MovieLinks.module.scss';
 
-export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl, frames = [] }) => {
+export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl, title, year, frames = [] }) => {
    const factsLinkTitle = 'Интересные факты';
    const officialLinkTitle = 'Подробнее на «Кинопоиск»';
    const factsLinkRoute = `/movies/info/${id}/facts`;
+   const torrentSearchText = 'Искать торренты';
+   const torrentSearchUrl = getTorrentSearchLink({ title, year });
    const linksValues = Object.values(getFreeLinksForPlayer(id));
    const spareValues = Object.values(getSpareLinksForPlayer(id));
    const linksForPlayer = [...linksValues, ...frames, ...spareValues];
@@ -46,6 +49,10 @@ export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl, frames = [] }) => 
                {it.title}
             </a>
          ))}
+
+         <a key={title + year} className={styles.movie_content_link} href={torrentSearchUrl} target="_blank" itemProp="url">
+            {torrentSearchText}
+         </a>
 
          <BackLink className={styles.movie_content_back} />
       </div>
