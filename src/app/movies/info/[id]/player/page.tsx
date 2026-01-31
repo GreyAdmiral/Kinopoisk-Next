@@ -37,6 +37,7 @@ export default async function PlayerPage({ searchParams: { token = '' } }: Props
       <section className={styles.player}>
          <BackLink className={styles.player_back_center} />
          <iframe
+            key={token}
             className={styles.player_frame}
             src={url}
             title="Смотреть беплатно"

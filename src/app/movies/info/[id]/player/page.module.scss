@@ -25,6 +25,7 @@
       min-width: fit-content;
       min-height: 225px;
       object-fit: cover;
+      background-color: v.$frameBgColor;
 
       @include m.oversmalltablet {
          aspect-ratio: 1120/610;
