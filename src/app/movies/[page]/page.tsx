@@ -44,6 +44,8 @@ export default async function MoviesPage({ params: { page = '' }, searchParams }
    const { keyword = '', reversed = '', sorted = defaulSortedMethod } = searchParams;
    let { total, totalPages, items: movies, error } = await Services.getMovies(page, keyword);
    const isMoviesLength = Boolean(movies.length);
+   const desktopQuery = '(min-width: 769px)';
+   const mobileQuery = '(max-width: 768.5px)';
 
    if (!Number.isInteger(+page) || !Number.isFinite(+page)) {
       notFound();
@@ -66,7 +68,7 @@ export default async function MoviesPage({ params: { page = '' }, searchParams }
          <MoviesCard>
             {isMoviesLength && (
                <>
-                  <QueryShow query={'(min-width: 769px)'}>
+                  <QueryShow query={desktopQuery}>
                      {movies.map((movie, idx) => (
                         <Movie key={`${movie.kinopoiskId}-${idx}`} movie={movie} />
                      ))}
@@ -74,7 +76,7 @@ export default async function MoviesPage({ params: { page = '' }, searchParams }
                      <LoadedComponent />
                   </QueryShow>
 
-                  <QueryShow query={'(max-width: 768.5px)'}>
+                  <QueryShow query={mobileQuery}>
                      <MoreButton page={page} searchParams={searchParams} totalPages={totalPages} />
                   </QueryShow>
                </>
@@ -84,7 +86,7 @@ export default async function MoviesPage({ params: { page = '' }, searchParams }
             {error && <ErrorComponent message={error} />}
          </MoviesCard>
 
-         <QueryShow query={'(min-width: 769px)'}>
+         <QueryShow query={desktopQuery}>
             {isMoviesLength && <Pagination totalPages={totalPages} total={total} page={page} searchParams={searchParams} />}
          </QueryShow>
 

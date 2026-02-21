@@ -16,9 +16,12 @@ export const SequelCard: FC<SequelsCardProps> = ({ sequel }) => {
    const { filmId, nameRu, nameEn, nameOriginal, posterUrl, posterUrlPreview } = sequel;
    const sequelTitle = nameRu || nameEn || nameOriginal;
    const linkUrl = `/movies/info/${filmId}`;
+   const linkAriaLabel = `Перейти на страницу фильма ${sequelTitle}`;
 
    return (
-      <Link href={linkUrl} className={styles.sequel} passHref>
+      <article className={styles.sequel}>
+         <Link href={linkUrl} className={styles.sequel_link} aria-label={linkAriaLabel}></Link>
+
          <div className={styles.sequel_image}>
             <Image
                src={posterUrlPreview || posterUrl || loadingImage}
@@ -41,6 +44,6 @@ export const SequelCard: FC<SequelsCardProps> = ({ sequel }) => {
 
             <span>{sequelTitle}</span>
          </h3>
-      </Link>
+      </article>
    );
 };
