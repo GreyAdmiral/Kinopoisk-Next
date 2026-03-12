@@ -8,12 +8,13 @@ import styles from './page.module.scss';
 export default async function ReviewsPage({ params: { id = '' } }: Props) {
    const title = 'Рецензии зрителей';
    const reviews = await Services.getReviews(id);
-   if (!reviews) return null;
+
+   if (!reviews) {
+      return null;
+   }
 
    const { total, totalPages, items = [] } = reviews;
    const isItems = Boolean(items.length);
-   if (!total || !isItems) return null;
-
    const startContentCount = Math.ceil(total / totalPages);
    let result: Array<Review[]> = [];
 
@@ -29,7 +30,7 @@ export default async function ReviewsPage({ params: { id = '' } }: Props) {
 
    const [startItems, ...otherItems] = result;
 
-   return (
+   return total && isItems ? (
       <section className={styles.reviews}>
          <h2 className={styles.reviews_title}>{title}</h2>
 
@@ -41,5 +42,5 @@ export default async function ReviewsPage({ params: { id = '' } }: Props) {
             {Boolean(otherItems.length) && <MoreReviewsButton reviews={otherItems} />}
          </div>
       </section>
-   );
+   ) : null;
 }
