@@ -21,6 +21,7 @@ export const MovieInfo: FC<MovieInfoProps> = ({ movie }) => {
       ratingKinopoisk,
       ratingImdb,
       ratingAgeLimits,
+      filmLength,
    } = movie;
    const title = nameRu || nameEn || nameOriginal;
    const validatedTitle = isExists(title) ? title : notFoundTitle;
@@ -61,11 +62,14 @@ export const MovieInfo: FC<MovieInfoProps> = ({ movie }) => {
       },
    ];
 
+   const duration = filmLength && !isNaN(filmLength) ? `PT${Math.floor(filmLength / 60)}H${filmLength % 60}M` : 'PT2H';
+
    return movie ? (
       <article className={styles.movie_info}>
          <meta itemProp="brand" content={brandTitle}></meta>
          <meta itemProp="isAccessibleForFree" content="true"></meta>
          <meta itemProp="description" content={description || shortDescription || noDescriptionText}></meta>
+         <meta itemProp="duration" content={duration} />
 
          <div className={styles.movie_info_wrapper}>
             <h2 className={styles.movie_info_title} itemProp="name">

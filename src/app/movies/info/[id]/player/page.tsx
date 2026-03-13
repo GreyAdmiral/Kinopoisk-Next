@@ -34,7 +34,9 @@ export default async function PlayerPage({ searchParams: { token = '' } }: Props
    const height = 610;
 
    return (
-      <section className={styles.player}>
+      <section className={styles.player} itemProp="video" itemScope itemType="https://schema.org/VideoObject">
+         <meta itemProp="embedUrl" content={url} />
+
          <BackLink className={styles.player_back_center} />
          <iframe
             key={token}
