@@ -13,6 +13,19 @@ export function getFrameLinks(frames: Frame[] = []): FrameLink[] {
    return links;
 }
 
+export function getFBPHDFrameLinks(frames: MiniFrame[] = []): FrameLink[] {
+   const links = [];
+
+   for (const { iframeUrl, type } of frames) {
+      if (!iframeUrl) continue;
+
+      const info = { title: type, url: iframeUrl };
+      links.push(info);
+   }
+
+   return links;
+}
+
 export function getMiniFrameLinks(frames: MiniFrame[] = []): string[] {
    const links = frames.map((frame) => frame.iframeUrl).filter(Boolean);
    return links;
