@@ -104,8 +104,8 @@ export type SelectedMovie = {
    link: string;
    freeLinkOne: string;
    freeLinkTwo: string;
-   spareLinkOne: string;
-   spareLinkTwo: string;
+   spareLinkOne?: string;
+   spareLinkTwo?: string;
    intermediateMirrorOne: string;
    intermediateMirrorTwo: string;
 };
@@ -196,6 +196,19 @@ export interface Frames {
 }
 
 export interface Frame {
+   source: string;
+   iframeUrl: string;
+   success: boolean;
+   updatedAt: string;
+   translations: Translation[];
+}
+
+export interface FrameLink {
+   title: string;
+   url: string;
+}
+
+export interface MiniFrame {
    type: string;
    iframeUrl: string;
    translations: Translation[];

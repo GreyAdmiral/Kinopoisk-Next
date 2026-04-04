@@ -41,7 +41,7 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
 export default async function MoviePage({ params: { id = '' } }: Props) {
    const schemeTypeAttr = 'https://schema.org/Movie';
    const movie = await Services.getMovie(id);
-   const { data: frames = [] } = await Services.getFrames(id);
+   const frames = await Services.getFrames(id);
    const framesLinks = getFrameLinks(frames);
 
    if (!id || !movie) {

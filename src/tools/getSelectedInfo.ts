@@ -1,6 +1,6 @@
 import { getFreeLinks } from './getFreeLinks';
 import { getFreeLinksForPlayer } from './getFreeLinksForPlayer';
-import { getSpareLinksForPlayer } from './getSpareLinksForPlayer';
+// import { getSpareLinksForPlayer } from './getSpareLinksForPlayer';
 import type { MovieProps, SelectedMovie } from '@typesfolder/types';
 
 export function getSelectedInfo(movie: MovieProps): SelectedMovie {
@@ -16,7 +16,7 @@ export function getSelectedInfo(movie: MovieProps): SelectedMovie {
       genres: movie.genres.map((genre) => genre.genre).join(separator),
       link: `${window.location.origin}/movies/info/${movie.kinopoiskId}`,
       ...getFreeLinksForPlayer(movie.kinopoiskId),
-      ...getSpareLinksForPlayer(movie.kinopoiskId),
+      // ...getSpareLinksForPlayer(movie.kinopoiskId),
       ...getFreeLinks(movie.kinopoiskId),
    };
 }
