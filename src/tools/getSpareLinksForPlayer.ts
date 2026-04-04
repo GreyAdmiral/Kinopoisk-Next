@@ -1,6 +1,6 @@
 export function getSpareLinksForPlayer(id: string) {
-   const spareLinkOne = `https://api.embess.ws/embed/kp/${id}/`;
-   const spareLinkTwo = `https://api.luxembd.ws/embed/kp/${id}/`;
+   const spareLinkOne = `${process.env.NEXT_PUBLIC_EMBESS_PLAYERS_API_URL}/embed/kp/${id}/`;
+   const spareLinkTwo = `${process.env.NEXT_PUBLIC_LUXEMBD_PLAYERS_API_URL}/embed/kp/${id}/`;
 
    return { spareLinkOne, spareLinkTwo };
 }

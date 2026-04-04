@@ -38,6 +38,6 @@ export function getMiniFrameLinks(frames: MiniFrame[] = []): string[] {
 
 export function getCloudFrameLink(id: string = ''): FrameLink {
    const title = 'Cloud';
-   const url = `https://iframe.cloud/iframe/${id}/`;
+   const url = `${process.env.NEXT_PUBLIC_CLOUD_PLAYERS_URL}/iframe/${id}/`;
    return { title, url };
 }

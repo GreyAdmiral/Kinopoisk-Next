@@ -120,7 +120,7 @@ class Kinopoisk {
    }
 
    async getSimilars(id: string = ''): Promise<Similars | null> {
-      const defaultErrorMessage = 'Ошибка получения информации о фактах!';
+      const defaultErrorMessage = 'Ошибка получения информации о похожих фильмах!';
       const baseUrl = `${this.baseUrl}/${id}/similars`;
       let similars = null;
 
