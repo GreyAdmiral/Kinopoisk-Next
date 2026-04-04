@@ -27,7 +27,12 @@ export function getFBPHDFrameLinks(frames: MiniFrame[] = []): FrameLink[] {
 }
 
 export function getMiniFrameLinks(frames: MiniFrame[] = []): string[] {
-   const links = frames.map((frame) => frame.iframeUrl).filter(Boolean);
+   const links = [];
+
+   for (const { iframeUrl } of frames) {
+      if (iframeUrl) links.push(iframeUrl);
+   }
+
    return links;
 }
 
