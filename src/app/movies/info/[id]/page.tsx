@@ -6,6 +6,7 @@ import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
 import { Services } from '@services/Kinopoisk';
 import { brandTitle } from '@tools/costants';
 import { getFrameLinks } from '@tools/getFrameLinks';
+import { getFilteredPlayers } from '@tools/getFilteredPlayers';
 import type { Metadata } from 'next';
 import type { Props } from './types';
 import styles from './page.module.scss';
@@ -42,7 +43,7 @@ export default async function MoviePage({ params: { id = '' } }: Props) {
    const schemeTypeAttr = 'https://schema.org/Movie';
    const movie = await Services.getMovie(id);
    const frames = await Services.getFrames(id);
-   const framesLinks = getFrameLinks(frames);
+   const framesLinks = getFilteredPlayers(getFrameLinks(frames));
 
    if (!id || !movie) {
       notFound();
