@@ -6,7 +6,7 @@
 
 html {
    @extend %smoothscroll;
-   @include mix.thinScrollbar();
+   @include mix.customScrollbar(var(--movie-link-color, vars.$orangeBlack), var(--additional-card-bg, vars.$grayTransparent));
 }
 
 body {

@@ -111,6 +111,32 @@
    }
 }
 
+// Стилизация скроллбара
+@mixin customScrollbar($thumbColor: #707070, $trackColor: #d8d8d8) {
+   @supports (scrollbar-width: auto) {
+      scrollbar-width: thin;
+      scrollbar-color: $thumbColor $trackColor;
+   }
+
+   &:hover {
+      --safari-fix: ;
+   }
+
+   &::-webkit-scrollbar-track,
+   &::-webkit-scrollbar-track-piece {
+      background: $trackColor; // Цвет трека
+   }
+
+   &::-webkit-scrollbar-thumb,
+   &::-webkit-scrollbar-thumb:vertical {
+      background-color: $thumbColor; // Цвет ползунка
+      box-shadow:
+         inset 2px 2px 2px $trackColor,
+         inset -2px -2px 2px $thumbColor; // Добавляем тень
+      border: none; // Убираем границу
+   }
+}
+
 // Тонкий скроллбар
 @mixin thinScrollbar() {
    @supports (scrollbar-width: auto) {
