@@ -36,9 +36,10 @@ export default async function PlayerPage({ searchParams: { token = '' } }: Props
    return (
       <section className={styles.player} itemProp="video" itemScope itemType="https://schema.org/VideoObject">
          <meta itemProp="embedUrl" content={url} />
-
          <BackLink className={styles.player_back_center} />
+
          <iframe
+            key={token}
             className={styles.player_frame}
             src={url}
             title="Смотреть беплатно"
