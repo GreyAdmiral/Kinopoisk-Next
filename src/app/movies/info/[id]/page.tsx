@@ -5,7 +5,7 @@ import { MoviePoster } from '@components/MoviePoster/MoviePoster';
 import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
 import { Services } from '@services/Kinopoisk';
 import { brandTitle } from '@tools/costants';
-import { getFrameLinks } from '@tools/getFrameLinks';
+import { getFBPHDFrameLinks } from '@tools/getFrameLinks';
 import { getFilteredPlayers } from '@tools/getFilteredPlayers';
 import type { Metadata } from 'next';
 import type { Props } from './types';
@@ -42,8 +42,8 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
 export default async function MoviePage({ params: { id = '' } }: Props) {
    const schemeTypeAttr = 'https://schema.org/Movie';
    const movie = await Services.getMovie(id);
-   const frames = await Services.getFrames(id);
-   const framesLinks = getFilteredPlayers(getFrameLinks(frames));
+   const frames = await Services.getFBPHdPlayFrames(id);
+   const framesLinks = getFilteredPlayers(getFBPHDFrameLinks(frames));
 
    if (!id || !movie) {
       notFound();

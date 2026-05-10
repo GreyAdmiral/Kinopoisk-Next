@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { BackLink } from '@components/BackLink/BackLink';
 import { URLToken } from '@services/URLToken';
-import { getCloudFrameLink } from '@tools/getFrameLinks';
+import { getLinksForStaticPlayer } from '@tools/getFrameLinks';
 import { getTorrentSearchLink } from '@tools/getTorrentSearchLink';
 import type { FC } from 'react';
 import type { MovieLinksProps } from './types';
@@ -13,7 +13,7 @@ export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl, title, year, frame
    const factsLinkRoute = `/movies/info/${id}/facts`;
    const torrentSearchText = 'Искать торренты';
    const torrentSearchUrl = getTorrentSearchLink({ title, year });
-   const linksForPlayer = [...frames, getCloudFrameLink(id)];
+   const linksForPlayer = [...frames, ...getLinksForStaticPlayer(id)];
 
    return webUrl ? (
       <div className={styles.movie_content_links}>

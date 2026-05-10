@@ -36,8 +36,15 @@ export function getMiniFrameLinks(frames: MiniFrame[] = []): string[] {
    return links;
 }
 
-export function getCloudFrameLink(id: string = ''): FrameLink {
-   const title = 'Cloud';
-   const url = `${process.env.NEXT_PUBLIC_CLOUD_PLAYERS_URL}/iframe/${id}/`;
-   return { title, url };
+export function getLinksForStaticPlayer(id: string): FrameLink[] {
+   return [
+      {
+         title: 'Lol',
+         url: `${process.env.NEXT_PUBLIC_LOL_PLAYERS_URL}/?id=${id}&n=0`,
+      },
+      {
+         title: 'Cloud',
+         url: `${process.env.NEXT_PUBLIC_CLOUD_PLAYERS_URL}/iframe/${id}/`,
+      },
+   ];
 }
