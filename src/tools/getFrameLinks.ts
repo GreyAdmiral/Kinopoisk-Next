@@ -13,7 +13,7 @@ export function getFrameLinks(frames: Frame[] = []): FrameLink[] {
    return links;
 }
 
-export function getFBPHDFrameLinks(frames: MiniFrame[] = []): FrameLink[] {
+export function getDataFrameLinks(frames: MiniFrame[] = []): FrameLink[] {
    const links = [];
 
    for (const { iframeUrl, type } of frames) {
@@ -38,10 +38,10 @@ export function getMiniFrameLinks(frames: MiniFrame[] = []): string[] {
 
 export function getLinksForStaticPlayer(id: string): FrameLink[] {
    return [
-      {
-         title: 'Lol',
-         url: `${process.env.NEXT_PUBLIC_LOL_PLAYERS_URL}/?id=${id}&n=0`,
-      },
+      // {
+      //    title: 'Lol',
+      //    url: `${process.env.NEXT_PUBLIC_LOL_PLAYERS_URL}/?id=${id}&n=0`,
+      // },
       {
          title: 'Cloud',
          url: `${process.env.NEXT_PUBLIC_CLOUD_PLAYERS_URL}/iframe/${id}/`,

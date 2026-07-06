@@ -17,7 +17,7 @@ class Kinopoisk {
    private baseUrl: string = process.env.NEXT_PUBLIC_API_URL!;
    private baseUrlOldAPI: string = process.env.NEXT_PUBLIC_OLD_API_URL!;
    private baseUrlFramesAPI: string = process.env.NEXT_PUBLIC_PLAYERS_API_URL!;
-   private baseUrlfbphDFramesAPI: string = process.env.NEXT_PUBLIC_FBPHD_PLAYERS_API_URL!;
+   private baseUrlDataFramesAPI: string = process.env.NEXT_PUBLIC_DATA_PLAYERS_API_URL!;
    private keyCounter: number = 0;
    public contentTypeKey = 'Content-Type';
    public contentTypeValue = 'application/json';
@@ -222,8 +222,8 @@ class Kinopoisk {
       return frames;
    }
 
-   async getFBPHdPlayFrames(id: string = ''): Promise<MiniFrame[]> {
-      const url = `${this.baseUrlfbphDFramesAPI}?kinopoisk=${id}`;
+   async getDataFrames(id: string = ''): Promise<MiniFrame[]> {
+      const url = `${this.baseUrlDataFramesAPI}?kinopoisk=${id}`;
       const defaultErrorMessage = 'Ошибка получения фреймов!';
       let frames = null;
 

@@ -1,6 +1,6 @@
-const xorNumber = 25;
-
 export class URLToken {
+   static xorNumber = 25;
+
    static encrypt(url: string = ''): string {
       // Используем TextEncoder для корректной работы с Unicode
       const encoder = new TextEncoder();
@@ -10,7 +10,7 @@ export class URLToken {
       const processed = new Uint8Array(bytes.length);
 
       for (let i = 0; i < bytes.length; i++) {
-         processed[bytes.length - 1 - i] = bytes[i] ^ xorNumber;
+         processed[bytes.length - 1 - i] = bytes[i] ^ this.xorNumber;
       }
 
       // Используем base64url (URL-safe)
@@ -43,7 +43,7 @@ export class URLToken {
          const decoded = new Uint8Array(bytes.length);
 
          for (let i = 0; i < bytes.length; i++) {
-            decoded[i] = bytes[bytes.length - 1 - i] ^ xorNumber;
+            decoded[i] = bytes[bytes.length - 1 - i] ^ this.xorNumber;
          }
 
          // Декодируем в строку
