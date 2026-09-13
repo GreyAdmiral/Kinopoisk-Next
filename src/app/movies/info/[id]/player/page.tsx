@@ -1,11 +1,15 @@
+import { notFound } from 'next/navigation';
 import { ScrollRestoration } from '@components/ScrollRestoration/ScrollRestoration';
+import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
 import { BackLink } from '@components/BackLink/BackLink';
 import { Services } from '@services/Kinopoisk';
 import { URLToken } from '@services/URLToken';
+import { isExists } from '@tools/isExist';
 import { brandTitle } from '@tools/costants';
 import type { Metadata } from 'next';
 import type { Props } from '../types';
 import styles from './page.module.scss';
+import Link from 'next/link';
 
 export async function generateMetadata({ params: { id = '' } }: Props): Promise<Metadata> {
    const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/info/${id}`;
@@ -29,10 +33,23 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
    };
 }
 
-export default async function PlayerPage({ searchParams: { token = '' } }: Props) {
-   const url = URLToken.decrypt(token);
+export default async function PlayerPage({ params: { id = '' }, searchParams: { token = '' } }: Props) {
+   const movie = await Services.getMovie(id);
+
+   if (!id || !movie) {
+      notFound();
+   }
+
    const width = 1120;
    const height = 610;
+   const isLinkPrefetch = true;
+   const url = URLToken.decrypt(token);
+   const titleLink = `/movies/info/${id}`;
+   const notFoundTitle = 'Неизвестный фильм';
+   const linkClue = 'Перейти на страницу фильма';
+   const { nameRu, nameEn, nameOriginal } = movie;
+   const title = nameRu || nameEn || nameOriginal;
+   const validatedTitle = isExists(title) ? title : notFoundTitle;
 
    return (
       <>
@@ -40,7 +57,12 @@ export default async function PlayerPage({ searchParams: { token = '' } }: Props
 
          <section className={styles.player} itemProp="video" itemScope itemType="https://schema.org/VideoObject">
             <meta itemProp="embedUrl" content={url} />
-            <BackLink className={styles.player_back_center} />
+
+            <h2 className={styles.player_title} itemProp="name">
+               <Link href={titleLink} className={styles.player_link} title={linkClue} prefetch={isLinkPrefetch} replace>
+                  {validatedTitle}
+               </Link>
+            </h2>
 
             <iframe
                key={token}
@@ -52,7 +74,11 @@ export default async function PlayerPage({ searchParams: { token = '' } }: Props
                frameBorder="0"
                allowFullScreen
             />
+
+            <BackLink className={styles.player_back_center} />
          </section>
+
+         <ScrollArrows />
       </>
    );
 }

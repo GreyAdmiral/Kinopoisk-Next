@@ -13,10 +13,22 @@
 
    &_title {
       color: var(--button-color, v.$whiteDark);
-      text-transform: uppercase;
+      font-variant: small-caps;
       font-weight: bold;
       text-align: center;
-      @include m.adaptiveValue('font-size', 19px, 15px);
+      text-wrap: balance;
+      letter-spacing: 1px;
+      @include m.uboldb('#{var(--button-color, v.$whiteDark)}');
+      @include m.adaptiveValue('font-size', 30px, 18px);
+   }
+
+   &_link {
+      @extend %link-effects;
+      color: var(--footer-link-color, v.$amberDark);
+
+      &:active {
+         @include m.luxtext(var(--movie-link-hover-color, v.$comicsRad), var(--movie-link-hover-color, v.$comicsRad));
+      }
    }
 
    &_frame {
