@@ -1,6 +1,11 @@
-import type { PropsWithChildren } from 'react';
 import styles from './layout.module.scss';
+import { LayoutProps } from './types';
 
-export default function RootLayout({ children }: PropsWithChildren) {
-   return <div className={styles.content}>{children}</div>;
+export default function RootLayout({ children, modal }: LayoutProps) {
+   return (
+      <div className={styles.content}>
+         {children}
+         {modal}
+      </div>
+   );
 }

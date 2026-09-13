@@ -5,6 +5,7 @@
 @use 'sass:math';
 
 html {
+   scrollbar-gutter: stable;
    @extend %smoothscroll;
    @include mix.customScrollbar(var(--movie-link-color, vars.$orangeBlack), var(--additional-card-bg, vars.$grayTransparent));
 }

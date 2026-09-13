@@ -17,7 +17,7 @@ export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl, title, year, frame
 
    return webUrl ? (
       <div className={styles.movie_content_links}>
-         <Link href={factsLinkRoute} className={styles.movie_content_link}>
+         <Link href={factsLinkRoute} scroll={false} className={styles.movie_content_link}>
             {factsLinkTitle}
          </Link>
 
@@ -35,6 +35,7 @@ export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl, title, year, frame
                href={`/movies/info/${id}/player?token=${URLToken.encrypt(url)}`}
                className={styles.movie_content_link}
                itemProp="url"
+               scroll={false}
             >
                {`Плеер ${title}`}
             </Link>

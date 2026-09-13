@@ -10,6 +10,10 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# Neural network settings files
+/.gigacode
+/.gigacode_vsc
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 

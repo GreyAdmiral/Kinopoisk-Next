@@ -1,14 +1,16 @@
-import { MutableRefObject, useEffect } from 'react';
+import { type RefObject, useCallback, useEffect } from 'react';
 
-export const useClickOutside = (ref: MutableRefObject<HTMLTemplateElement | null>, callback: () => void) => {
-   const handleClick = (e: Event) => {
-      e.stopPropagation();
-      const target = e.target as HTMLTemplateElement;
+export const useClickOutside = (ref: RefObject<HTMLElement | null>, callback: () => void) => {
+   const handleClick = useCallback(
+      (e: MouseEvent) => {
+         const target = e.target as Node;
 
-      if (ref.current && !ref.current.contains(target)) {
-         callback();
-      }
-   };
+         if (ref.current && !ref.current.contains(target)) {
+            callback();
+         }
+      },
+      [ref, callback]
+   );
 
    useEffect(() => {
       document.addEventListener('click', handleClick);
@@ -16,6 +18,5 @@ export const useClickOutside = (ref: MutableRefObject<HTMLTemplateElement | null
       return () => {
          document.removeEventListener('click', handleClick);
       };
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [callback, ref]);
+   }, [handleClick]);
 };

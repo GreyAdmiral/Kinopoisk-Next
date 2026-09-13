@@ -1,0 +1,42 @@
+.modal {
+   @include m.flex(center);
+   position: fixed;
+   inset: 0;
+   padding: f.rem(25px);
+   background-color: v.$modalBgColor;
+   transition: background-color 0.4s ease 0s;
+   animation: modalOpacity 0.15s ease-in-out 0s 1 forwards;
+   z-index: 9999999;
+   cursor: crosshair;
+
+   &,
+   & * {
+      @extend %noselect;
+      @extend %taphighlight;
+   }
+
+   &__content {
+      border: 3px ridge v.$blackUltra;
+      animation: modalScale 0.15s ease-in-out 0s 1 forwards;
+   }
+}
+
+@keyframes modalScale {
+   from {
+      transform: scale(0);
+   }
+
+   to {
+      transform: scale(1);
+   }
+}
+
+@keyframes modalOpacity {
+   from {
+      opacity: 0;
+   }
+
+   to {
+      opacity: 1;
+   }
+}

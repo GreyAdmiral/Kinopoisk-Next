@@ -1,11 +1,10 @@
-import { ScrollRestoration } from '@components/ScrollRestoration/ScrollRestoration';
-import { BackLink } from '@components/BackLink/BackLink';
+import { Modal } from '@components/Modal/Modal';
 import { Services } from '@services/Kinopoisk';
 import { URLToken } from '@services/URLToken';
 import { brandTitle } from '@tools/costants';
-import type { Metadata } from 'next';
-import type { Props } from '../types';
 import styles from './page.module.scss';
+import type { Metadata } from 'next';
+import type { Props } from './types';
 
 export async function generateMetadata({ params: { id = '' } }: Props): Promise<Metadata> {
    const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/info/${id}`;
@@ -29,30 +28,23 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
    };
 }
 
-export default async function PlayerPage({ searchParams: { token = '' } }: Props) {
+export default async function ModalPage({ searchParams: { token = '' } }: Props) {
    const url = URLToken.decrypt(token);
    const width = 1120;
    const height = 610;
 
    return (
-      <>
-         <ScrollRestoration />
-
-         <section className={styles.player} itemProp="video" itemScope itemType="https://schema.org/VideoObject">
-            <meta itemProp="embedUrl" content={url} />
-            <BackLink className={styles.player_back_center} />
-
-            <iframe
-               key={token}
-               className={styles.player_frame}
-               src={url}
-               title="Смотреть беплатно"
-               width={width}
-               height={height}
-               frameBorder="0"
-               allowFullScreen
-            />
-         </section>
-      </>
+      <Modal>
+         <iframe
+            key={token}
+            className={styles.frame}
+            src={url}
+            title="Смотреть беплатно"
+            width={width}
+            height={height}
+            frameBorder="0"
+            allowFullScreen
+         />
+      </Modal>
    );
 }

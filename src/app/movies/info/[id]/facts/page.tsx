@@ -1,3 +1,4 @@
+import { ScrollRestoration } from '@components/ScrollRestoration/ScrollRestoration';
 import { notFound } from 'next/navigation';
 import { FactsList } from '@components/FactsList/FactsList';
 import { BackLink } from '@components/BackLink/BackLink';
@@ -46,17 +47,21 @@ export default async function MoviePage({ params: { id = '' } }: Props) {
    const bloopersArray = items.filter((blooper) => blooper.type === bloopersLabel);
 
    return (
-      <div className={styles.facts}>
-         {isItems && (
-            <>
-               <h2 className={styles.facts_title}>{pageTitle}</h2>
-               <FactsList facts={factsArray} title={factsTitle} />
-               <FactsList facts={bloopersArray} title={bloopersTitle} />
-               <BackLink key={pageUrl} className={styles.facts_back_center} />
-            </>
-         )}
+      <>
+         <ScrollRestoration />
 
-         {!isItems && <NotFoundResult message={notFoundMessage} />}
-      </div>
+         <div className={styles.facts}>
+            {isItems && (
+               <>
+                  <h2 className={styles.facts_title}>{pageTitle}</h2>
+                  <FactsList facts={factsArray} title={factsTitle} />
+                  <FactsList facts={bloopersArray} title={bloopersTitle} />
+                  <BackLink key={pageUrl} className={styles.facts_back_center} />
+               </>
+            )}
+
+            {!isItems && <NotFoundResult message={notFoundMessage} />}
+         </div>
+      </>
    );
 }
