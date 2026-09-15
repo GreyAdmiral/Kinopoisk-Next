@@ -9,7 +9,6 @@ const nextConfig = {
    poweredByHeader: false,
    productionBrowserSourceMaps: false,
    cleanDistDir: true,
-   output: 'standalone',
    images: {
       formats: ['image/avif', 'image/webp'],
       remotePatterns: [
