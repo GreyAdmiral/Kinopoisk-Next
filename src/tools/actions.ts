@@ -4,6 +4,7 @@ import { AppRoutes } from '@tools/costants';
 
 export async function searchAction(data: FormData) {
    const { keyword, queries } = Object.fromEntries(data) as Record<string, string>;
+   console.log('queries: ', queries);
    const searchParams = new URLSearchParams(queries);
 
    if (keyword) {

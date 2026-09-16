@@ -53,7 +53,7 @@ $checkedFocusedShadow: v.$yellow;
          + span {
             &:before {
                background: $bg
-                  url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path class="checkmark" fill="%23#{str-slice(#{$color}, 2)}" d="M20.61 5.207a1 1 0 0 1 .183 1.403l-10 13a1 1 0 0 1-1.5.097l-5-5a1 1 0 0 1 1.414-1.414l4.195 4.195L19.207 5.39a1 1 0 0 1 1.403-.183Z" clip-rule="evenodd"/></svg>')
+                  url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path class="checkmark" fill="%23#{string.slice(#{$color}, 2)}" d="M20.61 5.207a1 1 0 0 1 .183 1.403l-10 13a1 1 0 0 1-1.5.097l-5-5a1 1 0 0 1 1.414-1.414l4.195 4.195L19.207 5.39a1 1 0 0 1 1.403-.183Z" clip-rule="evenodd"/></svg>')
                   center center / contain no-repeat;
             }
          }
@@ -62,7 +62,7 @@ $checkedFocusedShadow: v.$yellow;
             + span {
                &:before {
                   background-color: $disabledBg;
-                  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path class="checkmark" fill="%23#{str-slice(#{$disabledColor}, 2)}" d="M20.61 5.207a1 1 0 0 1 .183 1.403l-10 13a1 1 0 0 1-1.5.097l-5-5a1 1 0 0 1 1.414-1.414l4.195 4.195L19.207 5.39a1 1 0 0 1 1.403-.183Z" clip-rule="evenodd"/></svg>');
+                  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path class="checkmark" fill="%23#{string.slice(#{$disabledColor}, 2)}" d="M20.61 5.207a1 1 0 0 1 .183 1.403l-10 13a1 1 0 0 1-1.5.097l-5-5a1 1 0 0 1 1.414-1.414l4.195 4.195L19.207 5.39a1 1 0 0 1 1.403-.183Z" clip-rule="evenodd"/></svg>');
                }
             }
          }

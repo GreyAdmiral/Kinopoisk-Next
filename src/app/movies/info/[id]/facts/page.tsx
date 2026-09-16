@@ -9,7 +9,8 @@ import type { Metadata } from 'next';
 import type { Props } from '../types';
 import styles from './page.module.scss';
 
-export async function generateMetadata({ params: { id = '' } }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+   const { id } = await params;
    const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/info/${id}`;
    const unknownTitle = 'Неизвестный фильм';
    const facts = await Services.getMovie(id);
@@ -30,7 +31,8 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
    };
 }
 
-export default async function MoviePage({ params: { id = '' } }: Props) {
+export default async function MoviePage({ params }: Props) {
+   const { id } = await params;
    const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/info/${id}`;
    const factsLabel = 'FACT';
    const bloopersLabel = 'BLOOPER';

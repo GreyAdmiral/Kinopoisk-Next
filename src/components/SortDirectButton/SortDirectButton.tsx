@@ -1,6 +1,6 @@
 'use client';
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useFormStatus } from 'react-dom';
 import clsx from 'clsx';
 import { SPRITE_PATH } from '@tools/costants';
 import type { FC } from 'react';
@@ -13,39 +13,36 @@ export const SortDirectButton: FC<SortDirectButtonProps> = ({ className }) => {
    const infoLabel = '/movies/info/';
    const buttonsIconSize = 20;
    const path = usePathname();
+   const searchParams = useSearchParams();
    const router = useRouter();
-   const [isReverseDirection, setIsReverseDirection] = useState<boolean>(false);
+   const { pending } = useFormStatus();
+   const isReverseDirection = searchParams.get('reversed') === '1';
    const isInfo = path.includes(infoLabel);
 
    const sortDirectionButtonHandler = () => {
-      const params = new URLSearchParams(location.search);
+      const params = new URLSearchParams(searchParams.toString());
 
       if (!isReverseDirection) {
          params.set('reversed', '1');
-      } else if (params.has('reversed')) {
+      } else {
          params.delete('reversed');
       }
 
-      setIsReverseDirection((state) => !state);
       router.push(`${path}${params.size ? `?${params.toString()}` : ''}`);
    };
 
-   useEffect(() => {
-      const searchParams = new URLSearchParams(location.search);
-      setIsReverseDirection(Boolean(searchParams.get('reversed')));
-   }, []);
+   const title = `Сортировать по ${isReverseDirection ? 'возрастанию' : 'убыванию'}`;
 
    return (
       <button
          type="button"
-         {...(isInfo ? {} : { title: `Сортировать по ${isReverseDirection ? 'возрастанию' : 'убыванию'}` })}
-         {...(isInfo ? {} : { ['aria-label']: `Сортировать по ${isReverseDirection ? 'возрастанию' : 'убыванию'}` })}
+         {...(isInfo ? {} : { title, 'aria-label': title })}
          className={clsx([styles.search_button_sort, { [className]: Boolean(className) }])}
          onClick={sortDirectionButtonHandler}
-         disabled={isInfo}
+         disabled={pending || isInfo}
       >
          <svg width={buttonsIconSize} height={buttonsIconSize}>
-            <use xlinkHref={`${SPRITE_PATH}#${isReverseDirection ? sortReversedIconID : sortIconID}`} />
+            <use xlinkHref={`${SPRITE_PATH}#${isReverseDirection ? sortIconID : sortReversedIconID}`} />
          </svg>
       </button>
    );

@@ -11,7 +11,8 @@ import type { Metadata } from 'next';
 import type { Props } from './types';
 import styles from './page.module.scss';
 
-export async function generateMetadata({ params: { id = '' } }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+   const { id } = await params;
    const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/info/${id}`;
    const hotScreenShot = `https://mini.s-shot.ru/?${pageUrl}`;
    const unknownTitle = 'Неизвестный фильм';
@@ -39,7 +40,8 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
    };
 }
 
-export default async function MoviePage({ params: { id = '' } }: Props) {
+export default async function MoviePage({ params }: Props) {
+   const { id } = await params;
    const schemeTypeAttr = 'https://schema.org/Movie';
    const movie = await Services.getMovie(id);
    const frames = await Services.getDataFrames(id);

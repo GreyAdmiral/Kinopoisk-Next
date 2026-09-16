@@ -11,7 +11,8 @@ import type { Props } from '../types';
 import styles from './page.module.scss';
 import Link from 'next/link';
 
-export async function generateMetadata({ params: { id = '' } }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+   const { id } = await params;
    const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/info/${id}`;
    const unknownTitle = 'Неизвестный фильм';
    const movie = await Services.getMovie(id);
@@ -33,7 +34,9 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
    };
 }
 
-export default async function PlayerPage({ params: { id = '' }, searchParams: { token = '' } }: Props) {
+export default async function PlayerPage({ params, searchParams }: Props) {
+   const { id } = await params;
+   const { token = '' } = await searchParams;
    const movie = await Services.getMovie(id);
 
    if (!id || !movie) {

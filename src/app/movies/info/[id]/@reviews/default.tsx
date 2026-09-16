@@ -5,8 +5,9 @@ import type { Review } from '@typesfolder/types';
 import type { Props } from '../types';
 import styles from './page.module.scss';
 
-export default async function ReviewsPage({ params: { id = '' } }: Props) {
+export default async function ReviewsPage({ params }: Props) {
    const title = 'Рецензии зрителей';
+   const { id } = await params;
    const reviews = await Services.getReviews(id);
 
    if (!reviews) {

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
    return (
-      <html lang="ru">
+      <html lang="ru" data-scroll-behavior="smooth">
          <head>
             <meta name="format-detection" content="telephone=no, email=no, address=no, date=no" />
             <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

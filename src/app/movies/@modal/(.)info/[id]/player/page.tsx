@@ -6,7 +6,8 @@ import styles from './page.module.scss';
 import type { Metadata } from 'next';
 import type { Props } from './types';
 
-export async function generateMetadata({ params: { id = '' } }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+   const { id } = await params;
    const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/info/${id}`;
    const unknownTitle = 'Неизвестный фильм';
    const movie = await Services.getMovie(id);
@@ -28,7 +29,8 @@ export async function generateMetadata({ params: { id = '' } }: Props): Promise<
    };
 }
 
-export default async function ModalPage({ searchParams: { token = '' } }: Props) {
+export default async function ModalPage({ searchParams }: Props) {
+   const { token = '' } = await searchParams;
    const url = URLToken.decrypt(token);
    const width = 1120;
    const height = 610;

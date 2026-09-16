@@ -4,8 +4,9 @@ import { SimilarCard } from '@components/SimilarCard/SimilarCard';
 import type { Props } from '../types';
 import styles from './page.module.scss';
 
-export default async function SimilarsPage({ params: { id = '' } }: Props) {
+export default async function SimilarsPage({ params }: Props) {
    const title = 'Похожие фильмы';
+   const { id } = await params;
    const similars = await Services.getSimilars(id);
 
    if (!similars) {

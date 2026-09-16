@@ -11,14 +11,27 @@
    },
    "rules": {
       "max-lines-per-function": "off",
-      "no-undef":"off"
+      "no-undef": "off"
    },
    "overrides": [
       {
-         "files": ["*.tsx"],
+         "files": ["*.tsx", "*.ts"],
          "rules": {
             "max-lines-per-function": ["off"],
-            "no-undef": "off"
+            "no-undef": "off",
+            "no-unused-vars": [
+               "error",
+               {
+                  "vars": "all",
+                  "args": "after-used",
+                  "caughtErrors": "all",
+                  "ignoreRestSiblings": false,
+                  "reportUsedIgnorePattern": false,
+                  "argsIgnorePattern": "^_",
+                  "varsIgnorePattern": "^_",
+                  "caughtErrorsIgnorePattern": "^_"
+               }
+            ]
          }
       }
    ],

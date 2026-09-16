@@ -1,8 +1,8 @@
 export type Props = {
-   params: {
+   params: Promise<{
       id: string;
-   };
-   searchParams: {
+   }>;
+   searchParams: Promise<{
       token: string;
-   };
+   }>;
 };

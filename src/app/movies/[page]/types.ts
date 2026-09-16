@@ -1,12 +1,12 @@
 import { SortedMethod } from '@typesfolder/types';
 
 export type Props = {
-   params: {
+   params: Promise<{
       page: string;
-   };
-   searchParams: {
+   }>;
+   searchParams: Promise<{
       keyword: string;
       reversed: string;
       sorted: SortedMethod;
-   };
+   }>;
 };

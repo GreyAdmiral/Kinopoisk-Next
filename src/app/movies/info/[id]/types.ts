@@ -1,13 +1,13 @@
 import type { PropsWithChildren, ReactNode } from 'react';
 
 export type Props = {
-   params: {
+   params: Promise<{
       page: string;
       id: string;
-   };
-   searchParams: {
+   }>;
+   searchParams: Promise<{
       token: string;
-   };
+   }>;
 };
 
 export type GetMovieProps = {

@@ -11,6 +11,13 @@ import type {
    MiniFrame,
 } from '@typesfolder/types';
 
+interface RequestOptions extends RequestInit {
+   withAuth?: boolean;
+}
+
+type JsonResult<T> = { ok: true; data: T } | { ok: false; error: string; aborted?: boolean };
+type FetchBody = { message?: string };
+
 let instance = null;
 
 class Kinopoisk {
@@ -22,7 +29,7 @@ class Kinopoisk {
    public contentTypeKey = 'Content-Type';
    public contentTypeValue = 'application/json';
    public contentErrorMessage = 'Неверный тип контента.';
-   #keys: string[] = process.env.NEXT_PUBLIC_API_KEYS!.split('|');
+   #keys: string[] = process.env.NEXT_PUBLIC_API_KEYS!.split('|').filter(Boolean);
 
    getKey(): string {
       const key = this.#keys[this.keyCounter];
@@ -32,220 +39,149 @@ class Kinopoisk {
       return key;
    }
 
-   getHeader(key: string): FetchOptions {
+   getHeader(key?: string): FetchOptions {
       return {
          method: 'GET',
-         // cache: 'force-cache',
-         headers: { 'X-API-KEY': key, 'Content-Type': 'application/json' },
+         headers: { 'X-API-KEY': key ?? this.getKey(), 'Content-Type': 'application/json' },
          next: { revalidate: 3600 },
       };
    }
 
-   async getMovies(number: string = '', keyword: string = ''): Promise<MoviesProps> {
+   private async request<T>(url: string, defaultErrorMessage: string, options: RequestOptions = {}): Promise<JsonResult<T>> {
+      const { signal, withAuth = true } = options;
+
+      try {
+         const res = await fetch(url, {
+            ...(withAuth ? this.getHeader() : { method: 'GET' }),
+            signal,
+         });
+
+         const isJson = res.headers.get(this.contentTypeKey)?.includes(this.contentTypeValue);
+
+         if (!res.ok) {
+            const knownError = getErrorInfo(res.status);
+            const body: FetchBody = await res.json().catch((err) => ({ message: err.message }));
+            throw new Error(knownError || body.message || defaultErrorMessage);
+         }
+
+         if (!isJson) {
+            throw new Error(this.contentErrorMessage);
+         }
+
+         return { ok: true, data: (await res.json()) as T };
+      } catch (err) {
+         if ((err as Error).name === 'AbortError') {
+            return { ok: false, error: 'aborted', aborted: true };
+         }
+
+         return { ok: false, error: (err as Error).message };
+      }
+   }
+
+   async getMovies(number: string = '', keyword: string = '', options: RequestOptions = {}): Promise<MoviesProps> {
       const defaultErrorMessage = 'Ошибка получения фильмов!';
-      const baseUrl = `${this.baseUrl}?page=${number}${keyword ? `&keyword=${keyword}` : ''}`;
-      let movies = [];
+      const url = `${this.baseUrl}?page=${number}${keyword ? `&keyword=${keyword}` : ''}`;
+      const result = await this.request<MoviesProps>(url, defaultErrorMessage, options);
 
-      try {
-         const res = await fetch(baseUrl, this.getHeader(this.getKey()));
-         const isJson = res.headers.get(this.contentTypeKey)?.includes(this.contentTypeValue);
-
-         if (!res.ok) {
-            const knownError = getErrorInfo(res.status);
-            const req = await res.json();
-            throw new Error(knownError || (req as Error).message || defaultErrorMessage);
-         } else if (!isJson) {
-            throw new Error(this.contentErrorMessage);
-         }
-
-         movies = await res.json();
-      } catch (err) {
-         // console.error((err as Error).message);
-         return { error: (err as Error).message, total: 0, totalPages: 0, items: [] };
+      if (!result.ok) {
+         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
+         return { error: result.error, total: 0, totalPages: 0, items: [] };
       }
 
-      return movies;
+      return result.data;
    }
 
-   async getMovie(id: string = ''): Promise<MovieDescription | null> {
+   async getMovie(id = '', options: RequestOptions = {}): Promise<MovieDescription | null> {
       const defaultErrorMessage = 'Ошибка получения информации о фильме!';
-      const baseUrl = `${this.baseUrl}/${id}`;
-      let movie = null;
+      const url = `${this.baseUrl}/${id}`;
+      const result = await this.request<MovieDescription>(url, defaultErrorMessage, options);
 
-      try {
-         const res = await fetch(baseUrl, this.getHeader(this.getKey()));
-         const isJson = res.headers.get(this.contentTypeKey)?.includes(this.contentTypeValue);
-
-         if (!res.ok) {
-            const knownError = getErrorInfo(res.status);
-            const req = await res.json();
-            throw new Error(knownError || (req as Error).message || defaultErrorMessage);
-         } else if (!isJson) {
-            throw new Error(this.contentErrorMessage);
-         }
-
-         movie = await res.json();
-      } catch (err) {
-         // console.error((err as Error).message);
+      if (!result.ok) {
+         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
          return null;
       }
 
-      return movie;
+      return result.data;
    }
 
-   async getFacts(id: string = ''): Promise<Facts> {
+   async getFacts(id = '', options: RequestOptions = {}): Promise<Facts> {
       const defaultErrorMessage = 'Ошибка получения информации о фактах!';
-      const baseUrl = `${this.baseUrl}/${id}/facts`;
-      let facts = null;
+      const url = `${this.baseUrl}/${id}/facts`;
+      const result = await this.request<Facts>(url, defaultErrorMessage, options);
 
-      try {
-         const res = await fetch(baseUrl, this.getHeader(this.getKey()));
-         const isJson = res.headers.get(this.contentTypeKey)?.includes(this.contentTypeValue);
-
-         if (!res.ok) {
-            const knownError = getErrorInfo(res.status);
-            const req = await res.json();
-            throw new Error(knownError || (req as Error).message || defaultErrorMessage);
-         } else if (!isJson) {
-            throw new Error(this.contentErrorMessage);
-         }
-
-         facts = await res.json();
-      } catch (err) {
-         // console.error((err as Error).message);
-         return { error: (err as Error).message, total: 0, items: [] };
+      if (!result.ok) {
+         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
+         return { error: result.error, total: 0, items: [] };
       }
 
-      return facts;
+      return result.data;
    }
 
-   async getSimilars(id: string = ''): Promise<Similars | null> {
+   async getSimilars(id = '', options: RequestOptions = {}): Promise<Similars | null> {
       const defaultErrorMessage = 'Ошибка получения информации о похожих фильмах!';
-      const baseUrl = `${this.baseUrl}/${id}/similars`;
-      let similars = null;
+      const url = `${this.baseUrl}/${id}/similars`;
+      const result = await this.request<Similars>(url, defaultErrorMessage, options);
 
-      try {
-         const res = await fetch(baseUrl, this.getHeader(this.getKey()));
-         const isJson = res.headers.get(this.contentTypeKey)?.includes(this.contentTypeValue);
-
-         if (!res.ok) {
-            const knownError = getErrorInfo(res.status);
-            const req = await res.json();
-            throw new Error(knownError || (req as Error).message || defaultErrorMessage);
-         } else if (!isJson) {
-            throw new Error(this.contentErrorMessage);
-         }
-
-         similars = await res.json();
-      } catch (err) {
-         // console.error((err as Error).message);
+      if (!result.ok) {
+         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
          return null;
       }
 
-      return similars;
+      return result.data;
    }
 
-   async getSequelsAndPrequels(id: string = ''): Promise<Sequel[] | null> {
+   async getSequelsAndPrequels(id = '', options: RequestOptions = {}): Promise<Sequel[] | null> {
       const defaultErrorMessage = 'Ошибка получения информации о сиквелах и приквелах!';
-      const baseUrl = `${this.baseUrlOldAPI}/${id}/sequels_and_prequels`;
-      let sap = null;
+      const url = `${this.baseUrlOldAPI}/${id}/sequels_and_prequels`;
+      const result = await this.request<Sequel[]>(url, defaultErrorMessage, options);
 
-      try {
-         const res = await fetch(baseUrl, this.getHeader(this.getKey()));
-         const isJson = res.headers.get(this.contentTypeKey)?.includes(this.contentTypeValue);
-
-         if (!res.ok) {
-            const knownError = getErrorInfo(res.status);
-            const req = await res.json();
-            throw new Error(knownError || (req as Error).message || defaultErrorMessage);
-         } else if (!isJson) {
-            throw new Error(this.contentErrorMessage);
-         }
-
-         sap = await res.json();
-      } catch (err) {
-         // console.error((err as Error).message);
+      if (!result.ok) {
+         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
          return null;
       }
 
-      return sap;
+      return result.data;
    }
 
-   async getReviews(id: string = ''): Promise<Reviews | null> {
+   async getReviews(id = '', options: RequestOptions = {}): Promise<Reviews | null> {
       const defaultErrorMessage = 'Ошибка получения рецензий!';
-      const baseUrl = `${this.baseUrl}/${id}/reviews`;
-      let reviews = null;
+      const url = `${this.baseUrl}/${id}/reviews`;
+      const result = await this.request<Reviews>(url, defaultErrorMessage, options);
 
-      try {
-         const res = await fetch(baseUrl, this.getHeader(this.getKey()));
-         const isJson = res.headers.get(this.contentTypeKey)?.includes(this.contentTypeValue);
-
-         if (!res.ok) {
-            const knownError = getErrorInfo(res.status);
-            const req = await res.json();
-            throw new Error(knownError || (req as Error).message || defaultErrorMessage);
-         } else if (!isJson) {
-            throw new Error(this.contentErrorMessage);
-         }
-
-         reviews = await res.json();
-      } catch (err) {
-         // console.error((err as Error).message);
+      if (!result.ok) {
+         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
          return null;
       }
 
-      return reviews;
+      return result.data;
    }
 
-   async getFrames(id: string = ''): Promise<Frame[]> {
+   async getFrames(id = ''): Promise<Frame[]> {
+      const options = { withAuth: false };
+      const defaultErrorMessage = 'Ошибка получения фреймов!';
       const url = `${this.baseUrlFramesAPI}?kinopoisk=${id}`;
-      const defaultErrorMessage = 'Ошибка получения фреймов!';
-      let frames = null;
+      const result = await this.request<Frame[]>(url, defaultErrorMessage, options);
 
-      try {
-         const res = await fetch(url);
-         const isJson = res.headers.get(this.contentTypeKey)?.includes(this.contentTypeValue);
-
-         if (!res.ok) {
-            const req = await res.json();
-            throw new Error((req as Error).message || defaultErrorMessage);
-         } else if (!isJson) {
-            throw new Error(this.contentErrorMessage);
-         }
-
-         frames = await res.json();
-      } catch (err) {
-         // console.error((err as Error).message);
+      if (!result.ok) {
+         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
          return [];
       }
 
-      return frames;
+      return result.data;
    }
 
-   async getDataFrames(id: string = ''): Promise<MiniFrame[]> {
+   async getDataFrames(id = ''): Promise<MiniFrame[]> {
+      const options = { withAuth: false };
+      const defaultErrorMessage = 'Ошибка получения информации о похожих фильмах!';
       const url = `${this.baseUrlDataFramesAPI}?kinopoisk=${id}`;
-      const defaultErrorMessage = 'Ошибка получения фреймов!';
-      let frames = null;
+      const result = await this.request<{ data?: MiniFrame[] }>(url, defaultErrorMessage, options);
 
-      try {
-         const res = await fetch(url);
-         const isJson = res.headers.get(this.contentTypeKey)?.includes(this.contentTypeValue);
-
-         if (!res.ok) {
-            const req = await res.json();
-            throw new Error((req as Error).message || defaultErrorMessage);
-         } else if (!isJson) {
-            throw new Error(this.contentErrorMessage);
-         }
-
-         const req = await res.json();
-         frames = req.data || [];
-      } catch (err) {
-         // console.error((err as Error).message);
+      if (!result.ok) {
+         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
          return [];
       }
 
-      return frames;
+      return result.data.data || [];
    }
 }
 

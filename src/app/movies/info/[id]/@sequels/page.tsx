@@ -3,8 +3,9 @@ import { Services } from '@services/Kinopoisk';
 import type { Props } from '../types';
 import styles from './page.module.scss';
 
-export default async function SequelsPage({ params: { id = '' } }: Props) {
+export default async function SequelsPage({ params }: Props) {
    const title = 'Сиквелы и приквелы';
+   const { id } = await params;
    const sequels = await Services.getSequelsAndPrequels(id);
    if (!sequels) return null;
 

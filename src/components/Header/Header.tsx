@@ -1,7 +1,7 @@
 import { Container } from '@components/Container/Container';
 import { HeaderLink } from '@components/HeaderLink/HeaderLink';
 import { ChoiceSorting } from '@components/ChoiceSorting/ChoiceSorting';
-import { Search } from '@components/Search/Search';
+import { SearchForm } from '@components/SearchForm/SearchForm';
 import { ColorSchemeButton } from '@components/ColorSchemeButton/ColorSchemeButton';
 import styles from './Header.module.scss';
 
@@ -16,7 +16,7 @@ export const Header = () => {
 
                <div className={styles.header_controls}>
                   <ChoiceSorting />
-                  <Search />
+                  <SearchForm />
                   <ColorSchemeButton />
                </div>
             </div>

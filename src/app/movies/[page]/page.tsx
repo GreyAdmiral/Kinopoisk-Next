@@ -9,18 +9,19 @@ import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
 import { NotFoundResult } from '@/components/NotFoundResult/NotFoundResult';
 import { ErrorComponent } from '@/components/ErrorComponent/ErrorComponent';
 import { LoadedComponent } from '@/components/LoadedComponent/LoadedComponent';
-import { getCensoredFilms } from '@/tools/getCensoredFilms';
-import { getSortedMovies } from '@tools/getSortedMovies';
-import { brandTitle, defaulSortedMethod } from '@tools/costants';
+import { brandTitle, defaultSortedMethod } from '@tools/costants';
+import { prepareMovies } from '@/tools/prepareMovies';
 import { Services } from '@services/Kinopoisk';
 import type { Metadata } from 'next';
 import type { Props } from './types';
 
-export async function generateMetadata({ params: { page = '' }, searchParams: { keyword = '' } }: Props): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
+   const { page = '' } = await params;
+   const { keyword = '' } = await searchParams;
    const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/${page}`;
-   const hotScreenShot = `https://mini.s-shot.ru/?${pageUrl}`;
+   const hotScreenShot = `https://mini.s-shot.ru/?${encodeURIComponent(pageUrl)}`;
    const description = `${brandTitle} - ищите фильмы по ключевым словам и наслаждайтесь просмотром совершенно бесплатно!`;
-   const title = keyword ? `${brandTitle} | Поиск по словам «${decodeURIComponent(keyword)}»` : brandTitle;
+   const title = keyword ? `${brandTitle} | Поиск по словам «${keyword}»` : brandTitle;
 
    return {
       title: title,
@@ -40,33 +41,25 @@ export async function generateMetadata({ params: { page = '' }, searchParams: { 
    };
 }
 
-export default async function MoviesPage({ params: { page = '' }, searchParams }: Props) {
-   const { keyword = '', reversed = '', sorted = defaulSortedMethod } = searchParams;
-   let { total, totalPages, items: movies, error } = await Services.getMovies(page, keyword);
-   const isMoviesLength = Boolean(movies.length);
-   const desktopQuery = '(min-width: 769px)';
-   const mobileQuery = '(max-width: 768.5px)';
+export default async function MoviesPage({ params, searchParams }: Props) {
+   const { page } = await params;
+   const { keyword = '', reversed = '', sorted = defaultSortedMethod } = await searchParams;
+   const pageNumber = Number(page);
 
-   if (!Number.isInteger(+page) || !Number.isFinite(+page)) {
+   if (!Number.isInteger(pageNumber) || pageNumber < 1) {
       notFound();
    }
 
-   if (isMoviesLength) {
-      movies = getCensoredFilms(movies);
-
-      if (sorted) {
-         movies = getSortedMovies({ method: sorted, movies: movies });
-      }
-
-      if (reversed) {
-         movies.reverse();
-      }
-   }
+   const { total, totalPages, items: rawMovies, error } = await Services.getMovies(page, keyword);
+   const movies = rawMovies.length ? prepareMovies(rawMovies, { sorted, reversed }) : rawMovies;
+   const hasMovies = movies.length > 0;
+   const desktopQuery = '(min-width: 769px)';
+   const mobileQuery = '(max-width: 768.5px)';
 
    return (
       <>
          <MoviesCard>
-            {isMoviesLength && (
+            {hasMovies && (
                <>
                   <QueryShow query={desktopQuery}>
                      {movies.map((movie, idx) => (
@@ -77,21 +70,33 @@ export default async function MoviesPage({ params: { page = '' }, searchParams }
                   </QueryShow>
 
                   <QueryShow query={mobileQuery}>
-                     <MoreButton page={page} searchParams={searchParams} totalPages={totalPages} />
+                     <MoreButton
+                        key={`${keyword}-${sorted}-${reversed}`}
+                        page={page}
+                        searchParams={{ keyword: keyword, reversed, sorted }}
+                        totalPages={totalPages}
+                     />
                   </QueryShow>
                </>
             )}
 
-            {!isMoviesLength && keyword && <NotFoundResult />}
+            {!hasMovies && keyword && <NotFoundResult />}
             {error && <ErrorComponent message={error} />}
          </MoviesCard>
 
          <QueryShow query={desktopQuery}>
-            {isMoviesLength && <Pagination totalPages={totalPages} total={total} page={page} searchParams={searchParams} />}
+            {hasMovies && (
+               <Pagination
+                  totalPages={totalPages}
+                  total={total}
+                  page={page}
+                  searchParams={{ keyword: keyword, reversed, sorted }}
+               />
+            )}
          </QueryShow>
 
          <DownloadNotification />
-         {isMoviesLength && <ScrollArrows />}
+         {hasMovies && <ScrollArrows />}
       </>
    );
 }
