@@ -6,7 +6,6 @@ import { FormInput } from '@components/FormInput/FormInput';
 import { SortDirectButton } from '@components/SortDirectButton/SortDirectButton';
 import { searchAction } from '@tools/actions';
 import { SPRITE_PATH } from '@tools/costants';
-import type { MouseEventHandler } from 'react';
 import styles from './Search.module.scss';
 
 export const Search = () => {
@@ -14,14 +13,7 @@ export const Search = () => {
    const buttonsIconSize = 20;
    const [isSubmite, setIsSubmite] = useState(false);
 
-   const clickHandler: MouseEventHandler<HTMLButtonElement> = (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      e.currentTarget.form?.requestSubmit();
-   };
-
    const submitHandler: FormEventHandler = async (e) => {
-      e.stopPropagation();
       e.preventDefault();
       const target = e.target as HTMLFormElement;
 
@@ -29,11 +21,11 @@ export const Search = () => {
       await searchAction(new FormData(target));
    };
 
-   useEffect(() => {
-      const loadedHandler = () => {
-         setIsSubmite(false);
-      };
+   const loadedHandler = () => {
+      setIsSubmite(false);
+   };
 
+   useEffect(() => {
       document.body.addEventListener('loaded', loadedHandler);
 
       return () => {
@@ -56,12 +48,11 @@ export const Search = () => {
          <button
             id="submiter"
             name="submiter"
-            type="button"
+            type="submit"
             form="search"
             aria-label="Поиск"
             className={clsx([styles.search_button_submit, styles.search_button])}
             disabled={isSubmite || undefined}
-            onClick={clickHandler}
          >
             <svg width={buttonsIconSize} height={buttonsIconSize}>
                <use xlinkHref={`${SPRITE_PATH}#${searchIconID}`} />
