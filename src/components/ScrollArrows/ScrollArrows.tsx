@@ -1,59 +1,109 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { useScrollY } from '@hooks/useScrollY';
 import { getDocumentHeight } from '@tools/getDocumentSizes';
 import { smoothScroll } from '@tools/smoothScroll';
 import { SPRITE_PATH } from '@tools/costants';
-import type { FC } from 'react';
+import type { FC, KeyboardEvent } from 'react';
 import type { ScrollArrowsProps } from './type';
 import styles from './ScrollArrows.module.scss';
 
+const SPRITE_ID = 'arrow';
+const ARROW_SIZE = 40;
+
+/** Минимальный «излишек» высоты документа, при котором стрелки имеют смысл. */
+const MIN_OVERFLOW = 550;
+/** Порог сверху: ниже него верхняя стрелка скрывается. */
+const TOP_THRESHOLD = 550;
+/** Отступ от низа документа, при котором нижняя стрелка скрывается. */
+const BOTTOM_THRESHOLD = 325;
+
 export const ScrollArrows: FC<ScrollArrowsProps> = () => {
-   const spriteID = 'arrow';
-   const arrowSize = 40;
    const documentScrollY = useScrollY();
-   const [isUpArrowHidden, setIsUpArrowHidden] = useState<boolean>(documentScrollY < 550);
-   const [isDownArrowHidden, setIsDownArrowHidden] = useState<boolean>(false);
+   const [isUpHidden, setIsUpHidden] = useState(true);
+   const [isDownHidden, setIsDownHidden] = useState(true);
 
-   const arrowUpHandler = () => {
-      smoothScroll({ top: 0 });
-   };
+   const recalc = useCallback(() => {
+      const docHeight = getDocumentHeight();
+      const viewport = window.innerHeight;
+      const hasOverflow = docHeight >= viewport + MIN_OVERFLOW;
 
-   const arrowDownHandler = () => {
-      smoothScroll({
-         top: getDocumentHeight(),
-      });
-   };
+      if (!hasOverflow) {
+         setIsUpHidden(true);
+         setIsDownHidden(true);
+         return;
+      }
+
+      setIsUpHidden(documentScrollY < TOP_THRESHOLD);
+      setIsDownHidden(documentScrollY + viewport >= docHeight - BOTTOM_THRESHOLD);
+   }, [documentScrollY]);
 
    useEffect(() => {
-      if (getDocumentHeight() >= window.innerHeight + 550) {
-         setIsUpArrowHidden(documentScrollY < 550);
-         setIsDownArrowHidden(documentScrollY + window.innerHeight >= getDocumentHeight() - 325);
-      } else {
-         setIsUpArrowHidden(true);
-         setIsDownArrowHidden(true);
+      recalc();
+   }, [recalc]);
+
+   useEffect(() => {
+      if (typeof ResizeObserver === 'undefined') return;
+
+      const observer = new ResizeObserver(() => recalc());
+      observer.observe(document.documentElement);
+
+      return () => observer.disconnect();
+   }, [recalc]);
+
+   useEffect(() => {
+      const mql = window.matchMedia('(min-height: 0px)');
+      mql.addEventListener('change', recalc);
+
+      return () => mql.removeEventListener('change', recalc);
+   }, [recalc]);
+
+   const scrollToTop = useCallback(() => {
+      smoothScroll({ top: 0 });
+   }, []);
+
+   const scrollToBottom = useCallback(() => {
+      smoothScroll({ top: getDocumentHeight() });
+   }, []);
+
+   const handleKey = (handler: () => void) => (e: KeyboardEvent<SVGSVGElement>) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+         e.preventDefault();
+         handler();
       }
-   }, [documentScrollY]);
+   };
 
    return (
       <div className={styles.scroll_buttons}>
          <svg
-            className={clsx([styles.scroll_buttons_arrow, { [styles.scroll_buttons_arrow_hidden]: isUpArrowHidden }])}
-            width={arrowSize}
-            height={arrowSize}
-            onClick={arrowUpHandler}
+            className={clsx(styles.scroll_buttons_arrow, {
+               [styles.scroll_buttons_arrow_hidden]: isUpHidden,
+            })}
+            width={ARROW_SIZE}
+            height={ARROW_SIZE}
+            role="button"
+            tabIndex={0}
+            aria-label="Прокрутить вверх"
+            onClick={scrollToTop}
+            onKeyDown={handleKey(scrollToTop)}
          >
-            <use xlinkHref={`${SPRITE_PATH}#${spriteID}`} />
+            <use xlinkHref={`${SPRITE_PATH}#${SPRITE_ID}`} />
          </svg>
 
          <svg
-            className={clsx([styles.scroll_buttons_arrow, { [styles.scroll_buttons_arrow_hidden]: isDownArrowHidden }])}
-            width={arrowSize}
-            height={arrowSize}
-            onClick={arrowDownHandler}
+            className={clsx(styles.scroll_buttons_arrow, {
+               [styles.scroll_buttons_arrow_hidden]: isDownHidden,
+            })}
+            width={ARROW_SIZE}
+            height={ARROW_SIZE}
+            role="button"
+            tabIndex={0}
+            aria-label="Прокрутить вниз"
+            onClick={scrollToBottom}
+            onKeyDown={handleKey(scrollToBottom)}
          >
-            <use xlinkHref={`${SPRITE_PATH}#${spriteID}`} />
+            <use xlinkHref={`${SPRITE_PATH}#${SPRITE_ID}`} />
          </svg>
       </div>
    );
