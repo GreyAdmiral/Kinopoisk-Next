@@ -1,5 +1,4 @@
 'use server';
-import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { AppRoutes } from '@tools/costants';
 
@@ -8,7 +7,7 @@ export async function searchAction(data: FormData) {
    const searchParams = new URLSearchParams(queries);
 
    if (keyword) {
-      searchParams.set('keyword', keyword);
+      searchParams.set('keyword', encodeURIComponent(keyword));
    } else if (searchParams.has('keyword')) {
       searchParams.delete('keyword');
    }
@@ -17,5 +16,5 @@ export async function searchAction(data: FormData) {
    const path = `${AppRoutes.PAGE_ROUTE}/1${queies ? `?${queies}` : ''}`;
 
    revalidatePath(path);
-   redirect(path);
+   return path;
 }

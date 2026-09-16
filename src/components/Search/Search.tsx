@@ -1,5 +1,5 @@
 'use client';
-import { FormEventHandler, Suspense, useEffect, useState } from 'react';
+import { FormEventHandler, Suspense, useEffect, useState, useTransition } from 'react';
 import clsx from 'clsx';
 import { Loader } from '@components/Loader/Loader';
 import { FormInput } from '@components/FormInput/FormInput';
@@ -7,16 +7,28 @@ import { SortDirectButton } from '@components/SortDirectButton/SortDirectButton'
 import { searchAction } from '@tools/actions';
 import { SPRITE_PATH } from '@tools/costants';
 import styles from './Search.module.scss';
+import { useRouter } from 'next/navigation';
 
 export const Search = () => {
    const searchIconID = 'search';
    const buttonsIconSize = 20;
+   const router = useRouter();
    const [isSubmite, setIsSubmite] = useState(false);
+   const [isPending, startTransition] = useTransition();
 
-   const submitHandler: FormEventHandler = async () => {
+   const submitHandler: FormEventHandler = (e) => {
+      e.preventDefault();
+      const form = e.target as HTMLFormElement;
+      const data = new FormData(form);
+
       setIsSubmite(true);
-   };
 
+      startTransition(async () => {
+         const path = await searchAction(data);
+         router.push(path);
+         setIsSubmite(false);
+      });
+   };
    const loadedHandler = () => {
       setIsSubmite(false);
    };
@@ -34,7 +46,7 @@ export const Search = () => {
    }, [isSubmite]);
 
    return (
-      <form id="search" name="search" action={searchAction} onSubmit={submitHandler} className={styles.search}>
+      <form id="search" name="search" onSubmit={submitHandler} className={styles.search}>
          <SortDirectButton className={styles.search_button} />
 
          <Suspense key={searchIconID} fallback={<Loader />}>
@@ -48,7 +60,7 @@ export const Search = () => {
             form="search"
             aria-label="Поиск"
             className={clsx([styles.search_button_submit, styles.search_button])}
-            disabled={isSubmite || undefined}
+            disabled={isSubmite || isPending || undefined}
          >
             <svg width={buttonsIconSize} height={buttonsIconSize}>
                <use xlinkHref={`${SPRITE_PATH}#${searchIconID}`} />
