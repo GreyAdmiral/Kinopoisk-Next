@@ -13,12 +13,8 @@ export const Search = () => {
    const buttonsIconSize = 20;
    const [isSubmite, setIsSubmite] = useState(false);
 
-   const submitHandler: FormEventHandler = async (e) => {
-      e.preventDefault();
-      const target = e.target as HTMLFormElement;
-
+   const submitHandler: FormEventHandler = async () => {
       setIsSubmite(true);
-      await searchAction(new FormData(target));
    };
 
    const loadedHandler = () => {
@@ -38,7 +34,7 @@ export const Search = () => {
    }, [isSubmite]);
 
    return (
-      <form id="search" name="search" onSubmit={submitHandler} className={styles.search}>
+      <form id="search" name="search" action={searchAction} onSubmit={submitHandler} className={styles.search}>
          <SortDirectButton className={styles.search_button} />
 
          <Suspense key={searchIconID} fallback={<Loader />}>

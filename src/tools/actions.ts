@@ -8,7 +8,7 @@ export async function searchAction(data: FormData) {
    const searchParams = new URLSearchParams(queries);
 
    if (keyword) {
-      searchParams.set('keyword', encodeURIComponent(keyword));
+      searchParams.set('keyword', keyword);
    } else if (searchParams.has('keyword')) {
       searchParams.delete('keyword');
    }
