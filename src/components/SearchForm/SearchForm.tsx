@@ -1,5 +1,5 @@
-import { Suspense } from 'react';
 import Form from 'next/form';
+import { Suspense } from 'react';
 
 import { Loader } from '@components/Loader/Loader';
 import { ReversedHiddenInput } from '@components/ReversedHiddenInput/ReversedHiddenInput';

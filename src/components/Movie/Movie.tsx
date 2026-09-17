@@ -1,7 +1,7 @@
 // import { getAlias } from '@tools/getAlias';
-import type { FC } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import type { FC } from 'react';
 
 import loadingImage from '@assets/images/loading.svg?url';
 import { CustomCheckBox } from '@components/CustomCheckBox/CustomCheckBox';

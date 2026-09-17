@@ -1,7 +1,7 @@
 'use client';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { FC, SyntheticEvent } from 'react';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { useClickOutside } from '@hooks/useClickOutside';
 import type { CustomSelectOption } from '@typesfolder/types';

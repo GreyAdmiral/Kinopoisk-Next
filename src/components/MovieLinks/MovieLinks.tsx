@@ -1,5 +1,5 @@
-import type { FC } from 'react';
 import Link from 'next/link';
+import type { FC } from 'react';
 
 import { BackLink } from '@components/BackLink/BackLink';
 import { URLToken } from '@services/URLToken';

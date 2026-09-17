@@ -1,7 +1,7 @@
 'use client';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { FC } from 'react';
 import { useFormStatus } from 'react-dom';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { SPRITE_PATH } from '@tools/costants';
 import clsx from 'clsx';

@@ -1,8 +1,8 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import type { PropsWithChildren } from 'react';
 import { useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
 
 import { useClickOutside } from '@hooks/useClickOutside';
 

@@ -1,7 +1,7 @@
 'use client';
+import { useSearchParams } from 'next/navigation';
 import type { ChangeEvent, FC } from 'react';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
 
 import { usePlaceholder } from '@hooks/usePlaceholder';
 

@@ -1,6 +1,6 @@
 'use client';
-import type { FC } from 'react';
 import { useRouter } from 'next/navigation';
+import type { FC } from 'react';
 
 import { AppRoutes } from '@tools/costants';
 
