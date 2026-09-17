@@ -1,4 +1,5 @@
 import { NotFoundResult } from '@/components/NotFoundResult/NotFoundResult';
+
 import styles from './not-found.module.scss';
 
 export default function NotFoundPage() {

@@ -1,8 +1,10 @@
-import { isExists } from '@tools/isExist';
-import { brandTitle } from '@tools/costants';
 import type { FC } from 'react';
-import type { MovieInfoProps } from './types';
+
+import { brandTitle } from '@tools/costants';
+import { isExists } from '@tools/isExist';
+
 import styles from './MovieInfo.module.scss';
+import type { MovieInfoProps } from './types';
 
 export const MovieInfo: FC<MovieInfoProps> = ({ movie }) => {
    const separator = ' / ';

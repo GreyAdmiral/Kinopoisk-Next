@@ -1,11 +1,13 @@
+import type { FC } from 'react';
 import Link from 'next/link';
+
 import { BackLink } from '@components/BackLink/BackLink';
 import { URLToken } from '@services/URLToken';
 import { getLinksForStaticPlayer } from '@tools/getFrameLinks';
 import { getTorrentSearchLink } from '@tools/getTorrentSearchLink';
-import type { FC } from 'react';
-import type { MovieLinksProps } from './types';
+
 import styles from './MovieLinks.module.scss';
+import type { MovieLinksProps } from './types';
 
 export const MovieLinks: FC<MovieLinksProps> = ({ id, webUrl, title, year, frames = [] }) => {
    const factsLinkTitle = 'Интересные факты';

@@ -1,6 +1,8 @@
 'use client';
-import { useMediaQuery } from '@hooks/useMediaQuery';
 import type { FC } from 'react';
+
+import { useMediaQuery } from '@hooks/useMediaQuery';
+
 import type { QueryShowProps } from './types';
 
 export const QueryShow: FC<QueryShowProps> = ({ query, children }) => {

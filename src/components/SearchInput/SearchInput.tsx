@@ -1,8 +1,10 @@
 'use client';
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { usePlaceholder } from '@hooks/usePlaceholder';
 import type { ChangeEvent, FC } from 'react';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+
+import { usePlaceholder } from '@hooks/usePlaceholder';
+
 import type { SearchInputProps } from './types';
 
 export const SearchInput: FC<SearchInputProps> = ({ name, ...props }) => {

@@ -1,9 +1,12 @@
 'use client';
 import { useEffect, useState } from 'react';
+
 import { useLocalStorageSync } from '@hooks/useLocalStorageSync';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { getSchemeIconId } from '@tools/getSchemeIconId';
 import { SCHEMES, SPRITE_PATH } from '@tools/costants';
+import { getSchemeIconId } from '@tools/getSchemeIconId';
+
+import { useMediaQuery } from '@/hooks/useMediaQuery';
+
 import styles from './ColorSchemeButton.module.scss';
 
 export const ColorSchemeButton = () => {

@@ -1,6 +1,8 @@
 'use client';
 import Link from 'next/link';
+
 import { AppRoutes, brandTitle } from '@tools/costants';
+
 import styles from './HeaderLink.module.scss';
 
 export const HeaderLink = () => {

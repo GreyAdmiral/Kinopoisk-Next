@@ -1,10 +1,12 @@
+import type { FC } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BLUR_PLACEHOLDER_IMAGE, SPRITE_PATH } from '@tools/costants';
-import type { FC } from 'react';
-import type { SequelsCardProps } from './types';
-import styles from './SequelCard.module.scss';
+
 import loadingImage from '@assets/images/loading.svg?url';
+import { BLUR_PLACEHOLDER_IMAGE, SPRITE_PATH } from '@tools/costants';
+
+import styles from './SequelCard.module.scss';
+import type { SequelsCardProps } from './types';
 
 export const SequelCard: FC<SequelsCardProps> = ({ sequel }) => {
    const alternateText = 'Постер фильма';

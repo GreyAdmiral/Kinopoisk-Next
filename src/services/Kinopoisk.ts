@@ -1,14 +1,14 @@
 import { getErrorInfo } from '@tools/getErrorInfo';
 import type {
-   FetchOptions,
-   MoviesProps,
-   MovieDescription,
    Facts,
-   Similars,
-   Sequel,
-   Reviews,
+   FetchOptions,
    Frame,
    MiniFrame,
+   MovieDescription,
+   MoviesProps,
+   Reviews,
+   Sequel,
+   Similars,
 } from '@typesfolder/types';
 
 interface RequestOptions extends RequestInit {

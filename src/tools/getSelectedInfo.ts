@@ -1,7 +1,8 @@
-import { getFreeLinks } from './getFreeLinks';
-import { getFreeLinksForPlayer } from './getFreeLinksForPlayer';
 // import { getSpareLinksForPlayer } from './getSpareLinksForPlayer';
 import type { MovieProps, SelectedMovie } from '@typesfolder/types';
+
+import { getFreeLinks } from './getFreeLinks';
+import { getFreeLinksForPlayer } from './getFreeLinksForPlayer';
 
 export function getSelectedInfo(movie: MovieProps): SelectedMovie {
    const separator = ' / ';

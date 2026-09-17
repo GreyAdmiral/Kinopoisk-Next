@@ -1,15 +1,18 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ScrollRestoration } from '@components/ScrollRestoration/ScrollRestoration';
-import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
+
 import { BackLink } from '@components/BackLink/BackLink';
+import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
+import { ScrollRestoration } from '@components/ScrollRestoration/ScrollRestoration';
 import { Services } from '@services/Kinopoisk';
 import { URLToken } from '@services/URLToken';
-import { isExists } from '@tools/isExist';
 import { brandTitle } from '@tools/costants';
-import type { Metadata } from 'next';
+import { isExists } from '@tools/isExist';
+
 import type { Props } from '../types';
+
 import styles from './page.module.scss';
-import Link from 'next/link';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
    const { id } = await params;

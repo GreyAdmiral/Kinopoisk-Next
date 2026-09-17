@@ -1,8 +1,11 @@
-import { ReviewCard } from '@/components/ReviewCard/ReviewCard';
-import { MoreReviewsButton } from '@/components/MoreReviewsButton/MoreReviewsButton';
 import { Services } from '@services/Kinopoisk';
 import type { Review } from '@typesfolder/types';
+
+import { MoreReviewsButton } from '@/components/MoreReviewsButton/MoreReviewsButton';
+import { ReviewCard } from '@/components/ReviewCard/ReviewCard';
+
 import type { Props } from '../types';
+
 import styles from './page.module.scss';
 
 export default async function ReviewsPage({ params }: Props) {
@@ -16,7 +19,7 @@ export default async function ReviewsPage({ params }: Props) {
    if (!total || !isItems) return null;
 
    const startContentCount = Math.ceil(total / totalPages);
-   let result: Array<Review[]> = [];
+   const result: Array<Review[]> = [];
 
    for (let i = 1; i <= totalPages; i++) {
       const start = (i - 1) * startContentCount;

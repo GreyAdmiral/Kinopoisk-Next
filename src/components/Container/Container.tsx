@@ -1,4 +1,5 @@
 import type { FC, PropsWithChildren } from 'react';
+
 import type { ContainerProps } from './types';
 
 export const Container: FC<PropsWithChildren & ContainerProps> = ({ children, className }) => {

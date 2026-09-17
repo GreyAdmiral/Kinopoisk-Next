@@ -1,13 +1,15 @@
 'use client';
+import type { FC, KeyboardEvent } from 'react';
 import { useCallback, useEffect, useState } from 'react';
-import clsx from 'clsx';
+
 import { useScrollY } from '@hooks/useScrollY';
+import { SPRITE_PATH } from '@tools/costants';
 import { getDocumentHeight } from '@tools/getDocumentSizes';
 import { smoothScroll } from '@tools/smoothScroll';
-import { SPRITE_PATH } from '@tools/costants';
-import type { FC, KeyboardEvent } from 'react';
-import type { ScrollArrowsProps } from './type';
+import clsx from 'clsx';
+
 import styles from './ScrollArrows.module.scss';
+import type { ScrollArrowsProps } from './type';
 
 const SPRITE_ID = 'arrow';
 const ARROW_SIZE = 40;

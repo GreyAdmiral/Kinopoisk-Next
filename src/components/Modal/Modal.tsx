@@ -1,9 +1,11 @@
 'use client';
 
+import type { PropsWithChildren } from 'react';
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+
 import { useClickOutside } from '@hooks/useClickOutside';
-import type { PropsWithChildren } from 'react';
+
 import styles from './Modal.module.scss';
 
 export const Modal = ({ children }: PropsWithChildren) => {

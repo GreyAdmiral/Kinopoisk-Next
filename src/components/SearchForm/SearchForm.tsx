@@ -1,10 +1,12 @@
-import Form from 'next/form';
 import { Suspense } from 'react';
+import Form from 'next/form';
+
 import { Loader } from '@components/Loader/Loader';
 import { ReversedHiddenInput } from '@components/ReversedHiddenInput/ReversedHiddenInput';
-import { SortDirectButton } from '@components/SortDirectButton/SortDirectButton';
 import { SearchButton } from '@components/SearchButton/SearchButton';
 import { SearchInput } from '@components/SearchInput/SearchInput';
+import { SortDirectButton } from '@components/SortDirectButton/SortDirectButton';
+
 import styles from './SearchForm.module.scss';
 
 export const SearchForm = () => {

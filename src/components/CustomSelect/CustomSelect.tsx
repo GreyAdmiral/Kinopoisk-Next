@@ -1,12 +1,15 @@
 'use client';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
-import { QueryShow } from '@/components/QueryShow/QueryShow';
-import { useClickOutside } from '@hooks/useClickOutside';
 import type { FC, SyntheticEvent } from 'react';
-import type { CustomSelectProps } from './types';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
+import { useClickOutside } from '@hooks/useClickOutside';
 import type { CustomSelectOption } from '@typesfolder/types';
+
+import { QueryShow } from '@/components/QueryShow/QueryShow';
+
 import styles from './CustomSelect.module.scss';
+import type { CustomSelectProps } from './types';
 
 const CustomSelectKeysCodes = ['Escape'];
 

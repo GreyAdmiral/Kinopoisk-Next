@@ -1,6 +1,7 @@
+import type { MovieProps, SortedMethod } from '@typesfolder/types';
+
 import { getCensoredFilms } from './getCensoredFilms';
 import { getSortedMovies } from './getSortedMovies';
-import type { MovieProps, SortedMethod } from '@typesfolder/types';
 
 type Options = {
    sorted?: SortedMethod | string;

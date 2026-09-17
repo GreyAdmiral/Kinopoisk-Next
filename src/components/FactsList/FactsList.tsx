@@ -1,7 +1,9 @@
-import { getTextClearedOfTags } from '@tools/getTextClearedOfTags';
 import type { FC } from 'react';
-import type { FactsListProps } from './types';
+
+import { getTextClearedOfTags } from '@tools/getTextClearedOfTags';
+
 import styles from './FactsList.module.scss';
+import type { FactsListProps } from './types';
 
 export const FactsList: FC<FactsListProps> = ({ facts, title }) => {
    if (!facts.length) {

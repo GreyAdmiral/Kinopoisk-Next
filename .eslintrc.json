@@ -9,6 +9,7 @@
          "jsx": true
       }
    },
+   "plugins": ["simple-import-sort"],
    "rules": {
       "max-lines-per-function": "off",
       "no-undef": "off"
@@ -18,6 +19,8 @@
          "files": ["*.tsx", "*.ts"],
          "rules": {
             "max-lines-per-function": ["off"],
+            "simple-import-sort/exports": "warn",
+            "prefer-const": ["error", { "destructuring": "any" }],
             "no-undef": "off",
             "no-unused-vars": [
                "error",
@@ -29,7 +32,22 @@
                   "reportUsedIgnorePattern": false,
                   "argsIgnorePattern": "^_",
                   "varsIgnorePattern": "^_",
-                  "caughtErrorsIgnorePattern": "^_"
+                  "caughtErrorsIgnorePattern": "^_",
+                  "destructuredArrayIgnorePattern": "^_"
+               }
+            ],
+            "simple-import-sort/imports": [
+               "warn",
+               {
+                  "groups": [
+                     ["^react", "^next"],
+                     ["^@?\\w"],
+                     ["^@($|/)"],
+                     ["^src/"],
+                     ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+                     ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+                     ["^\\.css$", "^\\.scss$", "^.(jpe?g|png|svg|avif|webp|gif|bmp)$"]
+                  ]
                }
             ]
          }

@@ -1,10 +1,13 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { ReviewCard } from '@/components/ReviewCard/ReviewCard';
 import type { FC } from 'react';
-import type { MoreReviewsButtonProps } from './types';
+import { useEffect, useState } from 'react';
+
 import type { Review } from '@typesfolder/types';
+
+import { ReviewCard } from '@/components/ReviewCard/ReviewCard';
+
 import styles from './MoreReviewsButton.module.scss';
+import type { MoreReviewsButtonProps } from './types';
 
 export const MoreReviewsButton: FC<MoreReviewsButtonProps> = ({ reviews }) => {
    const title = 'Показать еще...';

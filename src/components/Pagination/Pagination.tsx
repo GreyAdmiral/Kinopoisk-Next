@@ -1,9 +1,12 @@
-import Link from 'next/link';
-import { PaginationButton } from '../PaginationButton/PaginationButton';
-import { AppRoutes } from '@tools/costants';
 import type { FC } from 'react';
-import type { PaginationProps } from './types';
+import Link from 'next/link';
+
+import { AppRoutes } from '@tools/costants';
+
+import { PaginationButton } from '../PaginationButton/PaginationButton';
+
 import styles from './Pagination.module.scss';
+import type { PaginationProps } from './types';
 
 export const Pagination: FC<PaginationProps> = ({ totalPages, page, searchParams }) => {
    const nextPageTitle = '❱';
@@ -15,7 +18,7 @@ export const Pagination: FC<PaginationProps> = ({ totalPages, page, searchParams
    const forwardPageTitleAttribut = 'Последняя страница';
    const backwardPageTitleAttribut = 'Первая страница';
    const { keyword = '', reversed = '', sorted = '' } = searchParams;
-   let queries = new URLSearchParams();
+   const queries = new URLSearchParams();
 
    Object.entries({ keyword, reversed, sorted }).forEach(([key, value]) => {
       if (value) {

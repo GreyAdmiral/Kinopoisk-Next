@@ -1,9 +1,11 @@
+import type { Metadata } from 'next';
+
 import { Modal } from '@components/Modal/Modal';
 import { Services } from '@services/Kinopoisk';
 import { URLToken } from '@services/URLToken';
 import { brandTitle } from '@tools/costants';
+
 import styles from './page.module.scss';
-import type { Metadata } from 'next';
 import type { Props } from './types';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

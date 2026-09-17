@@ -1,10 +1,12 @@
 'use client';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { SPRITE_PATH } from '@tools/costants';
 import type { FC } from 'react';
-import type { BackLinkProps } from './types';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+import { SPRITE_PATH } from '@tools/costants';
+
 import styles from './BackLink.module.scss';
+import type { BackLinkProps } from './types';
 
 export const BackLink: FC<BackLinkProps> = ({ className }) => {
    const buttonTitle = 'Вернуться';

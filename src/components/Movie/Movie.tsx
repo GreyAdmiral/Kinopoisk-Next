@@ -1,15 +1,18 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { CustomCheckBox } from '@components/CustomCheckBox/CustomCheckBox';
-import { getStringFromValue } from '@/tools/getStringFromValue';
-import { BLUR_PLACEHOLDER_IMAGE } from '@tools/costants';
-import { brandTitle } from '@tools/costants';
 // import { getAlias } from '@tools/getAlias';
 import type { FC } from 'react';
-import type { Props } from './types';
-import styles from './Movie.module.scss';
-import videotypes from '@data/videotypes.json';
+import Image from 'next/image';
+import Link from 'next/link';
+
 import loadingImage from '@assets/images/loading.svg?url';
+import { CustomCheckBox } from '@components/CustomCheckBox/CustomCheckBox';
+import videotypes from '@data/videotypes.json';
+import { BLUR_PLACEHOLDER_IMAGE } from '@tools/costants';
+import { brandTitle } from '@tools/costants';
+
+import { getStringFromValue } from '@/tools/getStringFromValue';
+
+import styles from './Movie.module.scss';
+import type { Props } from './types';
 
 const videoTypesTranslator = new Proxy(videotypes, {
    get(target: Record<string, string>, prop: string) {

@@ -1,10 +1,12 @@
-import Image from 'next/image';
-import { isExists } from '@tools/isExist';
-import { BLUR_PLACEHOLDER_IMAGE } from '@tools/costants';
 import type { FC } from 'react';
-import type { MoviePosterProps } from './types';
-import styles from './MoviePoster.module.scss';
+import Image from 'next/image';
+
 import loadingImage from '@assets/images/loading.svg?url';
+import { BLUR_PLACEHOLDER_IMAGE } from '@tools/costants';
+import { isExists } from '@tools/isExist';
+
+import styles from './MoviePoster.module.scss';
+import type { MoviePosterProps } from './types';
 
 export const MoviePoster: FC<MoviePosterProps> = ({ posterUrl, title }) => {
    const notFoundTitle = 'Не найдено';

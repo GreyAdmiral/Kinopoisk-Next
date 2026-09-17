@@ -1,6 +1,8 @@
 import { SequelCard } from '@components/SequelCard/SequelCard';
 import { Services } from '@services/Kinopoisk';
+
 import type { Props } from '../types';
+
 import styles from './page.module.scss';
 
 export default async function SequelsPage({ params }: Props) {

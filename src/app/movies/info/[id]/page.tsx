@@ -1,15 +1,18 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { MovieInfo } from '@/components/MovieInfo/MovieInfo';
-import { MovieLinks } from '@/components/MovieLinks/MovieLinks';
+
 import { MoviePoster } from '@components/MoviePoster/MoviePoster';
 import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
 import { Services } from '@services/Kinopoisk';
 import { brandTitle } from '@tools/costants';
-import { getDataFrameLinks } from '@tools/getFrameLinks';
 import { getFilteredPlayers } from '@tools/getFilteredPlayers';
-import type { Metadata } from 'next';
-import type { Props } from './types';
+import { getDataFrameLinks } from '@tools/getFrameLinks';
+
+import { MovieInfo } from '@/components/MovieInfo/MovieInfo';
+import { MovieLinks } from '@/components/MovieLinks/MovieLinks';
+
 import styles from './page.module.scss';
+import type { Props } from './types';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
    const { id } = await params;

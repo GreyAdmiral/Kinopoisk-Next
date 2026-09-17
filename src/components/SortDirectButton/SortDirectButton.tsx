@@ -1,11 +1,13 @@
 'use client';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useFormStatus } from 'react-dom';
-import clsx from 'clsx';
-import { SPRITE_PATH } from '@tools/costants';
 import type { FC } from 'react';
-import type { SortDirectButtonProps } from './types';
+import { useFormStatus } from 'react-dom';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+
+import { SPRITE_PATH } from '@tools/costants';
+import clsx from 'clsx';
+
 import styles from './SortDirectButton.module.scss';
+import type { SortDirectButtonProps } from './types';
 
 export const SortDirectButton: FC<SortDirectButtonProps> = ({ className }) => {
    const sortIconID = 'sort';

@@ -1,9 +1,12 @@
-import Link from 'next/link';
-import { BackLink } from '@components/BackLink/BackLink';
-import { AppRoutes } from '@/tools/costants';
 import type { FC } from 'react';
-import type { NotFoundResultProps } from './types';
+import Link from 'next/link';
+
+import { BackLink } from '@components/BackLink/BackLink';
+
+import { AppRoutes } from '@/tools/costants';
+
 import styles from './NotFoundResult.module.scss';
+import type { NotFoundResultProps } from './types';
 
 export const NotFoundResult: FC<NotFoundResultProps> = ({ message }) => {
    const title = message || 'Ничего не найдено!';

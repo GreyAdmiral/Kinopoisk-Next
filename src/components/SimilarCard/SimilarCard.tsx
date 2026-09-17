@@ -1,10 +1,12 @@
+import type { FC } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BLUR_PLACEHOLDER_IMAGE } from '@tools/costants';
-import type { FC } from 'react';
-import type { SimilarCardProps } from './types';
-import styles from './SimilarCard.module.scss';
+
 import loadingImage from '@assets/images/loading.svg?url';
+import { BLUR_PLACEHOLDER_IMAGE } from '@tools/costants';
+
+import styles from './SimilarCard.module.scss';
+import type { SimilarCardProps } from './types';
 
 export const SimilarCard: FC<SimilarCardProps> = ({ similar }) => {
    const alternateText = 'Постер фильма';

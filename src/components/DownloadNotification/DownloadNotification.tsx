@@ -1,11 +1,13 @@
 'use client';
+import type { MouseEvent } from 'react';
 import { useEffect, useState } from 'react';
+
 import { DialogNotification } from '@components/DialogNotification/DialogNotification';
 import { useSessionStorageSync } from '@hooks/useSessionStorageSync';
-import { getCSVLine } from '@tools/getCSVLine';
 import { downloadCSV } from '@tools/downloadCSV';
-import type { MouseEvent } from 'react';
+import { getCSVLine } from '@tools/getCSVLine';
 import type { SavedMovies } from '@typesfolder/types';
+
 import styles from './DownloadNotification.module.scss';
 
 export const DownloadNotification = () => {

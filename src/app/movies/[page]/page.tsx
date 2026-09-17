@@ -1,18 +1,21 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { MoviesCard } from '@components/MoviesCard/MoviesCard';
-import { Movie } from '@components/Movie/Movie';
-import { QueryShow } from '@/components/QueryShow/QueryShow';
-import { Pagination } from '@components/Pagination/Pagination';
-import { MoreButton } from '@components/MoreButton/MoreButton';
+
 import { DownloadNotification } from '@components/DownloadNotification/DownloadNotification';
+import { MoreButton } from '@components/MoreButton/MoreButton';
+import { Movie } from '@components/Movie/Movie';
+import { MoviesCard } from '@components/MoviesCard/MoviesCard';
+import { Pagination } from '@components/Pagination/Pagination';
 import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
-import { NotFoundResult } from '@/components/NotFoundResult/NotFoundResult';
+import { Services } from '@services/Kinopoisk';
+import { brandTitle, defaultSortedMethod } from '@tools/costants';
+
 import { ErrorComponent } from '@/components/ErrorComponent/ErrorComponent';
 import { LoadedComponent } from '@/components/LoadedComponent/LoadedComponent';
-import { brandTitle, defaultSortedMethod } from '@tools/costants';
+import { NotFoundResult } from '@/components/NotFoundResult/NotFoundResult';
+import { QueryShow } from '@/components/QueryShow/QueryShow';
 import { prepareMovies } from '@/tools/prepareMovies';
-import { Services } from '@services/Kinopoisk';
-import type { Metadata } from 'next';
+
 import type { Props } from './types';
 
 export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {

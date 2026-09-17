@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
 import type { FC } from 'react';
-import type { CustomNotificationProps } from './types';
+import { useEffect, useRef } from 'react';
+
 import styles from './DialogNotification.module.scss';
+import type { CustomNotificationProps } from './types';
 
 export const DialogNotification: FC<CustomNotificationProps> = ({ isOpenNotification, children }) => {
    const notificationRef = useRef<HTMLDialogElement>(null);

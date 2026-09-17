@@ -1,7 +1,8 @@
 'use client';
 import type { FC } from 'react';
-import type { ReloadButtonProps } from './types';
+
 import styles from './ReloadButton.module.scss';
+import type { ReloadButtonProps } from './types';
 
 export const ReloadButton: FC<ReloadButtonProps> = ({ className }) => {
    const buttonTitle = 'Обновить страницу';

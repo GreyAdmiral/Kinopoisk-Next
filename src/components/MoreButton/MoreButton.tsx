@@ -1,14 +1,17 @@
 'use client';
-import { useCallback, useEffect, useState } from 'react';
-import { Movie } from '@components/Movie/Movie';
-import { Loader } from '@components/Loader/Loader';
-import { prepareMovies } from '@tools/prepareMovies';
-import { Services } from '@services/Kinopoisk';
 import type { FC } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+import { Loader } from '@components/Loader/Loader';
+import { Movie } from '@components/Movie/Movie';
+import { Services } from '@services/Kinopoisk';
+import { prepareMovies } from '@tools/prepareMovies';
 import type { MovieProps } from '@typesfolder/types';
-import type { MoreButtonProps } from './types';
-import styles from './MoreButton.module.scss';
+
 import { LoadedComponent } from '@/components/LoadedComponent/LoadedComponent';
+
+import styles from './MoreButton.module.scss';
+import type { MoreButtonProps } from './types';
 
 const BUTTON_TITLE = 'Загрузить еще';
 const LOADING_BUTTON_TITLE = 'Загрузка...';

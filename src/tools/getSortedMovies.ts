@@ -1,5 +1,6 @@
-import { getStringFromValue } from './getStringFromValue';
 import type { MovieProps, SortedMethod } from '@typesfolder/types';
+
+import { getStringFromValue } from './getStringFromValue';
 
 interface Arguments {
    method: SortedMethod;

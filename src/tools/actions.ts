@@ -1,5 +1,6 @@
 'use server';
 import { revalidatePath } from 'next/cache';
+
 import { AppRoutes } from '@tools/costants';
 
 export async function searchAction(data: FormData) {

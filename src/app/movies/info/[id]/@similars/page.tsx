@@ -1,7 +1,9 @@
-import { Services } from '@services/Kinopoisk';
-import { SliderList } from '@components/SliderList/SliderList';
 import { SimilarCard } from '@components/SimilarCard/SimilarCard';
+import { SliderList } from '@components/SliderList/SliderList';
+import { Services } from '@services/Kinopoisk';
+
 import type { Props } from '../types';
+
 import styles from './page.module.scss';
 
 export default async function SimilarsPage({ params }: Props) {

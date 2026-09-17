@@ -1,12 +1,16 @@
-import { ScrollRestoration } from '@components/ScrollRestoration/ScrollRestoration';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { FactsList } from '@components/FactsList/FactsList';
+
 import { BackLink } from '@components/BackLink/BackLink';
-import { NotFoundResult } from '@/components/NotFoundResult/NotFoundResult';
+import { FactsList } from '@components/FactsList/FactsList';
+import { ScrollRestoration } from '@components/ScrollRestoration/ScrollRestoration';
 import { Services } from '@services/Kinopoisk';
 import { brandTitle } from '@tools/costants';
-import type { Metadata } from 'next';
+
+import { NotFoundResult } from '@/components/NotFoundResult/NotFoundResult';
+
 import type { Props } from '../types';
+
 import styles from './page.module.scss';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

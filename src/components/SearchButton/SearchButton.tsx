@@ -1,8 +1,10 @@
 'use client';
 import { useEffect } from 'react';
 import { useFormStatus } from 'react-dom';
-import clsx from 'clsx';
+
 import { SPRITE_PATH } from '@tools/costants';
+import clsx from 'clsx';
+
 import styles from './SearchButton.module.scss';
 
 export const SearchButton = () => {

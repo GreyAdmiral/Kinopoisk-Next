@@ -1,8 +1,9 @@
 'use client';
-import { useCallback, useEffect, useRef } from 'react';
 import type { FC } from 'react';
-import type { SliderListProps, State } from './types';
+import { useCallback, useEffect, useRef } from 'react';
+
 import styles from './SliderList.module.scss';
+import type { SliderListProps, State } from './types';
 
 export const SliderList: FC<SliderListProps> = ({ className, children }) => {
    const listRef = useRef<HTMLDivElement>(null);

@@ -1,8 +1,9 @@
+import { ChoiceSorting } from '@components/ChoiceSorting/ChoiceSorting';
+import { ColorSchemeButton } from '@components/ColorSchemeButton/ColorSchemeButton';
 import { Container } from '@components/Container/Container';
 import { HeaderLink } from '@components/HeaderLink/HeaderLink';
-import { ChoiceSorting } from '@components/ChoiceSorting/ChoiceSorting';
 import { SearchForm } from '@components/SearchForm/SearchForm';
-import { ColorSchemeButton } from '@components/ColorSchemeButton/ColorSchemeButton';
+
 import styles from './Header.module.scss';
 
 export const Header = () => {

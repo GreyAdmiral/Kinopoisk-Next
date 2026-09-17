@@ -1,10 +1,13 @@
-import { Container } from '@components/Container/Container';
-import { Header } from '@components/Header/Header';
-import { Footer } from '@components/Footer/Footer';
-import { brandTitle } from '@tools/costants';
 import type { PropsWithChildren } from 'react';
 import type { Metadata, Viewport } from 'next';
+
+import { Container } from '@components/Container/Container';
+import { Footer } from '@components/Footer/Footer';
+import { Header } from '@components/Header/Header';
+import { brandTitle } from '@tools/costants';
+
 import styles from './layout.module.scss';
+
 import '../scss/style.scss';
 
 export const viewport: Viewport = {

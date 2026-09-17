@@ -1,7 +1,9 @@
-import { getTextClearedOfTags } from '@tools/getTextClearedOfTags';
 import type { FC } from 'react';
-import type { ReviewCardProps } from './types';
+
+import { getTextClearedOfTags } from '@tools/getTextClearedOfTags';
+
 import styles from './ReviewCard.module.scss';
+import type { ReviewCardProps } from './types';
 
 export const ReviewCard: FC<ReviewCardProps> = ({ review }) => {
    const { author, description, date } = review;

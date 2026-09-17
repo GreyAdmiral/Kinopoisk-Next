@@ -1,11 +1,13 @@
 'use client';
+import type { ChangeEvent, FC } from 'react';
 import { useEffect, useRef, useState } from 'react';
+
 import { useSessionStorageSync } from '@hooks/useSessionStorageSync';
 import { getSelectedInfo } from '@tools/getSelectedInfo';
-import type { FC, ChangeEvent } from 'react';
-import type { CustomCheckBoxProps } from './types';
 import type { SavedMovies, SelectedMovie } from '@typesfolder/types';
+
 import styles from './CustomCheckBox.module.scss';
+import type { CustomCheckBoxProps } from './types';
 
 export const CustomCheckBox: FC<CustomCheckBoxProps> = ({ movie }) => {
    const [selectedMovies, setSelectedMovies] = useSessionStorageSync('selectedMovies', JSON.stringify([]));
