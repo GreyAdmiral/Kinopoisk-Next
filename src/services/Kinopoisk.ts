@@ -15,8 +15,11 @@ interface RequestOptions extends RequestInit {
    withAuth?: boolean;
 }
 
-type JsonResult<T> = { ok: true; data: T } | { ok: false; error: string; aborted?: boolean };
-type FetchBody = { message?: string };
+type FetchErrorBody = { message?: string };
+type SuccessRequest<T> = { ok: true; data: T };
+type ErrorRequest = { ok: false; error: string; aborted?: boolean; status?: number };
+
+export type JsonResult<T> = SuccessRequest<T> | ErrorRequest;
 
 let instance = null;
 
@@ -60,8 +63,11 @@ class Kinopoisk {
 
          if (!res.ok) {
             const knownError = getErrorInfo(res.status);
-            const body: FetchBody = await res.json().catch((err) => ({ message: err.message }));
-            throw new Error(knownError || body.message || defaultErrorMessage);
+            const body: FetchErrorBody = await res.json().catch(() => ({}));
+            const err = new Error(knownError || body.message || `${defaultErrorMessage} (${res.status})`);
+
+            ((<unknown>err) as ErrorRequest).status = res.status;
+            throw err;
          }
 
          if (!isJson) {
@@ -74,7 +80,7 @@ class Kinopoisk {
             return { ok: false, error: 'aborted', aborted: true };
          }
 
-         return { ok: false, error: (err as Error).message };
+         return { ok: false, error: (err as Error).message, status: ((<unknown>err) as ErrorRequest).status };
       }
    }
 
