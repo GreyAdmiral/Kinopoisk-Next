@@ -10,11 +10,11 @@ export const AppRoutes = {
    ERROR_ROUTE: '/error',
 } as const;
 
-export const SCHEMES = {
+export const THEMES = {
    LIGHT: 'light',
    DARK: 'dark',
-   DEFAULT: 'light',
-};
+   DEFAULT: 'dark',
+} as const;
 
 export const SPRITE_PATH = '/images/sprite.svg';
 

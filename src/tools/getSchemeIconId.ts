@@ -1,5 +1,5 @@
-import { SCHEMES } from '@tools/costants';
+import { THEMES } from '@tools/costants';
 
 export function getSchemeIconId(schemeName: string) {
-   return schemeName === SCHEMES.LIGHT ? SCHEMES.DARK : SCHEMES.LIGHT;
+   return schemeName === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT;
 }

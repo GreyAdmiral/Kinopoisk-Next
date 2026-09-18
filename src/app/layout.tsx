@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from 'next';
+import { ThemeProvider } from 'next-themes';
 import type { PropsWithChildren } from 'react';
 
 import { Container } from '@components/Container/Container';
 import { Footer } from '@components/Footer/Footer';
 import { Header } from '@components/Header/Header';
-import { brandTitle } from '@tools/costants';
+import { brandTitle, THEMES } from '@tools/costants';
 
 import styles from './layout.module.scss';
 
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
    return (
-      <html lang="ru" data-scroll-behavior="smooth">
+      <html lang="ru" data-scroll-behavior="smooth" suppressHydrationWarning>
          <head>
             <meta name="format-detection" content="telephone=no, email=no, address=no, date=no" />
             <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -42,17 +43,19 @@ export default function RootLayout({ children }: PropsWithChildren) {
          </head>
 
          <body>
-            <div id="root" className="wrapper">
-               <Header />
+            <ThemeProvider defaultTheme={THEMES.DEFAULT} enableSystem>
+               <div id="root" className="wrapper">
+                  <Header />
 
-               <div className={styles.main}>
-                  <Container>
-                     <div className={styles.main_body}>{children}</div>
-                  </Container>
+                  <div className={styles.main}>
+                     <Container>
+                        <div className={styles.main_body}>{children}</div>
+                     </Container>
+                  </div>
+
+                  <Footer />
                </div>
-
-               <Footer />
-            </div>
+            </ThemeProvider>
          </body>
       </html>
    );

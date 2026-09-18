@@ -1,52 +1,34 @@
 'use client';
+import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
-import { useLocalStorageSync } from '@hooks/useLocalStorageSync';
-import { SCHEMES, SPRITE_PATH } from '@tools/costants';
+import { SPRITE_PATH, THEMES } from '@tools/costants';
 import { getSchemeIconId } from '@tools/getSchemeIconId';
-
-import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 import styles from './ColorSchemeButton.module.scss';
 
 export const ColorSchemeButton = () => {
+   const { theme, setTheme } = useTheme();
+   const [mounted, setMounted] = useState<boolean>(false);
+   const ariaText = theme === THEMES.LIGHT ? 'тёмную' : 'светлую';
    const buttonsIconSize = 24;
-   const [saveScheme, setSaveScheme] = useLocalStorageSync('userScheme', '');
-   const isAutoDark = useMediaQuery('(prefers-color-scheme: dark)');
-   const [activeScheme, setActiveScheme] = useState<string>('');
-
-   function writeSchemeName() {
-      const newScheme = activeScheme === SCHEMES.DARK ? SCHEMES.LIGHT : SCHEMES.DARK;
-
-      setSaveScheme(newScheme);
-      setActiveScheme(newScheme);
-      (document.activeElement as HTMLTemplateElement).blur();
-   }
 
    useEffect(() => {
-      const scheme = saveScheme ? saveScheme : isAutoDark ? SCHEMES.DARK : SCHEMES.LIGHT;
+      setMounted(true);
+   }, []);
 
-      if (scheme) {
-         setActiveScheme(scheme);
-      }
-   }, [isAutoDark, saveScheme]);
-
-   useEffect(() => {
-      if (activeScheme) {
-         document.documentElement.dataset.theme = activeScheme;
-      }
-   }, [activeScheme]);
+   if (!mounted) return null;
 
    return (
       <button
          type="button"
          className={styles.scheme_button}
-         onClick={writeSchemeName}
-         title={`Выбрать ${activeScheme == SCHEMES.LIGHT ? 'тёмную' : 'светлую'} тему`}
-         aria-label={`Выбрать ${activeScheme == SCHEMES.LIGHT ? 'тёмную' : 'светлую'} тему`}
+         onClick={() => setTheme(getSchemeIconId(theme ?? THEMES.DEFAULT))}
+         title={`Выбрать ${ariaText} тему`}
+         aria-label={`Выбрать ${ariaText} тему`}
       >
          <svg width={buttonsIconSize} height={buttonsIconSize}>
-            <use xlinkHref={`${SPRITE_PATH}#${getSchemeIconId(activeScheme)}`} />
+            <use xlinkHref={`${SPRITE_PATH}#${getSchemeIconId(theme ?? THEMES.DEFAULT)}`} />
          </svg>
       </button>
    );
