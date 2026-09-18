@@ -13,7 +13,6 @@ export const AppRoutes = {
 export const THEMES = {
    LIGHT: 'light',
    DARK: 'dark',
-   DEFAULT: 'dark',
 } as const;
 
 export const SPRITE_PATH = '/images/sprite.svg';

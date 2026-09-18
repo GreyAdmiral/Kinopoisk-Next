@@ -8,9 +8,9 @@ import { getSchemeIconId } from '@tools/getSchemeIconId';
 import styles from './ColorSchemeButton.module.scss';
 
 export const ColorSchemeButton = () => {
-   const { theme, setTheme } = useTheme();
+   const { resolvedTheme, setTheme } = useTheme();
    const [mounted, setMounted] = useState<boolean>(false);
-   const ariaText = theme === THEMES.LIGHT ? 'тёмную' : 'светлую';
+   const ariaText = resolvedTheme === THEMES.LIGHT ? 'тёмную' : 'светлую';
    const buttonsIconSize = 24;
 
    useEffect(() => {
@@ -23,12 +23,12 @@ export const ColorSchemeButton = () => {
       <button
          type="button"
          className={styles.scheme_button}
-         onClick={() => setTheme(getSchemeIconId(theme ?? THEMES.DEFAULT))}
+         onClick={() => setTheme(getSchemeIconId(resolvedTheme as string))}
          title={`Выбрать ${ariaText} тему`}
          aria-label={`Выбрать ${ariaText} тему`}
       >
          <svg width={buttonsIconSize} height={buttonsIconSize}>
-            <use xlinkHref={`${SPRITE_PATH}#${getSchemeIconId(theme ?? THEMES.DEFAULT)}`} />
+            <use xlinkHref={`${SPRITE_PATH}#${getSchemeIconId(resolvedTheme as string)}`} />
          </svg>
       </button>
    );

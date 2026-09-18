@@ -5,7 +5,7 @@ import type { PropsWithChildren } from 'react';
 import { Container } from '@components/Container/Container';
 import { Footer } from '@components/Footer/Footer';
 import { Header } from '@components/Header/Header';
-import { brandTitle, THEMES } from '@tools/costants';
+import { brandTitle } from '@tools/costants';
 
 import styles from './layout.module.scss';
 
@@ -43,7 +43,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
          </head>
 
          <body>
-            <ThemeProvider defaultTheme={THEMES.DEFAULT} enableSystem>
+            <ThemeProvider enableSystem>
                <div id="root" className="wrapper">
                   <Header />
 
