@@ -8,7 +8,7 @@ import { MoviesCard } from '@components/MoviesCard/MoviesCard';
 import { Pagination } from '@components/Pagination/Pagination';
 import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
 import { Services } from '@services/Kinopoisk';
-import { brandTitle, defaultSortedMethod } from '@tools/costants';
+import { brandTitle, DEFAULT_SORTED_METHOD } from '@tools/costants';
 
 import { ErrorComponent } from '@/components/ErrorComponent/ErrorComponent';
 import { LoadedComponent } from '@/components/LoadedComponent/LoadedComponent';
@@ -46,7 +46,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
 
 export default async function MoviesPage({ params, searchParams }: Props) {
    const { page } = await params;
-   const { keyword = '', reversed = '', sorted = defaultSortedMethod } = await searchParams;
+   const { keyword = '', reversed = '', sorted = DEFAULT_SORTED_METHOD } = await searchParams;
    const pageNumber = Number(page);
 
    if (!Number.isInteger(pageNumber) || pageNumber < 1) {

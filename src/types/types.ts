@@ -1,5 +1,3 @@
-import type { ReactNode } from 'react';
-
 export type MoviesProps = {
    total: number;
    totalPages: number;
@@ -186,7 +184,7 @@ export type SortedMethod = 'year' | 'title' | 'country' | 'genre' | 'type' | 'ra
 
 export interface CustomSelectOption {
    id: string;
-   content: string | ReactNode;
+   content: string;
    value: SortedMethod;
    breakpoint?: string;
 }

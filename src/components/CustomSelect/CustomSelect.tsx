@@ -1,7 +1,8 @@
 'use client';
+
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import type { FC, SyntheticEvent } from 'react';
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import type { FC, MouseEvent } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 
 import { useClickOutside } from '@hooks/useClickOutside';
 import type { CustomSelectOption } from '@typesfolder/types';
@@ -11,144 +12,128 @@ import { QueryShow } from '@/components/QueryShow/QueryShow';
 import styles from './CustomSelect.module.scss';
 import type { CustomSelectProps } from './types';
 
-const CustomSelectKeysCodes = ['Escape'];
+const INFO_PATH = '/movies/info/';
+const DEFAULT_NOT_ACTIVE_TITLE = '---';
 
 export const CustomSelect: FC<CustomSelectProps> = ({
    list,
    defaultPointNumber,
-   notActivePointTitle,
+   notActivePointTitle = DEFAULT_NOT_ACTIVE_TITLE,
    beforeSelectCb,
    afterSelectCb,
 }) => {
-   const infoLabel = '/movies/info/';
-   const defaultNotActivePointTitle = notActivePointTitle || '---';
-   const queries = useSearchParams();
-   const sorted = queries.get('sorted');
-   const activeIndex = list.findIndex(({ value }) => value === sorted);
-   const defaultPoint = ~activeIndex ? list[activeIndex] : list.length && defaultPointNumber ? list[defaultPointNumber - 1] : null;
-   const hiddenTabIndex = 1;
-   const listID = useId();
-   const selectRef = useRef(null);
-   const [activePoint, setActivePoint] = useState<CustomSelectOption | null>(defaultPoint);
-   const [isOpen, setIsOpen] = useState<boolean>(false);
-   const path = usePathname();
+   const searchParams = useSearchParams();
+   const searchParamsString = searchParams.toString();
+   const pathname = usePathname();
    const router = useRouter();
-   const isInfo = path.includes(infoLabel);
+   const listId = useId();
+   const selectRef = useRef<HTMLDivElement>(null);
+   const [isOpen, setIsOpen] = useState(false);
+   const isInfoPage = pathname.includes(INFO_PATH);
+   const sortedValue = searchParams.get('sorted') ?? '';
 
-   const keydownHandler = useCallback((e: KeyboardEvent) => {
+   const activePoint = useMemo<CustomSelectOption | null>(() => {
+      const found = list.find(({ value }) => value === sortedValue);
+      if (found) {
+         return found;
+      }
+
+      if (defaultPointNumber && defaultPointNumber > 0 && list.length >= defaultPointNumber) {
+         return list[defaultPointNumber - 1] ?? null;
+      }
+
+      return null;
+   }, [list, sortedValue, defaultPointNumber]);
+
+   const closeSelect = useCallback(() => {
+      setIsOpen(false);
+   }, []);
+
+   const handleToggle = (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      if (isInfoPage) return;
+      setIsOpen((open) => !open);
+   };
+
+   const handleOptionClick = (e: MouseEvent<HTMLButtonElement>, point: CustomSelectOption) => {
       e.stopPropagation();
 
-      if (CustomSelectKeysCodes.includes(e.code)) {
-         setIsOpen(false);
-         (document.activeElement as HTMLTemplateElement).blur();
+      beforeSelectCb?.();
+      setIsOpen(false);
+      afterSelectCb?.();
+
+      if (isInfoPage) return;
+      if (point.value === sortedValue) return;
+
+      const params = new URLSearchParams(searchParamsString);
+      params.set('sorted', point.value);
+      router.push(`${pathname}?${params.toString()}`);
+   };
+
+   const handleKeyDown = useCallback((e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+
+      setIsOpen(false);
+      if (document.activeElement instanceof HTMLElement) {
+         document.activeElement.blur();
       }
    }, []);
 
-   const CustomSelectClickHandler = (e: SyntheticEvent) => {
-      e.stopPropagation();
-
-      setIsOpen((state) => !state);
-   };
-
-   const CustomSelectItemClickHandler = (e: SyntheticEvent) => {
-      e.stopPropagation();
-      const [pointID] = (e.target as HTMLButtonElement).id.split('-#-').reverse();
-      const point = list.find((it) => it.id === pointID);
-
-      if (beforeSelectCb) {
-         beforeSelectCb();
-      }
-
-      setActivePoint(point!);
-      setIsOpen(false);
-
-      if (afterSelectCb) {
-         afterSelectCb();
-      }
-   };
-
-   useClickOutside(selectRef, () => {
-      setIsOpen(false);
-   });
+   useClickOutside(selectRef, closeSelect);
 
    useEffect(() => {
-      if (isOpen) {
-         document.body.addEventListener('keydown', keydownHandler);
-      }
+      if (!isOpen) return;
 
-      return () => {
-         if (isOpen) {
-            document.body.removeEventListener('keydown', keydownHandler);
-         }
-      };
-   }, [isOpen, keydownHandler]);
-
-   useEffect(() => {
-      const params = new URLSearchParams(queries);
-
-      if (activePoint && activePoint.value) {
-         params.set('sorted', activePoint.value);
-      } else if (params.has('sorted')) {
-         params.delete('sorted');
-      }
-
-      if (!isInfo) {
-         router.push(`${path}${params.size ? `?${params.toString()}` : ''}`);
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [activePoint, path, queries, router]);
+      document.addEventListener('keydown', handleKeyDown);
+      return () => document.removeEventListener('keydown', handleKeyDown);
+   }, [isOpen, handleKeyDown]);
 
    return (
       <div ref={selectRef} className={styles.select}>
-         <input
-            type="hidden"
-            name="sorted"
-            form="search"
-            aria-hidden="true"
-            tabIndex={hiddenTabIndex}
-            value={activePoint?.value || ''}
-         />
+         <input type="hidden" name="sorted" form="search" aria-hidden="true" value={activePoint?.value ?? ''} />
+
          <button
             type="button"
             role="combobox"
             aria-haspopup="listbox"
-            aria-controls={listID}
+            aria-controls={listId}
             aria-expanded={isOpen}
-            {...(activePoint ? { 'aria-activedescendant': `${listID}-#-option-#-${activePoint.id}` } : {})}
-            disabled={isInfo}
+            {...(activePoint ? { 'aria-activedescendant': `${listId}-option-${activePoint.id}` } : {})}
+            disabled={isInfoPage}
             className={styles.select_current}
-            onClick={CustomSelectClickHandler}
+            onClick={handleToggle}
          >
-            {activePoint?.content || defaultNotActivePointTitle}
+            {activePoint?.content || notActivePointTitle}
          </button>
 
          {isOpen && (
-            <div id={listID} role="listbox" className={styles.select_list}>
-               {list.map(({ id, content, value, breakpoint }) => {
-                  const getButton = (key?: string) => {
-                     return (
-                        <button
-                           key={key}
-                           id={`${listID}-#-option-#-${id}`}
-                           type="button"
-                           role="option"
-                           aria-selected={activePoint?.id === id}
-                           data-value={value}
-                           {...(activePoint?.id === id ? { tabIndex: -1 } : {})}
-                           className={styles.select_list_item}
-                           onClick={CustomSelectItemClickHandler}
-                        >
-                           {content || ''}
-                        </button>
-                     );
-                  };
+            <div id={listId} role="listbox" className={styles.select_list}>
+               {list.map((point) => {
+                  const { id, content, value, breakpoint } = point;
+                  const optionId = `${listId}-option-${id}`;
+
+                  const renderOption = (key?: string) => (
+                     <button
+                        key={key}
+                        id={optionId}
+                        type="button"
+                        role="option"
+                        aria-selected={activePoint?.id === id}
+                        data-value={value}
+                        tabIndex={activePoint?.id === id ? -1 : undefined}
+                        className={styles.select_list_item}
+                        onClick={(e) => handleOptionClick(e, point)}
+                     >
+                        {content || ''}
+                     </button>
+                  );
 
                   return breakpoint ? (
-                     <QueryShow query={breakpoint} key={content + value}>
-                        {getButton()}
+                     <QueryShow query={breakpoint} key={`${content}-${value}`}>
+                        {renderOption()}
                      </QueryShow>
                   ) : (
-                     getButton(content + value)
+                     renderOption(`${content}-${value}`)
                   );
                })}
             </div>

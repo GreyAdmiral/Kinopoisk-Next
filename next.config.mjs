@@ -34,15 +34,6 @@ const nextConfig = {
    },
    // output: 'export',
    distDir: './dist',
-   async redirects() {
-      return [
-         {
-            source: '/',
-            destination: '/movies/1',
-            permanent: true,
-         },
-      ];
-   },
 };
 
 export default nextConfig;
