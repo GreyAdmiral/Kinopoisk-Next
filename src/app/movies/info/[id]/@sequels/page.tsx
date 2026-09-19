@@ -6,10 +6,15 @@ import type { Props } from '../types';
 import styles from './page.module.scss';
 
 export default async function SequelsPage({ params }: Props) {
-   const title = 'Сиквелы и приквелы';
    const { id } = await params;
+
+   if (!id) return null;
+
    const sequels = await Services.getSequelsAndPrequels(id);
+
    if (!sequels) return null;
+
+   const title = 'Сиквелы и приквелы';
 
    return (
       <section className={styles.sequels_and_prequels}>

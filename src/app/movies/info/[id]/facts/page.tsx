@@ -37,6 +37,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function MoviePage({ params }: Props) {
    const { id } = await params;
+
+   if (!id) notFound();
+
    const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/info/${id}`;
    const factsLabel = 'FACT';
    const bloopersLabel = 'BLOOPER';
@@ -44,7 +47,6 @@ export default async function MoviePage({ params }: Props) {
    const bloopersTitle = 'Ляпы:';
    const pageTitle = 'Знаете ли вы что?..';
    const notFoundMessage = 'Фактов не найдено!';
-   if (!id) notFound();
 
    const facts = await Services.getFacts(id);
    const { items } = facts;

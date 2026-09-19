@@ -40,11 +40,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PlayerPage({ params, searchParams }: Props) {
    const { id } = await params;
    const { token = '' } = await searchParams;
+
+   if (!id || !token) notFound();
+
    const movie = await Services.getMovie(id);
 
-   if (!id || !movie) {
-      notFound();
-   }
+   if (!movie) notFound();
 
    const width = 1120;
    const height = 610;

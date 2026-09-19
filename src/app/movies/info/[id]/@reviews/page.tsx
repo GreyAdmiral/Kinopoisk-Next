@@ -9,17 +9,22 @@ import type { Props } from '../types';
 import styles from './page.module.scss';
 
 export default async function ReviewsPage({ params }: Props) {
-   const title = 'Рецензии зрителей';
    const { id } = await params;
+
+   if (!id) return null;
+
    const reviews = await Services.getReviews(id);
+
    if (!reviews) return null;
 
    const { total, totalPages, items = [] } = reviews;
    const isItems = Boolean(items.length);
+
    if (!total || !isItems) return null;
 
    const startContentCount = Math.ceil(total / totalPages);
    const result: Array<Review[]> = [];
+   const title = 'Рецензии зрителей';
 
    for (let i = 1; i <= totalPages; i++) {
       const start = (i - 1) * startContentCount;
