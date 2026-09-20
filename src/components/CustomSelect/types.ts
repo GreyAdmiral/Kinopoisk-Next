@@ -1,3 +1,5 @@
+import { HTMLAttributes } from 'react';
+
 import { CustomSelectOption } from '@typesfolder/types';
 
 export interface CustomSelectProps {
@@ -6,4 +8,10 @@ export interface CustomSelectProps {
    notActivePointTitle?: string;
    beforeSelectCb?: () => void;
    afterSelectCb?: () => void;
+}
+
+export interface OptionProps extends HTMLAttributes<HTMLButtonElement> {
+   point: CustomSelectOption;
+   listId: string;
+   ariaSelected: boolean;
 }

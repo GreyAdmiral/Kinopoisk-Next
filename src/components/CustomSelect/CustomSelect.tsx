@@ -4,16 +4,34 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { FC, MouseEvent } from 'react';
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 
+import { QueryShow } from '@components/QueryShow/QueryShow';
 import { useClickOutside } from '@hooks/useClickOutside';
 import type { CustomSelectOption } from '@typesfolder/types';
 
-import { QueryShow } from '@/components/QueryShow/QueryShow';
-
 import styles from './CustomSelect.module.scss';
-import type { CustomSelectProps } from './types';
+import type { CustomSelectProps, OptionProps } from './types';
 
 const INFO_PATH = '/movies/info/';
 const DEFAULT_NOT_ACTIVE_TITLE = '---';
+const KEYS_FOR_REACTION = ['Escape', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'Tab'];
+
+const Option: FC<OptionProps> = ({ point, listId, ariaSelected, ...rest }) => {
+   const { id, content, value, breakpoint } = point;
+   const optionId = `${listId}-option-${id}`;
+   const renderOption = () => (
+      <button id={optionId} type="button" role="option" aria-selected={ariaSelected} data-value={value} {...rest}>
+         {content || ''}
+      </button>
+   );
+
+   if (!breakpoint) return renderOption();
+
+   return (
+      <QueryShow query={breakpoint} key={`${content}-${value}`}>
+         {renderOption()}
+      </QueryShow>
+   );
+};
 
 export const CustomSelect: FC<CustomSelectProps> = ({
    list,
@@ -28,6 +46,7 @@ export const CustomSelect: FC<CustomSelectProps> = ({
    const router = useRouter();
    const listId = useId();
    const selectRef = useRef<HTMLDivElement>(null);
+   const listRef = useRef<HTMLDivElement>(null);
    const [isOpen, setIsOpen] = useState(false);
    const isInfoPage = pathname.includes(INFO_PATH);
    const sortedValue = searchParams.get('sorted') ?? '';
@@ -45,6 +64,12 @@ export const CustomSelect: FC<CustomSelectProps> = ({
       return null;
    }, [list, sortedValue, defaultPointNumber]);
 
+   const getOptionElements = useCallback(() => {
+      if (!listRef.current) return [];
+
+      return Array.from(listRef.current.querySelectorAll<HTMLButtonElement>(':scope [role="option"]:not(:disabled)'));
+   }, []);
+
    const closeSelect = useCallback(() => {
       setIsOpen(false);
    }, []);
@@ -58,26 +83,71 @@ export const CustomSelect: FC<CustomSelectProps> = ({
    const handleOptionClick = (e: MouseEvent<HTMLButtonElement>, point: CustomSelectOption) => {
       e.stopPropagation();
 
-      beforeSelectCb?.();
+      if (beforeSelectCb) beforeSelectCb();
       setIsOpen(false);
-      afterSelectCb?.();
+      if (afterSelectCb) afterSelectCb();
 
-      if (isInfoPage) return;
-      if (point.value === sortedValue) return;
+      if (isInfoPage || point.value === sortedValue) return;
 
       const params = new URLSearchParams(searchParamsString);
       params.set('sorted', point.value);
       router.push(`${pathname}?${params.toString()}`);
    };
 
-   const handleKeyDown = useCallback((e: KeyboardEvent) => {
-      if (e.key !== 'Escape') return;
+   const handleKeyDown = useCallback(
+      (e: KeyboardEvent) => {
+         const isReaction = KEYS_FOR_REACTION.includes(e.key);
+         if (!isReaction) return;
 
-      setIsOpen(false);
-      if (document.activeElement instanceof HTMLElement) {
-         document.activeElement.blur();
-      }
-   }, []);
+         if (e.key == 'Escape') {
+            setIsOpen(false);
+
+            if (document.activeElement instanceof HTMLElement) {
+               document.activeElement.blur();
+            }
+
+            return;
+         }
+
+         const options = getOptionElements();
+         if (!options.length) return;
+
+         e.preventDefault();
+
+         const currentIndex = options.findIndex((option) => option === document.activeElement);
+         const selectedIndex = options.findIndex((option) => option.getAttribute('aria-selected') === 'true');
+         const length = options.length;
+         let nextIndex = 0;
+
+         switch (e.key) {
+            case 'Tab':
+            case 'ArrowDown': {
+               nextIndex = !~currentIndex ? (selectedIndex + 1) % length : (currentIndex + 1) % length;
+               if (nextIndex === selectedIndex) nextIndex = (nextIndex + 1) % length;
+               break;
+            }
+
+            case 'ArrowUp': {
+               nextIndex = !~currentIndex ? length - 1 : (length + (currentIndex - 1)) % length;
+               if (nextIndex === selectedIndex) nextIndex = (length + (nextIndex - 1)) % length;
+               break;
+            }
+
+            case 'Home': {
+               nextIndex = 0;
+               break;
+            }
+
+            case 'End': {
+               nextIndex = length - 1;
+               break;
+            }
+         }
+
+         options[nextIndex]?.focus();
+      },
+      [getOptionElements]
+   );
 
    useClickOutside(selectRef, closeSelect);
 
@@ -107,33 +177,19 @@ export const CustomSelect: FC<CustomSelectProps> = ({
          </button>
 
          {isOpen && (
-            <div id={listId} role="listbox" className={styles.select_list}>
+            <div ref={listRef} id={listId} role="listbox" className={styles.select_list}>
                {list.map((point) => {
-                  const { id, content, value, breakpoint } = point;
-                  const optionId = `${listId}-option-${id}`;
-
-                  const renderOption = (key?: string) => (
-                     <button
-                        key={key}
-                        id={optionId}
-                        type="button"
-                        role="option"
-                        aria-selected={activePoint?.id === id}
-                        data-value={value}
+                  const { id, content, value } = point;
+                  return (
+                     <Option
+                        key={`${content}-${value}`}
+                        point={point}
+                        listId={listId}
+                        ariaSelected={activePoint?.id === id}
                         tabIndex={activePoint?.id === id ? -1 : undefined}
                         className={styles.select_list_item}
                         onClick={(e) => handleOptionClick(e, point)}
-                     >
-                        {content || ''}
-                     </button>
-                  );
-
-                  return breakpoint ? (
-                     <QueryShow query={breakpoint} key={`${content}-${value}`}>
-                        {renderOption()}
-                     </QueryShow>
-                  ) : (
-                     renderOption(`${content}-${value}`)
+                     />
                   );
                })}
             </div>
