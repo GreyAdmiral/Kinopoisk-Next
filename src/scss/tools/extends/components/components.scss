@@ -26,3 +26,17 @@
       color: var(--info-link-color-hover, vars.$orangeBlack);
    }
 }
+
+%header-button-segment {
+   @include mix.flex(center);
+   @include mix.colors(var(--button-color, vars.$whiteDark), var(--card-color, vars.$blackLight));
+   @include mix.adaptiveValue('font-size', 16px, 12px);
+
+   @include mix.focused {
+      color: var(--theme-button-color, vars.$amberDark);
+
+      svg {
+         @include mix.luximage(var(--theme-button-color, vars.$amberDark));
+      }
+   }
+}

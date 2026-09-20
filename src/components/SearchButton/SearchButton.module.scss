@@ -1,17 +1,7 @@
 .button {
-   @include m.flex(center);
+   @extend %header-button-segment;
    padding: f.rem(5px) f.rem(10px);
    min-width: 40px;
-   @include m.colors(var(--button-color, v.$whiteDark), var(--card-color, v.$blackLight));
-   @include m.adaptiveValue('font-size', 16px, 12px);
-
-   @include m.focused {
-      color: var(--theme-button-color, v.$amberDark);
-
-      svg {
-         @include m.luximage(var(--theme-button-color, v.$amberDark));
-      }
-   }
 
    &_submit {
       border-top-right-radius: 10px;

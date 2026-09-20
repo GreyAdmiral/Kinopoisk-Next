@@ -1,13 +1,18 @@
-.search {
-   &_button {
-      &_sort {
-         border-top-left-radius: 10px;
-         border-bottom-left-radius: 10px;
+.button {
+   @extend %header-button-segment;
+   padding: f.rem(5px) f.rem(10px);
+   min-width: 40px;
 
-         &:disabled {
-            cursor: default;
-            color: v.$greyDisabledElement;
-         }
+   &_sort {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+      transition:
+         color ease-out 255ms,
+         filter ease-out 255ms;
+
+      &:disabled {
+         cursor: default;
+         color: v.$greyDisabledElement;
       }
    }
 }

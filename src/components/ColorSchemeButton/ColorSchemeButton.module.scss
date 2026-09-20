@@ -1,19 +1,13 @@
 .scheme {
    &_button {
       @extend %bblockstyle;
-      @include m.flex(center);
+      @extend %header-button-segment;
       padding: f.rem(5px);
       min-width: 42px;
       min-height: 42px;
-      @include m.colors(var(--button-color, v.$whiteDark), var(--card-color, v.$blackLight));
-      @include m.adaptiveValue('font-size', 16px, 12px);
-      @include m.focused {
-         color: var(--theme-button-color, v.$amberDark);
-
-         svg {
-            @include m.luximage(var(--theme-button-color, v.$amberDark));
-         }
-      }
+      transition:
+         color ease-out 255ms,
+         filter ease-out 255ms;
 
       @include m.smalltablet {
          order: 1;

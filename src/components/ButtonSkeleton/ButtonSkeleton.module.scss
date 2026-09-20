@@ -1,0 +1,31 @@
+$skeletonShine: rgba(255, 255, 255, 0.25);
+$skeletonIcon: rgba(128, 128, 128, 0.3);
+
+.skeleton {
+   position: relative;
+   color: transparent;
+   pointer-events: none;
+   user-select: none;
+   overflow: hidden;
+   cursor: default;
+
+   &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 0%, var(--skeleton-shine, $skeletonShine) 50%, transparent 100%);
+      transform: translateX(-100%);
+      animation: scheme-skeleton-shine 1.4s ease-in-out infinite;
+   }
+
+   &_icon {
+      border-radius: 4px;
+      background-color: var(--skeleton-icon, $skeletonIcon);
+   }
+}
+
+@keyframes scheme-skeleton-shine {
+   100% {
+      transform: translateX(100%);
+   }
+}

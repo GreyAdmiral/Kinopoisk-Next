@@ -1,7 +1,8 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 
+import { ButtonSkeleton } from '@components/ButtonSkeleton/ButtonSkeleton';
 import { SPRITE_PATH } from '@tools/costants';
 import clsx from 'clsx';
 
@@ -10,11 +11,23 @@ import styles from './SearchButton.module.scss';
 export const SearchButton = () => {
    const buttonsIconSize = 20;
    const searchIconID = 'search';
-   const status = useFormStatus();
+   const attributeName = 'data-submite';
+   const [mounted, setMounted] = useState<boolean>(false);
+   const { pending } = useFormStatus();
 
    useEffect(() => {
-      document.documentElement.toggleAttribute('data-submite', status.pending);
-   }, [status.pending]);
+      setMounted(true);
+   }, []);
+
+   useEffect(() => {
+      document.documentElement.toggleAttribute(attributeName, pending);
+
+      return () => {
+         document.documentElement.removeAttribute(attributeName);
+      };
+   }, [pending]);
+
+   if (!mounted) return <ButtonSkeleton iconSize={buttonsIconSize} className={styles.button} />;
 
    return (
       <button
@@ -24,10 +37,10 @@ export const SearchButton = () => {
          form="search"
          aria-label="Поиск"
          className={clsx([styles.button_submit, styles.button])}
-         disabled={status.pending}
+         disabled={pending}
       >
          <svg width={buttonsIconSize} height={buttonsIconSize}>
-            <use xlinkHref={`${SPRITE_PATH}#${searchIconID}`} />
+            <use href={`${SPRITE_PATH}#${searchIconID}`} />
          </svg>
       </button>
    );

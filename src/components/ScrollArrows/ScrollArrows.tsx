@@ -90,7 +90,7 @@ export const ScrollArrows: FC<ScrollArrowsProps> = () => {
             onClick={scrollToTop}
             onKeyDown={handleKey(scrollToTop)}
          >
-            <use xlinkHref={`${SPRITE_PATH}#${SPRITE_ID}`} />
+            <use href={`${SPRITE_PATH}#${SPRITE_ID}`} />
          </svg>
 
          <svg
@@ -105,7 +105,7 @@ export const ScrollArrows: FC<ScrollArrowsProps> = () => {
             onClick={scrollToBottom}
             onKeyDown={handleKey(scrollToBottom)}
          >
-            <use xlinkHref={`${SPRITE_PATH}#${SPRITE_ID}`} />
+            <use href={`${SPRITE_PATH}#${SPRITE_ID}`} />
          </svg>
       </div>
    );

@@ -41,7 +41,7 @@ export const SequelCard: FC<SequelsCardProps> = ({ sequel }) => {
 
          <h3 className={styles.sequel_title}>
             <svg width={iconWidth} height={iconHeight}>
-               <use xlinkHref={`${SPRITE_PATH}#${spriteID}`} />
+               <use href={`${SPRITE_PATH}#${spriteID}`} />
             </svg>
 
             <span>{sequelTitle}</span>

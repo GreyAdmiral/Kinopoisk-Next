@@ -2,6 +2,7 @@
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
+import { ButtonSkeleton } from '@components/ButtonSkeleton/ButtonSkeleton';
 import { SPRITE_PATH, THEMES } from '@tools/costants';
 import { getSchemeIconId } from '@tools/getSchemeIconId';
 
@@ -17,7 +18,7 @@ export const ColorSchemeButton = () => {
       setMounted(true);
    }, []);
 
-   if (!mounted) return null;
+   if (!mounted) return <ButtonSkeleton iconSize={buttonsIconSize} className={styles.scheme_button} />;
 
    return (
       <button
@@ -28,7 +29,7 @@ export const ColorSchemeButton = () => {
          aria-label={`Выбрать ${ariaText} тему`}
       >
          <svg width={buttonsIconSize} height={buttonsIconSize}>
-            <use xlinkHref={`${SPRITE_PATH}#${getSchemeIconId(resolvedTheme as string)}`} />
+            <use href={`${SPRITE_PATH}#${getSchemeIconId(resolvedTheme as string)}`} />
          </svg>
       </button>
    );

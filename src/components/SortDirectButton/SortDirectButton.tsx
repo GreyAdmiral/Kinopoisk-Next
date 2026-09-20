@@ -1,8 +1,10 @@
 'use client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import type { FC } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 
+import { ButtonSkeleton } from '@components/ButtonSkeleton/ButtonSkeleton';
+import { useIsNotFound } from '@hooks/useIsNotFound';
 import { SPRITE_PATH } from '@tools/costants';
 import clsx from 'clsx';
 
@@ -15,9 +17,11 @@ export const SortDirectButton: FC<SortDirectButtonProps> = ({ className }) => {
    const infoLabel = '/movies/info/';
    const buttonsIconSize = 20;
    const path = usePathname();
-   const searchParams = useSearchParams();
    const router = useRouter();
+   const searchParams = useSearchParams();
+   const [mounted, setMounted] = useState<boolean>(false);
    const { pending } = useFormStatus();
+   const isNotFound = useIsNotFound();
    const isReverseDirection = searchParams.get('reversed') === '1';
    const isInfo = path.includes(infoLabel);
 
@@ -35,16 +39,22 @@ export const SortDirectButton: FC<SortDirectButtonProps> = ({ className }) => {
 
    const title = `Сортировать по ${isReverseDirection ? 'возрастанию' : 'убыванию'}`;
 
+   useEffect(() => {
+      setMounted(true);
+   }, []);
+
+   if (!mounted) return <ButtonSkeleton iconSize={buttonsIconSize} className={styles.button} />;
+
    return (
       <button
          type="button"
          {...(isInfo ? {} : { title, 'aria-label': title })}
-         className={clsx([styles.search_button_sort, { [className]: Boolean(className) }])}
+         className={clsx([styles.button_sort, { [className]: Boolean(className) }])}
          onClick={sortDirectionButtonHandler}
-         disabled={pending || isInfo}
+         disabled={pending || isInfo || isNotFound}
       >
          <svg width={buttonsIconSize} height={buttonsIconSize}>
-            <use xlinkHref={`${SPRITE_PATH}#${isReverseDirection ? sortIconID : sortReversedIconID}`} />
+            <use href={`${SPRITE_PATH}#${isReverseDirection ? sortIconID : sortReversedIconID}`} />
          </svg>
       </button>
    );
