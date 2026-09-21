@@ -55,7 +55,9 @@ export default async function MoviesPage({ params, searchParams }: Props) {
 
    const { total, totalPages, items: rawMovies, error } = await Services.getMovies(page, keyword);
 
-   if (pageNumber > totalPages) notFound();
+   if (!error && totalPages > 0 && pageNumber > totalPages) {
+      notFound();
+   }
 
    const movies = rawMovies.length ? prepareMovies(rawMovies, { sorted, reversed }) : rawMovies;
    const hasMovies = movies.length > 0;

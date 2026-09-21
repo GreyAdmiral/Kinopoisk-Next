@@ -2,8 +2,7 @@ import Link from 'next/link';
 import type { FC } from 'react';
 
 import { BackLink } from '@components/BackLink/BackLink';
-
-import { AppRoutes } from '@/tools/costants';
+import { AppRoutes } from '@tools/costants';
 
 import styles from './NotFoundResult.module.scss';
 import type { NotFoundResultProps } from './types';
