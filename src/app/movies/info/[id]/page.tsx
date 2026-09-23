@@ -5,8 +5,6 @@ import { MoviePoster } from '@components/MoviePoster/MoviePoster';
 import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
 import { Services } from '@services/Kinopoisk';
 import { brandTitle } from '@tools/costants';
-import { getFilteredPlayers } from '@tools/getFilteredPlayers';
-import { getDataFrameLinks } from '@tools/getFrameLinks';
 
 import { MovieInfo } from '@/components/MovieInfo/MovieInfo';
 import { MovieLinks } from '@/components/MovieLinks/MovieLinks';
@@ -45,14 +43,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function MoviePage({ params }: Props) {
    const { id } = await params;
+
+   if (!id) notFound();
+
    const schemeTypeAttr = 'https://schema.org/Movie';
    const movie = await Services.getMovie(id);
-   const frames = await Services.getDataFrames(id);
-   const framesLinks = getFilteredPlayers(getDataFrameLinks(frames));
 
-   if (!id || !movie) {
-      notFound();
-   }
+   if (!movie) notFound();
 
    const { nameRu, nameEn, nameOriginal, posterUrl, posterUrlPreview, webUrl, year } = movie;
    const title = nameRu || nameEn || nameOriginal;
@@ -66,7 +63,7 @@ export default async function MoviePage({ params }: Props) {
 
             <div className={styles.movie_content}>
                <MovieInfo movie={movie} />
-               <MovieLinks id={id} webUrl={webUrl} title={title} year={year} frames={framesLinks} />
+               <MovieLinks id={id} webUrl={webUrl} title={title} year={year} />
             </div>
          </div>
 

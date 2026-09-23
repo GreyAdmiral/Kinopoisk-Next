@@ -101,7 +101,7 @@ export type SelectedMovie = {
    genres: string;
    link: string;
    // freeLinkOne: string;
-   freeLinkTwo: string;
+   // freeLinkTwo: string;
    spareLinkOne?: string;
    spareLinkTwo?: string;
    intermediateMirrorOne: string;
