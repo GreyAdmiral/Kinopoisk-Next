@@ -1,4 +1,5 @@
 'use client';
+
 import type { FC } from 'react';
 
 import { useMediaQuery } from '@hooks/useMediaQuery';

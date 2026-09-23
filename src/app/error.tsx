@@ -1,4 +1,5 @@
 'use client';
+
 import styles from './error.module.scss';
 
 interface ErrorProps {

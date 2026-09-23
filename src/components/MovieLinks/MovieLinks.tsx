@@ -2,14 +2,14 @@ import Link from 'next/link';
 import type { FC } from 'react';
 
 import { BackLink } from '@components/BackLink/BackLink';
+import { Services } from '@services/Kinopoisk';
 import { URLToken } from '@services/URLToken';
+import { getFilteredPlayers } from '@tools/getFilteredPlayers';
 import { getDataFrameLinks, getLinksForStaticPlayer } from '@tools/getFrameLinks';
 import { getTorrentSearchLink } from '@tools/getTorrentSearchLink';
 
 import styles from './MovieLinks.module.scss';
 import type { MovieLinksProps } from './types';
-import { Services } from '@services/Kinopoisk';
-import { getFilteredPlayers } from '@tools/getFilteredPlayers';
 
 export const MovieLinks: FC<MovieLinksProps> = async ({ id, webUrl, title, year }) => {
    const factsLinkTitle = 'Интересные факты';
