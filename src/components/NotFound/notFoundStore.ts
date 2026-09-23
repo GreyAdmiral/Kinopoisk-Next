@@ -1,9 +1,7 @@
-'use client';
-
 type Listener = () => void;
 
 const listeners = new Set<Listener>();
-const emit = () => listeners.forEach((listener) => listener());
+const emit = () => listeners.forEach((listener) => void listener());
 let isNotFound = false;
 
 export const notFoundStore = {
