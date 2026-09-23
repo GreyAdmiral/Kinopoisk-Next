@@ -5,8 +5,8 @@ import { selectedMoviesStore } from '@store/selectedMoviesStore';
 const isSelected = (id: string) => selectedMoviesStore.has(id);
 const getServerSnapshotFalse = () => false;
 
-export function useIsMovieSelected(this: unknown, id: string): boolean {
-   const getSnapshot = useCallback(isSelected.bind(this, id), [id]);
+export function useIsMovieSelected(id: string): boolean {
+   const getSnapshot = useCallback(() => isSelected(id), [id]);
 
    return useSyncExternalStore(selectedMoviesStore.subscribe, getSnapshot, getServerSnapshotFalse);
 }

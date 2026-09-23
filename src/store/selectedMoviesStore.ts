@@ -1,7 +1,7 @@
 import { getSelectedInfo } from '@tools/getSelectedInfo';
 import type { MovieProps, SavedMovies, SelectedMovie } from '@typesfolder/types';
 
-import type { Cb } from './types';
+import type { Listener } from './types';
 
 const STORAGE_KEY = 'selectedMovies';
 const EMPTY: SavedMovies = [];
@@ -20,7 +20,7 @@ function readFromStorage(): SavedMovies {
    }
 }
 
-const listeners = new Set<Cb>();
+const listeners = new Set<Listener>();
 let snapshot: SavedMovies = readFromStorage();
 let snapshotIds: ReadonlySet<string> = new Set(snapshot.map(([id]) => id));
 
@@ -44,7 +44,7 @@ function setSnapshot(next: SavedMovies): void {
 }
 
 export const selectedMoviesStore = {
-   subscribe(listener: Cb): Cb {
+   subscribe(listener: Listener): Listener {
       listeners.add(listener);
 
       return () => {

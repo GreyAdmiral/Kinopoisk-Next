@@ -1,1 +1,1 @@
-export type Cb = () => void;
+export type Listener = () => void;

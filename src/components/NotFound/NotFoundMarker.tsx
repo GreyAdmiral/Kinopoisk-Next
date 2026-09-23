@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 
-import { notFoundStore } from './notFoundStore';
+import { notFoundStore } from '@store/notFoundStore';
 
 export const NotFoundMarker = () => {
    useEffect(() => {

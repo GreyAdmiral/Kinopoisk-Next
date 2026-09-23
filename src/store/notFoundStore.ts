@@ -1,4 +1,4 @@
-type Listener = () => void;
+import { Listener } from './types';
 
 const listeners = new Set<Listener>();
 const emit = () => listeners.forEach((listener) => void listener());
