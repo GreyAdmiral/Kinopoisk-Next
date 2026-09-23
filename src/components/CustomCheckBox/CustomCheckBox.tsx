@@ -1,77 +1,40 @@
 'use client';
-import type { ChangeEvent, FC } from 'react';
-import { useEffect, useRef, useState } from 'react';
 
-import { useSessionStorageSync } from '@hooks/useSessionStorageSync';
-import { getSelectedInfo } from '@tools/getSelectedInfo';
-import type { SavedMovies, SelectedMovie } from '@typesfolder/types';
+import type { ChangeEvent, FC } from 'react';
+import { useCallback } from 'react';
+
+import { useIsMovieSelected } from '@hooks/useSelectedMovies';
+import { selectedMoviesStore } from '@store/selectedMoviesStore';
 
 import styles from './CustomCheckBox.module.scss';
 import type { CustomCheckBoxProps } from './types';
 
 export const CustomCheckBox: FC<CustomCheckBoxProps> = ({ movie }) => {
-   const [selectedMovies, setSelectedMovies] = useSessionStorageSync('selectedMovies', JSON.stringify([]));
-   const savedMovies: SavedMovies = JSON.parse(selectedMovies);
-   const inputRef = useRef<HTMLLabelElement>(null);
-   const [isChecked, setIsChecked] = useState<boolean>(
-      savedMovies.some(([, m]: [unknown, SelectedMovie]) => m.id === movie.kinopoiskId)
-   );
-
-   function checkBoxHandler(e: ChangeEvent) {
-      e.stopPropagation();
-
-      setIsChecked((state) => !state);
-   }
-
-   useEffect(() => {
-      const { current } = inputRef;
-
-      function resetHandler(e: Event) {
+   const checked = useIsMovieSelected(movie.kinopoiskId);
+   const handleChange = useCallback(
+      (e: ChangeEvent<HTMLInputElement>) => {
          e.stopPropagation();
-
-         setIsChecked(false);
-      }
-
-      current?.addEventListener('ResetAllCheckbox', resetHandler);
-
-      return () => {
-         current?.removeEventListener('ResetAllCheckbox', resetHandler);
-      };
-   }, []);
-
-   useEffect(() => {
-      const savedMoviesMap = savedMovies.length ? new Map(savedMovies) : new Map();
-      inputRef.current?.toggleAttribute('data-checked', isChecked);
-
-      if (isChecked) {
-         savedMoviesMap.set(movie.kinopoiskId, getSelectedInfo(movie));
-      } else {
-         savedMoviesMap.delete(movie.kinopoiskId);
-      }
-
-      const moviesString = [...savedMoviesMap.entries()];
-      setSelectedMovies(JSON.stringify(moviesString));
-      document.body.dispatchEvent(new CustomEvent('FilmsChoice', { detail: moviesString }));
-   }, [isChecked, movie, savedMovies, setSelectedMovies]);
+         selectedMoviesStore.toggle(movie);
+      },
+      [movie]
+   );
 
    return (
       <label
-         ref={inputRef}
          id={`label-${movie.kinopoiskId}`}
-         title={isChecked ? 'Отменить выбор фильма' : 'Выбрать фильм'}
+         title={checked ? 'Отменить выбор фильма' : 'Выбрать фильм'}
          className={styles.custom_checkbox}
-         onClick={(e) => {
-            e.stopPropagation();
-         }}
+         data-checked={checked || undefined}
+         onClick={(e) => e.stopPropagation()}
       >
          <input
             type="checkbox"
-            name={movie.kinopoiskId}
+            name={String(movie.kinopoiskId)}
             id={`checkbox-${movie.kinopoiskId}`}
-            checked={isChecked}
-            onChange={checkBoxHandler}
+            checked={checked}
+            onChange={handleChange}
          />
-         <span></span>
+         <span />
       </label>
    );
 };

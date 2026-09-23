@@ -1,10 +1,10 @@
-// import { getSpareLinksForPlayer } from './getSpareLinksForPlayer';
 import type { MovieProps, SelectedMovie } from '@typesfolder/types';
 
-import { getFreeLinks } from './getFreeLinks';
+// import { getSpareLinksForPlayer } from './getSpareLinksForPlayer';
 // import { getFreeLinksForPlayer } from './getFreeLinksForPlayer';
+import { getFreeLinks } from './getFreeLinks';
 
-export function getSelectedInfo(movie: MovieProps): SelectedMovie {
+export function getSelectedInfo(movie: MovieProps, origin = window.location.origin): SelectedMovie {
    const separator = ' / ';
 
    return {
@@ -15,9 +15,9 @@ export function getSelectedInfo(movie: MovieProps): SelectedMovie {
       posterUrl: movie.posterUrl,
       countries: movie.countries.map((country) => country.country).join(separator),
       genres: movie.genres.map((genre) => genre.genre).join(separator),
-      link: `${window.location.origin}/movies/info/${movie.kinopoiskId}`,
-      // ...getFreeLinksForPlayer(movie.kinopoiskId),
-      // ...getSpareLinksForPlayer(movie.kinopoiskId),
-      ...getFreeLinks(movie.kinopoiskId),
+      link: `${origin}/movies/info/${movie.kinopoiskId}`,
+      freeLinks: getFreeLinks(movie.kinopoiskId),
+      // playerFreeLinks: getFreeLinksForPlayer(movie.kinopoiskId),
+      // spareFreeLinks: getSpareLinksForPlayer(movie.kinopoiskId),
    };
 }

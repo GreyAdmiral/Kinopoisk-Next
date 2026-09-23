@@ -100,12 +100,9 @@ export type SelectedMovie = {
    countries: string;
    genres: string;
    link: string;
-   // freeLinkOne: string;
-   // freeLinkTwo: string;
-   spareLinkOne?: string;
-   spareLinkTwo?: string;
-   intermediateMirrorOne: string;
-   intermediateMirrorTwo: string;
+   freeLinks: string[];
+   // playerFreeLinks: string[];
+   // spareFreeLinks: string[];
 };
 
 export type SavedMovies = Array<[string, SelectedMovie]>;

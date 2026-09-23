@@ -1,15 +1,9 @@
 export function getFreeLinks(id: string) {
-   const intermediateMirrorOne = `https://habster.sbs/series/${id}/`;
-   const intermediateMirrorTwo = `https://flcksbr.top/film/${id}/`;
-   const intermediateMirrorThree = `https://prq.pkvbn.xyz/${id}/`;
-   const intermediateMirrorFour = `https://kinopoisk.wtf/series/${id}/`;
-   const intermediateMirrorFive = `https://kinopk.web.app/movie/${id}/`;
-
-   return {
-      intermediateMirrorOne,
-      intermediateMirrorTwo,
-      intermediateMirrorThree,
-      intermediateMirrorFour,
-      intermediateMirrorFive,
-   };
+   return [
+      `https://habster.sbs/series/${id}/`,
+      `https://kinopoisk.wtf/series/${id}/`,
+      `https://kinopk.web.app/movie/${id}/`,
+      `https://prq.pkvbn.xyz/${id}/`,
+      `https://flcksbr.top/film/${id}/`,
+   ];
 }
