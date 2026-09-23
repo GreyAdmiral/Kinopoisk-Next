@@ -14,7 +14,6 @@ $skeletonIcon: rgba(128, 128, 128, 0.3);
       position: absolute;
       inset: 0;
       background: linear-gradient(90deg, transparent 0%, var(--skeleton-shine, $skeletonShine) 50%, transparent 100%);
-      transform: translateX(-100%);
       animation: scheme-skeleton-shine 1.4s ease-in-out infinite;
    }
 
@@ -25,6 +24,10 @@ $skeletonIcon: rgba(128, 128, 128, 0.3);
 }
 
 @keyframes scheme-skeleton-shine {
+   0% {
+      transform: translateX(-100%);
+   }
+
    100% {
       transform: translateX(100%);
    }
