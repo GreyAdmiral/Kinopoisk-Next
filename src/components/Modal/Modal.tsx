@@ -11,11 +11,8 @@ import styles from './Modal.module.scss';
 export const Modal = ({ children }: PropsWithChildren) => {
    const ref = useRef<HTMLTemplateElement>(null);
    const router = useRouter();
-   const handler = () => {
-      router.back();
-   };
 
-   useClickOutside(ref, handler);
+   useClickOutside(ref, router.back);
 
    useEffect(() => {
       document.body.classList.add('lock');
