@@ -53,7 +53,8 @@ export default async function MoviesPage({ params, searchParams }: Props) {
       notFound();
    }
 
-   const { total, totalPages, items: rawMovies, error } = await Services.getMovies(page, keyword);
+   const results = keyword ? await Services.getMovies(page, keyword) : await Services.getProgrammersFilms(page);
+   const { total, totalPages, items: rawMovies, error } = results;
 
    if (!error && totalPages > 0 && pageNumber > totalPages) {
       notFound();

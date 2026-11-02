@@ -97,6 +97,19 @@ class Kinopoisk {
       return result.data;
    }
 
+   async getCollection(number: string = '1', collectionName: string = '', options: RequestOptions = {}): Promise<MoviesProps> {
+      const defaultErrorMessage = 'Ошибка получения фильмов!';
+      const url = `${this.baseUrl}/collections?type=${collectionName}&page=${number}`;
+      const result = await this.request<MoviesProps>(url, defaultErrorMessage, options);
+
+      if (!result.ok) {
+         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
+         return { error: result.error, total: 0, totalPages: 0, items: [] };
+      }
+
+      return result.data;
+   }
+
    async getMovie(id = '', options: RequestOptions = {}): Promise<MovieDescription | null> {
       const defaultErrorMessage = 'Ошибка получения информации о фильме!';
       const url = `${this.baseUrl}/${id}`;
@@ -160,6 +173,14 @@ class Kinopoisk {
       }
 
       return result.data;
+   }
+
+   async getBestFilms(number: string = '1', options: RequestOptions = {}): Promise<MoviesProps> {
+      return await this.getCollection(number, 'TOP_250_MOVIES', options);
+   }
+
+   async getProgrammersFilms(number: string = '1', options: RequestOptions = {}): Promise<MoviesProps> {
+      return await this.getCollection(number, 'PROGRAMMERS_THEME', options);
    }
 
    async getFrames(id = ''): Promise<Frame[]> {
