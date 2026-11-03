@@ -1,24 +1,50 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-export function useFetch<T>(url: string | URL | Request, init?: Omit<RequestInit, 'signal'>) {
+interface InitProp extends Omit<RequestInit, 'signal'> {
+   clearingData?: boolean;
+}
+
+interface ErrorRequest extends Error {
+   status?: number;
+}
+
+export function useFetch<T>(url: string | URL | Request, init?: InitProp) {
    const [data, setData] = useState<T | null>(null);
-   const [isLoading, setIsloading] = useState<boolean>(false);
-   const [error, setError] = useState<Error | null>(null);
+   const [isLoading, setIsLoading] = useState<boolean>(false);
+   const [error, setError] = useState<ErrorRequest | null>(null);
+   const [reloadKey, setReloadKey] = useState<number>(0);
+   const initRef = useRef<InitProp>(init);
+   const refetch = useCallback(() => {
+      setReloadKey((key) => key + 1);
+   }, []);
+
+   initRef.current = init;
 
    useEffect(() => {
+      const contentTypeKey = 'Content-Type';
+      const jsonMime = 'application/json';
       const controller = new AbortController();
-      const fetchInit = { ...init, signal: controller.signal };
+      const currentInit = initRef.current;
+      const { clearingData = true, ...requestInit } = currentInit ?? {};
 
-      setIsloading(true);
+      setIsLoading(true);
       setError(null);
-      setData(null);
+      if (clearingData) setData(null);
 
-      fetch(url, fetchInit)
-         .then((res: Response) => {
+      fetch(url, { ...requestInit, signal: controller.signal })
+         .then(async (res: Response) => {
+            const isJson = res.headers.get(contentTypeKey)?.includes(jsonMime);
+
             if (!res.ok) {
-               let message = `Fetch error! Status: ${res.status}.`;
-               if (res.statusText) message += ` Message: ${res.statusText}.`;
-               throw new Error(message);
+               const errorData = await res.json().catch(() => ({}));
+               const error = new Error(errorData.message || res.statusText || `Fetch error! (${res.status})`);
+
+               ((<unknown>error) as ErrorRequest).status = res.status;
+               throw error;
+            }
+
+            if (!isJson) {
+               throw new Error('Invalid content type. Expected JSON.');
             }
 
             return res.json();
@@ -30,18 +56,17 @@ export function useFetch<T>(url: string | URL | Request, init?: Omit<RequestInit
          })
          .catch((err: Error) => {
             if (err.name !== 'AbortError') {
-               console.error('Error:', err.message);
                setError(err);
             }
          })
          .finally(() => {
             if (!controller.signal.aborted) {
-               setIsloading(false);
+               setIsLoading(false);
             }
          });
 
       return () => controller.abort();
-   }, [init, url]);
+   }, [reloadKey, url]);
 
-   return [data, isLoading, error] as const;
+   return [data, isLoading, error, refetch] as const;
 }

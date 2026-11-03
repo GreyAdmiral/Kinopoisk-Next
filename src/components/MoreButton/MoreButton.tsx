@@ -14,10 +14,9 @@ import { LoadedComponent } from '@/components/LoadedComponent/LoadedComponent';
 import styles from './MoreButton.module.scss';
 import type { MoreButtonProps } from './types';
 
-const BUTTON_TITLE = 'Загрузить еще';
-const LOADING_BUTTON_TITLE = 'Загрузка...';
-
 export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams }) => {
+   const BUTTON_TITLE = 'Загрузить еще';
+   const LOADING_BUTTON_TITLE = 'Загрузка...';
    const { keyword = '', reversed = '', sorted = '' } = searchParams;
 
    const [movies, setMovies] = useState<MovieProps[]>([]);
@@ -35,7 +34,11 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
       const controller = new AbortController();
       setIsLoading(true);
 
-      Services.getMovies(String(activePage), keyword, { signal: controller.signal })
+      const results = keyword
+         ? Services.getMovies(String(activePage), keyword, { signal: controller.signal })
+         : Services.getProgrammersFilms(String(activePage), { signal: controller.signal });
+
+      results
          .then((data) => {
             const prepared = prepareMovies(data.items, { sorted, reversed });
             setMovies((state) => (activePage === 1 ? prepared : [...state, ...prepared]));
