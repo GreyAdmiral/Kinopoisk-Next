@@ -79,7 +79,7 @@ export default async function MoviesPage({ params, searchParams }: Props) {
                   <QueryShow query={mobileQuery}>
                      <MoreButton
                         key={`${keyword}-${sorted}-${reversed}`}
-                        page={page}
+                        page={totalPages}
                         searchParams={{ keyword: keyword, reversed, sorted }}
                         totalPages={totalPages}
                      />

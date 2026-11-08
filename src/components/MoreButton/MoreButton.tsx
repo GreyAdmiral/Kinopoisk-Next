@@ -20,7 +20,7 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
    const { keyword = '', reversed = '', sorted = '' } = searchParams;
 
    const [movies, setMovies] = useState<MovieProps[]>([]);
-   const [activePage, setActivePage] = useState<number>(+page);
+   const [activePage, setActivePage] = useState<number>(page);
    const [isLoading, setIsLoading] = useState(false);
 
    useEffect(() => {
@@ -36,7 +36,7 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
 
       const results = keyword
          ? Services.getMovies(String(activePage), keyword, { signal: controller.signal })
-         : Services.getProgrammersFilms(String(activePage), { signal: controller.signal });
+         : Services.getBestFilms(String(activePage), { signal: controller.signal });
 
       results
          .then((data) => {

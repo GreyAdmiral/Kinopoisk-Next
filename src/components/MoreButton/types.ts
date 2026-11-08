@@ -1,7 +1,7 @@
 import { SortedMethod } from '@typesfolder/types';
 
 export interface MoreButtonProps {
-   page: string;
+   page: number;
    totalPages: number;
    searchParams: {
       keyword: string;
