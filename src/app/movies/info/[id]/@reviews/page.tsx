@@ -43,8 +43,8 @@ export default async function ReviewsPage({ params }: Props) {
          <h2 className={styles.reviews_title}>{title}</h2>
 
          <div className={styles.reviews_body}>
-            {startItems.map((it) => (
-               <ReviewCard key={it.kinopoiskId + it.title + it.date} review={it} />
+            {startItems.map((it, idx) => (
+               <ReviewCard key={`reviews-${it.kinopoiskId + it.title + it.date}-${idx}`} review={it} />
             ))}
 
             {Boolean(otherItems.length) && <MoreReviewsButton reviews={otherItems} />}

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { FC } from 'react';
 
 import { AppRoutes } from '@tools/costants';
+import { getPaginationContent } from '@tools/getPaginationContent';
 
 import { PaginationButton } from '../PaginationButton/PaginationButton';
 
@@ -27,6 +28,7 @@ export const Pagination: FC<PaginationProps> = ({ totalPages, page, searchParams
    });
 
    const queryParams = queries.toString();
+   const pagesScheme = getPaginationContent(page, totalPages);
 
    return totalPages ? (
       <div className={styles.pagination}>
@@ -52,23 +54,35 @@ export const Pagination: FC<PaginationProps> = ({ totalPages, page, searchParams
             </PaginationButton>
          </div>
 
-         {Array.from({ length: totalPages }, (_, idx: number) => {
+         {pagesScheme.map((it, idx) => {
             const pageKey = idx.toString().repeat(10);
-            const pageNumber = idx + 1;
-            const linkUrl = `${AppRoutes.PAGE_ROUTE}/${pageNumber}${queryParams ? `?${queryParams}` : ''}`;
-            const isActive = pageNumber === +page;
 
-            return (
-               <Link
-                  key={pageKey}
-                  href={linkUrl}
-                  className={styles.pagination_link}
-                  aria-label={`На страницу ${pageNumber}`}
-                  {...(isActive ? { tabIndex: -1 } : {})}
-               >
-                  {pageNumber}
-               </Link>
-            );
+            if (it === 'dots') {
+               return (
+                  <span key={pageKey} className={styles.pagination_link} aria-hidden={true}>
+                     ...
+                  </span>
+               );
+            }
+
+            if (Number.isInteger(it)) {
+               const linkUrl = `${AppRoutes.PAGE_ROUTE}/${it}${queryParams ? `?${queryParams}` : ''}`;
+               const isActive = it === page;
+
+               return (
+                  <Link
+                     key={pageKey}
+                     href={linkUrl}
+                     className={styles.pagination_link}
+                     aria-label={`На страницу ${it}`}
+                     {...(isActive ? { tabIndex: -1 } : {})}
+                  >
+                     {it}
+                  </Link>
+               );
+            }
+
+            return null;
          })}
 
          <div className={styles.pagination_buttons}>

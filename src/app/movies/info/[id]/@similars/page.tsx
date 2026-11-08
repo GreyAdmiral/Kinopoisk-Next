@@ -27,8 +27,8 @@ export default async function SimilarsPage({ params }: Props) {
          <h2 className={styles.similars_title}>{title}</h2>
 
          <SliderList>
-            {items.map((item) => (
-               <SimilarCard key={item.filmId} similar={item} />
+            {items.map((item, idx) => (
+               <SimilarCard key={`similars-${item.filmId}-${idx}`} similar={item} />
             ))}
          </SliderList>
       </section>

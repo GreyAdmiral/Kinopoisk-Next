@@ -19,8 +19,8 @@ export default async function SequelsPage({ params }: Props) {
          <h2 className={styles.sequels_and_prequels_title}>{title}</h2>
 
          <div className={styles.sequels_and_prequels_body}>
-            {sequels.map((sequel) => (
-               <SequelCard key={sequel.filmId} sequel={sequel} />
+            {sequels.map((sequel, idx) => (
+               <SequelCard key={`sequel-${sequel.filmId}-${idx}`} sequel={sequel} />
             ))}
          </div>
       </section>

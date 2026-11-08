@@ -2,8 +2,7 @@ import { SortedMethod } from '@typesfolder/types';
 
 export interface PaginationProps {
    totalPages: number;
-   total: number;
-   page: string;
+   page: number;
    searchParams: {
       keyword: string;
       reversed: string;

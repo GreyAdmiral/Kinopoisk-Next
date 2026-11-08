@@ -16,7 +16,7 @@ export const FactsList: FC<FactsListProps> = ({ facts, title }) => {
 
          <ul className={styles.facts_list}>
             {facts.map(({ text }, idx) => (
-               <li key={idx} className={styles.facts_list_item}>
+               <li key={`${title}-${idx}`} className={styles.facts_list_item}>
                   {getTextClearedOfTags(text)}
                </li>
             ))}

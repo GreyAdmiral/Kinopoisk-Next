@@ -2,19 +2,20 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { DownloadNotification } from '@components/DownloadNotification/DownloadNotification';
+import { ErrorComponent } from '@components/ErrorComponent/ErrorComponent';
+import { LoadedComponent } from '@components/LoadedComponent/LoadedComponent';
 import { MoreButton } from '@components/MoreButton/MoreButton';
 import { Movie } from '@components/Movie/Movie';
 import { MoviesCard } from '@components/MoviesCard/MoviesCard';
+import { NotFoundResult } from '@components/NotFoundResult/NotFoundResult';
 import { Pagination } from '@components/Pagination/Pagination';
+import { QueryShow } from '@components/QueryShow/QueryShow';
 import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
 import { Services } from '@services/Kinopoisk';
 import { brandTitle, DEFAULT_SORTED_METHOD } from '@tools/costants';
-
-import { ErrorComponent } from '@/components/ErrorComponent/ErrorComponent';
-import { LoadedComponent } from '@/components/LoadedComponent/LoadedComponent';
-import { NotFoundResult } from '@/components/NotFoundResult/NotFoundResult';
-import { QueryShow } from '@/components/QueryShow/QueryShow';
-import { prepareMovies } from '@/tools/prepareMovies';
+import { normalizePage } from '@tools/normalizePage';
+import { normalizeTotalPages } from '@tools/normalizeTotalPages';
+import { prepareMovies } from '@tools/prepareMovies';
 
 import type { Props } from './types';
 
@@ -47,16 +48,13 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
 export default async function MoviesPage({ params, searchParams }: Props) {
    const { page } = await params;
    const { keyword = '', reversed = '', sorted = DEFAULT_SORTED_METHOD } = await searchParams;
-   const pageNumber = Number(page);
+   const pageNumber = normalizePage(page);
 
-   if (!Number.isInteger(pageNumber) || pageNumber < 1) {
-      notFound();
-   }
+   const results = keyword ? await Services.getMovies(page, keyword) : await Services.getBestFilms(page);
+   const { totalPages: rawTotalPages, items: rawMovies, error } = results;
+   const totalPages = normalizeTotalPages(rawTotalPages);
 
-   const results = keyword ? await Services.getMovies(page, keyword) : await Services.getProgrammersFilms(page);
-   const { total, totalPages, items: rawMovies, error } = results;
-
-   if (!error && totalPages > 0 && pageNumber > totalPages) {
+   if (!error && pageNumber > totalPages) {
       notFound();
    }
 
@@ -95,12 +93,7 @@ export default async function MoviesPage({ params, searchParams }: Props) {
 
          <QueryShow query={desktopQuery}>
             {hasMovies && (
-               <Pagination
-                  totalPages={totalPages}
-                  total={total}
-                  page={page}
-                  searchParams={{ keyword: keyword, reversed, sorted }}
-               />
+               <Pagination totalPages={totalPages} page={pageNumber} searchParams={{ keyword: keyword, reversed, sorted }} />
             )}
          </QueryShow>
 
