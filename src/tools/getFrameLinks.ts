@@ -40,15 +40,15 @@ export function getLinksForStaticPlayer(id: string): FrameLink[] {
    return [
       // {
       //    title: 'Lol',
-      //    url: `${process.env.NEXT_PUBLIC_LOL_PLAYERS_URL}/?id=${id}&n=0`,
+      //    url: `${process.env.LOL_PLAYERS_URL}/?id=${id}&n=0`,
       // },
       // {
       //    title: 'Obrut',
-      //    url: `${process.env.NEXT_PUBLIC_OBRUT_PLAYERS_API_URL}?kinopoisk_id=${id}`,
+      //    url: `${process.env.OBRUT_PLAYERS_API_URL}?kinopoisk_id=${id}`,
       // },
       {
          title: 'Cloud',
-         url: `${process.env.NEXT_PUBLIC_CLOUD_PLAYERS_URL}/iframe/${id}/`,
+         url: `${process.env.CLOUD_PLAYERS_URL}/iframe/${id}/`,
       },
    ];
 }

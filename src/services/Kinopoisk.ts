@@ -24,15 +24,15 @@ export type JsonResult<T> = SuccessRequest<T> | ErrorRequest;
 let instance = null;
 
 class Kinopoisk {
-   private baseUrl: string = process.env.NEXT_PUBLIC_API_URL!;
-   private baseUrlOldAPI: string = process.env.NEXT_PUBLIC_OLD_API_URL!;
-   private baseUrlFramesAPI: string = process.env.NEXT_PUBLIC_PLAYERS_API_URL!;
-   private baseUrlDataFramesAPI: string = process.env.NEXT_PUBLIC_DATA_PLAYERS_API_URL!;
+   private baseUrl: string = process.env.API_URL!;
+   private baseUrlOldAPI: string = process.env.OLD_API_URL!;
+   private baseUrlFramesAPI: string = process.env.PLAYERS_API_URL!;
+   private baseUrlDataFramesAPI: string = process.env.DATA_PLAYERS_API_URL!;
    private keyCounter: number = 0;
    public contentTypeKey = 'Content-Type';
    public contentTypeValue = 'application/json';
    public contentErrorMessage = 'Неверный тип контента.';
-   #keys: string[] = process.env.NEXT_PUBLIC_API_KEYS!.split('|').filter(Boolean);
+   #keys: string[] = process.env.API_KEYS!.split('|').filter(Boolean);
 
    getKey(): string {
       const key = this.#keys[this.keyCounter];

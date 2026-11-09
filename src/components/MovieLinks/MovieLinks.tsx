@@ -11,11 +11,14 @@ import { getTorrentSearchLink } from '@tools/getTorrentSearchLink';
 import styles from './MovieLinks.module.scss';
 import type { MovieLinksProps } from './types';
 
-export const MovieLinks: FC<MovieLinksProps> = async ({ id, webUrl, title, year }) => {
+export const MovieLinks: FC<MovieLinksProps> = async ({ info }) => {
+   const { id, imdbId, webUrl, title, year } = info;
    const factsLinkTitle = 'Интересные факты';
    const officialLinkTitle = 'Подробнее на «Кинопоиск»';
    const torrentSearchText = 'Искать торренты';
+   const imdbLinktext = 'Плеер Imdb';
    const factsLinkRoute = `/movies/info/${id}/facts`;
+   const imdbUrl = `${process.env.IMDB_FRAME_URL!}/${imdbId}`;
    const frames = await Services.getDataFrames(id);
    const framesLinks = getFilteredPlayers(getDataFrameLinks(frames));
    const torrentSearchUrl = getTorrentSearchLink({ title, year });
@@ -49,6 +52,17 @@ export const MovieLinks: FC<MovieLinksProps> = async ({ id, webUrl, title, year 
                   {`Плеер ${title}`}
                </Link>
             ))}
+
+         {imdbId && (
+            <Link
+               href={`/movies/info/${id}/player?token=${URLToken.encrypt(imdbUrl)}`}
+               className={styles.movie_content_link}
+               itemProp="url"
+               scroll={false}
+            >
+               {imdbLinktext}
+            </Link>
+         )}
 
          <BackLink className={styles.movie_content_back} />
       </div>
