@@ -39,6 +39,7 @@
       "paths": {
          "@/*": ["./src/*"],
          "@app/*": ["./src/app/*"],
+         "@actions/*": ["./src/actions/*"],
          "@components/*": ["./src/components/*"],
          "@api/*": ["./src/app/api/*"],
          "@router/*": ["./src/router/*"],

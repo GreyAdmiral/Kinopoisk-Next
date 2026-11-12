@@ -11,7 +11,7 @@ import type {
    Similars,
 } from '@typesfolder/types';
 
-interface RequestOptions extends RequestInit {
+export interface RequestOptions extends RequestInit {
    withAuth?: boolean;
 }
 
@@ -32,7 +32,7 @@ class Kinopoisk {
    public contentTypeKey = 'Content-Type';
    public contentTypeValue = 'application/json';
    public contentErrorMessage = 'Неверный тип контента.';
-   #keys: string[] = process.env.API_KEYS!.split('|').filter(Boolean);
+   #keys: string[] = (process.env.API_KEYS ?? '').split('|').filter(Boolean);
 
    getKey(): string {
       const key = this.#keys[this.keyCounter];

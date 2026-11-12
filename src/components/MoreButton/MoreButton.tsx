@@ -3,72 +3,61 @@
 import type { FC } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 
+import { loadHomeMovies } from '@actions/loadHomeMovies';
+import { ErrorComponent } from '@components/ErrorComponent/ErrorComponent';
+import { LoadedComponent } from '@components/LoadedComponent/LoadedComponent';
 import { Loader } from '@components/Loader/Loader';
 import { Movie } from '@components/Movie/Movie';
-import { Services } from '@services/Kinopoisk';
 import { prepareMovies } from '@tools/prepareMovies';
 import type { MovieProps } from '@typesfolder/types';
-
-import { LoadedComponent } from '@/components/LoadedComponent/LoadedComponent';
 
 import styles from './MoreButton.module.scss';
 import type { MoreButtonProps } from './types';
 
-export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams }) => {
+export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams, initMovies }) => {
    const BUTTON_TITLE = 'Загрузить еще';
    const LOADING_BUTTON_TITLE = 'Загрузка...';
    const { keyword = '', reversed = '', sorted = '' } = searchParams;
 
    const [movies, setMovies] = useState<MovieProps[]>([]);
-   const [activePage, setActivePage] = useState<number>(page);
-   const [isLoading, setIsLoading] = useState(false);
-
-   useEffect(() => {
-      setMovies([]);
-      setActivePage(1);
-   }, [keyword, sorted, reversed]);
-
-   useEffect(() => {
-      if (activePage < 1 || activePage > totalPages) return;
-
-      const controller = new AbortController();
-      setIsLoading(true);
-
-      const results = keyword
-         ? Services.getMovies(String(activePage), keyword, { signal: controller.signal })
-         : Services.getBestFilms(String(activePage), { signal: controller.signal });
-
-      results
-         .then((data) => {
-            const prepared = prepareMovies(data.items, { sorted, reversed });
-            setMovies((state) => (activePage === 1 ? prepared : [...state, ...prepared]));
-         })
-         .catch((err: Error) => {
-            if (err.name !== 'AbortError') console.error(err.message);
-         })
-         .finally(() => {
-            if (!controller.signal.aborted) setIsLoading(false);
-         });
-
-      return () => controller.abort();
-   }, [activePage, keyword, sorted, reversed, totalPages]);
-
-   const moreButtonClickHandler = useCallback(() => {
-      setActivePage((p) => Math.min(p + 1, totalPages));
-   }, [totalPages]);
-
+   const [activePage, setActivePage] = useState<number>(page ?? 1);
+   const [isLoading, setIsLoading] = useState<boolean>(false);
+   const [error, setError] = useState<string | null>(null);
    const canLoadMore = activePage < totalPages;
    const hasMovies = movies.length > 0;
+   const isContent = !error && hasMovies;
+
+   const moreButtonClickHandler = useCallback(async () => {
+      const nextPage = activePage + 1;
+      if (nextPage > totalPages) return;
+
+      setIsLoading(true);
+
+      try {
+         const data = await loadHomeMovies(nextPage, keyword);
+         if (data.error) throw data.error;
+         const prepared = prepareMovies(data.items, { sorted, reversed });
+
+         setMovies((prev) => [...prev, ...prepared]);
+         setActivePage(nextPage);
+      } catch (err) {
+         console.error(err);
+         setError(err as string);
+      } finally {
+         setIsLoading(false);
+      }
+   }, [activePage, totalPages, keyword, sorted, reversed]);
+
+   useEffect(() => {
+      setMovies(initMovies ?? []);
+   }, []);
 
    return (
       <>
-         {movies.map((movie, idx) => (
-            <Movie key={`${movie.kinopoiskId}-${idx}`} movie={movie} />
-         ))}
-
+         {isContent && movies.map((movie, idx) => <Movie key={`${movie.kinopoiskId}-${idx}`} movie={movie} />)}
          <LoadedComponent />
 
-         {canLoadMore && hasMovies && (
+         {canLoadMore && isContent && (
             <div className={styles.more}>
                <button className={styles.more_button} onClick={moreButtonClickHandler} disabled={isLoading}>
                   {isLoading ? LOADING_BUTTON_TITLE : BUTTON_TITLE}
@@ -76,11 +65,13 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
             </div>
          )}
 
-         {canLoadMore && !hasMovies && (
+         {canLoadMore && !isContent && (
             <div className={styles.more_loader}>
                <Loader />
             </div>
          )}
+
+         {error && !isLoading && <ErrorComponent message={error} />}
       </>
    );
 };

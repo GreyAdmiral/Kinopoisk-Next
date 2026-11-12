@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { loadHomeMovies } from '@actions/loadHomeMovies';
 import { DownloadNotification } from '@components/DownloadNotification/DownloadNotification';
 import { ErrorComponent } from '@components/ErrorComponent/ErrorComponent';
 import { LoadedComponent } from '@components/LoadedComponent/LoadedComponent';
@@ -11,7 +12,6 @@ import { NotFoundResult } from '@components/NotFoundResult/NotFoundResult';
 import { Pagination } from '@components/Pagination/Pagination';
 import { QueryShow } from '@components/QueryShow/QueryShow';
 import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
-import { Services } from '@services/Kinopoisk';
 import { brandTitle, DEFAULT_SORTED_METHOD } from '@tools/costants';
 import { normalizePage } from '@tools/normalizePage';
 import { normalizeTotalPages } from '@tools/normalizeTotalPages';
@@ -50,7 +50,7 @@ export default async function MoviesPage({ params, searchParams }: Props) {
    const { keyword = '', reversed = '', sorted = DEFAULT_SORTED_METHOD } = await searchParams;
    const pageNumber = normalizePage(page);
 
-   const results = keyword ? await Services.getMovies(page, keyword) : await Services.getBestFilms(page);
+   const results = await loadHomeMovies(pageNumber, keyword);
    const { totalPages: rawTotalPages, items: rawMovies, error } = results;
    const totalPages = normalizeTotalPages(rawTotalPages);
 
@@ -79,9 +79,10 @@ export default async function MoviesPage({ params, searchParams }: Props) {
                   <QueryShow query={mobileQuery}>
                      <MoreButton
                         key={`${keyword}-${sorted}-${reversed}`}
-                        page={totalPages}
+                        page={pageNumber}
                         searchParams={{ keyword: keyword, reversed, sorted }}
                         totalPages={totalPages}
+                        initMovies={movies}
                      />
                   </QueryShow>
                </>
