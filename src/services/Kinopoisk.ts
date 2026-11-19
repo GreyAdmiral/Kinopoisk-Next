@@ -46,7 +46,7 @@ class Kinopoisk {
       return {
          method: 'GET',
          headers: { 'X-API-KEY': key ?? this.getKey(), 'Content-Type': 'application/json' },
-         next: { revalidate: 3600 },
+         next: { revalidate: 10800 },
       };
    }
 
