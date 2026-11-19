@@ -51,9 +51,9 @@ export default async function MoviePage({ params }: Props) {
 
    if (!movie) notFound();
 
-   const { imdbId, nameRu, nameEn, nameOriginal, posterUrl, posterUrlPreview, webUrl, year } = movie;
+   const { imdbId, nameRu, nameEn, nameOriginal, posterUrl, posterUrlPreview, webUrl, year, type } = movie;
    const title = nameRu || nameEn || nameOriginal;
-   const linksInfo = { id, imdbId, webUrl, title, year };
+   const linksInfo = { id, imdbId, webUrl, title, year, type };
 
    return (
       <>

@@ -4,6 +4,7 @@ interface MovieLinksInfo {
    webUrl: string;
    title: string;
    year: number;
+   type: string;
 }
 
 export interface MovieLinksProps {

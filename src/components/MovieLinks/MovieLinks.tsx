@@ -6,19 +6,21 @@ import { Services } from '@services/Kinopoisk';
 import { URLToken } from '@services/URLToken';
 import { getFilteredPlayers } from '@tools/getFilteredPlayers';
 import { getDataFrameLinks, getLinksForStaticPlayer } from '@tools/getFrameLinks';
+import { getImdbUrl } from '@tools/getImdbUrl';
 import { getTorrentSearchLink } from '@tools/getTorrentSearchLink';
 
 import styles from './MovieLinks.module.scss';
 import type { MovieLinksProps } from './types';
 
 export const MovieLinks: FC<MovieLinksProps> = async ({ info }) => {
-   const { id, imdbId, webUrl, title, year } = info;
+   const { id, imdbId, webUrl, title, year, type } = info;
    const factsLinkTitle = 'Интересные факты';
    const officialLinkTitle = 'Подробнее на «Кинопоиск»';
    const torrentSearchText = 'Искать торренты';
    const imdbLinktext = 'Плеер Imdb';
    const factsLinkRoute = `/movies/info/${id}/facts`;
-   const imdbUrl = `${process.env.IMDB_FRAME_URL!}/${imdbId}`;
+   const imdbInfo = { id: imdbId, type };
+   const imdbUrl = imdbId ? getImdbUrl(imdbInfo) : null;
    const frames = await Services.getDataFrames(id);
    const framesLinks = getFilteredPlayers(getDataFrameLinks(frames));
    const torrentSearchUrl = getTorrentSearchLink({ title, year });
@@ -53,7 +55,7 @@ export const MovieLinks: FC<MovieLinksProps> = async ({ info }) => {
                </Link>
             ))}
 
-         {imdbId && (
+         {imdbUrl && (
             <Link
                href={`/movies/info/${id}/player?token=${URLToken.encrypt(imdbUrl)}`}
                className={styles.movie_content_link}
