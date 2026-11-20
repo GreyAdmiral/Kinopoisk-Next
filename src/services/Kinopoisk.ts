@@ -84,57 +84,53 @@ class Kinopoisk {
       }
    }
 
-   async getMovies(number: string = '', keyword: string = '', options: RequestOptions = {}): Promise<JsonResult<MoviesProps>> {
+   async getMovies(number: string = '', keyword: string = '', options: RequestOptions = {}) {
       const defaultErrorMessage = 'Ошибка получения фильмов!';
       const url = `${this.baseUrl}?page=${number}${keyword ? `&keyword=${keyword}` : ''}`;
 
       return await this.request<MoviesProps>(url, defaultErrorMessage, options);
    }
 
-   async getCollection(
-      number: string = '1',
-      collectionName: string = '',
-      options: RequestOptions = {}
-   ): Promise<JsonResult<MoviesProps>> {
+   async getCollection(number: string = '1', collectionName: string = '', options: RequestOptions = {}) {
       const defaultErrorMessage = 'Ошибка получения фильмов!';
       const url = `${this.baseUrl}/collections?type=${collectionName}&page=${number}`;
 
       return await this.request<MoviesProps>(url, defaultErrorMessage, options);
    }
 
-   async getMovie(id = '', options: RequestOptions = {}): Promise<JsonResult<MovieDescription>> {
+   async getMovie(id = '', options: RequestOptions = {}) {
       const defaultErrorMessage = 'Ошибка получения информации о фильме!';
       const url = `${this.baseUrl}/${id}`;
 
       return await this.request<MovieDescription>(url, defaultErrorMessage, options);
    }
 
-   async getFacts(id = '', options: RequestOptions = {}): Promise<JsonResult<Facts>> {
+   async getFacts(id = '', options: RequestOptions = {}) {
       const defaultErrorMessage = 'Ошибка получения информации о фактах!';
       const url = `${this.baseUrl}/${id}/facts`;
 
       return await this.request<Facts>(url, defaultErrorMessage, options);
    }
 
-   async getSimilars(id = '', options: RequestOptions = {}): Promise<JsonResult<Similars | null>> {
+   async getSimilars(id = '', options: RequestOptions = {}) {
       const defaultErrorMessage = 'Ошибка получения информации о похожих фильмах!';
       const url = `${this.baseUrl}/${id}/similars`;
 
-      return await this.request<Similars>(url, defaultErrorMessage, options);
+      return await this.request<Similars | null>(url, defaultErrorMessage, options);
    }
 
-   async getSequelsAndPrequels(id = '', options: RequestOptions = {}): Promise<JsonResult<Sequel[] | null>> {
+   async getSequelsAndPrequels(id = '', options: RequestOptions = {}) {
       const defaultErrorMessage = 'Ошибка получения информации о сиквелах и приквелах!';
       const url = `${this.baseUrlOldAPI}/${id}/sequels_and_prequels`;
 
-      return await this.request<Sequel[]>(url, defaultErrorMessage, options);
+      return await this.request<Sequel[] | null>(url, defaultErrorMessage, options);
    }
 
-   async getReviews(id = '', options: RequestOptions = {}): Promise<JsonResult<Reviews | null>> {
+   async getReviews(id = '', options: RequestOptions = {}) {
       const defaultErrorMessage = 'Ошибка получения рецензий!';
       const url = `${this.baseUrl}/${id}/reviews`;
 
-      return await this.request<Reviews>(url, defaultErrorMessage, options);
+      return await this.request<Reviews | null>(url, defaultErrorMessage, options);
    }
 
    async getBestFilms(number: string = '1', options: RequestOptions = {}): Promise<JsonResult<MoviesProps>> {
@@ -145,7 +141,7 @@ class Kinopoisk {
       return await this.getCollection(number, 'PROGRAMMERS_THEME', options);
    }
 
-   async getFrames(id = ''): Promise<JsonResult<Frame[]>> {
+   async getFrames(id = '') {
       const options = { withAuth: false };
       const defaultErrorMessage = 'Ошибка получения фреймов!';
       const url = `${this.baseUrlFramesAPI}?kinopoisk=${id}`;
@@ -153,7 +149,7 @@ class Kinopoisk {
       return await this.request<Frame[]>(url, defaultErrorMessage, options);
    }
 
-   async getDataFrames(id = ''): Promise<JsonResult<{ data?: MiniFrame[] }>> {
+   async getDataFrames(id = '') {
       const options = { withAuth: false };
       const defaultErrorMessage = 'Ошибка получения информации о похожих фильмах!';
       const url = `${this.baseUrlDataFramesAPI}?kinopoisk=${id}`;

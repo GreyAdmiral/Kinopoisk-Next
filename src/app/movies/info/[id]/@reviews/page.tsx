@@ -19,6 +19,8 @@ export default async function ReviewsPage({ params }: Props) {
 
    const { total, totalPages, items = [] } = reviews || {};
    const isItems = Boolean(items.length);
+   if (!total || !isItems) return null;
+
    const startContentCount = Math.ceil(total / totalPages);
    const result: Array<Review[]> = [];
 
@@ -34,7 +36,7 @@ export default async function ReviewsPage({ params }: Props) {
 
    const [startItems, ...otherItems] = result;
 
-   return total && isItems ? (
+   return (
       <section className={styles.reviews}>
          <h2 className={styles.reviews_title}>{title}</h2>
 
@@ -46,5 +48,5 @@ export default async function ReviewsPage({ params }: Props) {
             {Boolean(otherItems.length) && <MoreReviewsButton reviews={otherItems} />}
          </div>
       </section>
-   ) : null;
+   );
 }

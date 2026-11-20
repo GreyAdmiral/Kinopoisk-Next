@@ -1,13 +1,8 @@
 'use server';
 
-import { JsonResult, RequestOptions, Services } from '@services/Kinopoisk';
-import type { MoviesProps } from '@typesfolder/types';
+import { type RequestOptions, Services } from '@services/Kinopoisk';
 
-export async function loadHomeMovies(
-   page: number,
-   keyword?: string,
-   options: RequestOptions = {}
-): Promise<JsonResult<MoviesProps>> {
+export async function loadHomeMovies(page: number, keyword?: string, options: RequestOptions = {}) {
    const result = keyword
       ? await Services.getMovies(String(page), keyword, options)
       : await Services.getBestFilms(String(page), options);

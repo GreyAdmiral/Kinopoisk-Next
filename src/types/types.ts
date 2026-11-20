@@ -2,7 +2,6 @@ export type MoviesProps = {
    total: number;
    totalPages: number;
    items: MovieProps[];
-   error?: string;
 };
 
 export type MovieProps = {

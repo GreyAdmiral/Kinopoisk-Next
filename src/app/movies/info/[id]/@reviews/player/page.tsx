@@ -1,0 +1,51 @@
+import { Services } from '@services/Kinopoisk';
+import type { Review } from '@typesfolder/types';
+
+import { MoreReviewsButton } from '@/components/MoreReviewsButton/MoreReviewsButton';
+import { ReviewCard } from '@/components/ReviewCard/ReviewCard';
+
+import type { Props } from '../../types';
+import styles from '../page.module.scss';
+
+export default async function ReviewsPage({ params }: Props) {
+   const title = 'Рецензии зрителей';
+   const { id } = await params;
+   const results = await Services.getReviews(id);
+   if (!results.ok) return null;
+
+   const { data: reviews } = results || {};
+   if (!reviews) return null;
+
+   const { total, totalPages, items = [] } = reviews || {};
+   const isItems = Boolean(items.length);
+   if (!total || !isItems) return null;
+
+   const startContentCount = Math.ceil(total / totalPages);
+   const result: Array<Review[]> = [];
+
+   for (let i = 1; i <= totalPages; i++) {
+      const start = (i - 1) * startContentCount;
+      const end = i * startContentCount;
+      const array = items.slice(start, end);
+
+      if (array.length) {
+         result.push(array);
+      }
+   }
+
+   const [startItems, ...otherItems] = result;
+
+   return (
+      <section className={styles.reviews}>
+         <h2 className={styles.reviews_title}>{title}</h2>
+
+         <div className={styles.reviews_body}>
+            {startItems.map((it, idx) => (
+               <ReviewCard key={`reviews-${it.kinopoiskId + it.title + it.date}-${idx}`} review={it} />
+            ))}
+
+            {Boolean(otherItems.length) && <MoreReviewsButton reviews={otherItems} />}
+         </div>
+      </section>
+   );
+}

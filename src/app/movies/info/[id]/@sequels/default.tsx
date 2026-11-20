@@ -1,28 +1,3 @@
-import { SequelCard } from '@components/SequelCard/SequelCard';
-import { Services } from '@services/Kinopoisk';
-
-import type { Props } from '../types';
-
-import styles from './page.module.scss';
-
-export default async function SequelsPage({ params }: Props) {
-   const title = 'Сиквелы и приквелы';
-   const { id } = await params;
-   const results = await Services.getSequelsAndPrequels(id);
-   if (!results.ok) return null;
-
-   const { data: sequels } = results || {};
-   if (!sequels) return null;
-
-   return (
-      <section className={styles.sequels_and_prequels}>
-         <h2 className={styles.sequels_and_prequels_title}>{title}</h2>
-
-         <div className={styles.sequels_and_prequels_body}>
-            {sequels.map((sequel, idx) => (
-               <SequelCard key={`sequel-${sequel.filmId}-${idx}`} sequel={sequel} />
-            ))}
-         </div>
-      </section>
-   );
+export default function SequelsPage() {
+   return null;
 }

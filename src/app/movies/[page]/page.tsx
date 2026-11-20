@@ -67,10 +67,10 @@ export default async function MoviesPage({ params, searchParams }: Props) {
    const { data: moviesResult } = results || {};
    if (!moviesResult) notFound();
 
-   const { totalPages: rawTotalPages, items: rawMovies, error } = moviesResult || {};
+   const { totalPages: rawTotalPages, items: rawMovies } = moviesResult || {};
    const totalPages = normalizeTotalPages(rawTotalPages);
 
-   if (!error && pageNumber > totalPages) {
+   if (pageNumber > totalPages) {
       notFound();
    }
 
@@ -105,7 +105,6 @@ export default async function MoviesPage({ params, searchParams }: Props) {
             )}
 
             {!hasMovies && keyword && <NotFoundResult />}
-            {error && <ErrorComponent message={error} />}
          </MoviesCard>
 
          <QueryShow query={desktopQuery}>
