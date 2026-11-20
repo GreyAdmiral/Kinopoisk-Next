@@ -53,7 +53,7 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
 
    useEffect(() => {
       setMovies(initMovies ?? []);
-   }, []);
+   }, [initMovies]);
 
    return (
       <>

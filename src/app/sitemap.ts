@@ -16,10 +16,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
    ];
 
    try {
-      const { items: rawMovies, error } = await Services.getMovies(page);
+      const results = await Services.getMovies(page);
 
-      if (error) throw error;
+      if (!results.ok) {
+         if (results.error) {
+            throw results.error;
+         } else {
+            throw new DOMException('Неизвестная техническая ошибка!');
+         }
+      }
 
+      const { data } = results || {};
+      const { items: rawMovies = [] } = data || {};
       const dynamicRoutes: MetadataRoute.Sitemap = getCensoredFilms(rawMovies).map(({ kinopoiskId }) => {
          return {
             url: `${baseUrl}/movies/info/${kinopoiskId}`,
