@@ -9,22 +9,18 @@ import type { Props } from '../types';
 import styles from './page.module.scss';
 
 export default async function ReviewsPage({ params }: Props) {
+   const title = 'Рецензии зрителей';
    const { id } = await params;
+   const results = await Services.getReviews(id);
+   if (!results.ok) return null;
 
-   if (!id) return null;
-
-   const reviews = await Services.getReviews(id);
-
+   const { data: reviews } = results || {};
    if (!reviews) return null;
 
-   const { total, totalPages, items = [] } = reviews;
+   const { total, totalPages, items = [] } = reviews || {};
    const isItems = Boolean(items.length);
-
-   if (!total || !isItems) return null;
-
    const startContentCount = Math.ceil(total / totalPages);
    const result: Array<Review[]> = [];
-   const title = 'Рецензии зрителей';
 
    for (let i = 1; i <= totalPages; i++) {
       const start = (i - 1) * startContentCount;
@@ -38,7 +34,7 @@ export default async function ReviewsPage({ params }: Props) {
 
    const [startItems, ...otherItems] = result;
 
-   return (
+   return total && isItems ? (
       <section className={styles.reviews}>
          <h2 className={styles.reviews_title}>{title}</h2>
 
@@ -50,5 +46,5 @@ export default async function ReviewsPage({ params }: Props) {
             {Boolean(otherItems.length) && <MoreReviewsButton reviews={otherItems} />}
          </div>
       </section>
-   );
+   ) : null;
 }

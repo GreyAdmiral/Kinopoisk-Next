@@ -8,11 +8,11 @@ import styles from './page.module.scss';
 export default async function SequelsPage({ params }: Props) {
    const title = 'Сиквелы и приквелы';
    const { id } = await params;
-   const sequels = await Services.getSequelsAndPrequels(id);
+   const results = await Services.getSequelsAndPrequels(id);
+   if (!results.ok) return null;
 
-   if (!sequels) {
-      return null;
-   }
+   const { data: sequels } = results || {};
+   if (!sequels) return null;
 
    return (
       <section className={styles.sequels_and_prequels}>

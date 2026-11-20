@@ -2,12 +2,12 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { BackLink } from '@components/BackLink/BackLink';
+import { ErrorComponent } from '@components/ErrorComponent/ErrorComponent';
 import { FactsList } from '@components/FactsList/FactsList';
+import { NotFoundResult } from '@components/NotFoundResult/NotFoundResult';
 import { ScrollRestoration } from '@components/ScrollRestoration/ScrollRestoration';
 import { Services } from '@services/Kinopoisk';
 import { brandTitle } from '@tools/costants';
-
-import { NotFoundResult } from '@/components/NotFoundResult/NotFoundResult';
 
 import type { Props } from '../types';
 
@@ -17,7 +17,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
    const { id } = await params;
    const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/info/${id}`;
    const unknownTitle = 'Неизвестный фильм';
-   const facts = await Services.getMovie(id);
+   const results = await Services.getMovie(id);
+
+   if (!results.ok) {
+      return { title: brandTitle };
+   }
+
+   const { data: facts } = results || {};
    const { nameRu, nameEn, nameOriginal, year } = facts || {};
    const title = nameRu || nameEn || nameOriginal || unknownTitle;
    const yearString = year ? ` (${year})` : '';
@@ -48,8 +54,22 @@ export default async function MoviePage({ params }: Props) {
    const pageTitle = 'Знаете ли вы что?..';
    const notFoundMessage = 'Фактов не найдено!';
 
-   const facts = await Services.getFacts(id);
-   const { items } = facts;
+   const results = await Services.getFacts(id);
+
+   if (!results.ok) {
+      if (results.error) {
+         return <ErrorComponent message={results.error} />;
+      } else {
+         return (
+            <div className={styles.facts}>
+               <NotFoundResult message={notFoundMessage} />
+            </div>
+         );
+      }
+   }
+
+   const { data: facts } = results || {};
+   const { items } = facts || {};
    const isItems = Boolean(items.length);
    const factsArray = items.filter((fact) => fact.type === factsLabel);
    const bloopersArray = items.filter((blooper) => blooper.type === bloopersLabel);

@@ -84,131 +84,81 @@ class Kinopoisk {
       }
    }
 
-   async getMovies(number: string = '', keyword: string = '', options: RequestOptions = {}): Promise<MoviesProps> {
+   async getMovies(number: string = '', keyword: string = '', options: RequestOptions = {}): Promise<JsonResult<MoviesProps>> {
       const defaultErrorMessage = 'Ошибка получения фильмов!';
       const url = `${this.baseUrl}?page=${number}${keyword ? `&keyword=${keyword}` : ''}`;
-      const result = await this.request<MoviesProps>(url, defaultErrorMessage, options);
 
-      if (!result.ok) {
-         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
-         return { error: result.error, total: 0, totalPages: 0, items: [] };
-      }
-
-      return result.data;
+      return await this.request<MoviesProps>(url, defaultErrorMessage, options);
    }
 
-   async getCollection(number: string = '1', collectionName: string = '', options: RequestOptions = {}): Promise<MoviesProps> {
+   async getCollection(
+      number: string = '1',
+      collectionName: string = '',
+      options: RequestOptions = {}
+   ): Promise<JsonResult<MoviesProps>> {
       const defaultErrorMessage = 'Ошибка получения фильмов!';
       const url = `${this.baseUrl}/collections?type=${collectionName}&page=${number}`;
-      const result = await this.request<MoviesProps>(url, defaultErrorMessage, options);
 
-      if (!result.ok) {
-         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
-         return { error: result.error, total: 0, totalPages: 0, items: [] };
-      }
-
-      return result.data;
+      return await this.request<MoviesProps>(url, defaultErrorMessage, options);
    }
 
-   async getMovie(id = '', options: RequestOptions = {}): Promise<MovieDescription | null> {
+   async getMovie(id = '', options: RequestOptions = {}): Promise<JsonResult<MovieDescription>> {
       const defaultErrorMessage = 'Ошибка получения информации о фильме!';
       const url = `${this.baseUrl}/${id}`;
-      const result = await this.request<MovieDescription>(url, defaultErrorMessage, options);
 
-      if (!result.ok) {
-         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
-         return null;
-      }
-
-      return result.data;
+      return await this.request<MovieDescription>(url, defaultErrorMessage, options);
    }
 
-   async getFacts(id = '', options: RequestOptions = {}): Promise<Facts> {
+   async getFacts(id = '', options: RequestOptions = {}): Promise<JsonResult<Facts>> {
       const defaultErrorMessage = 'Ошибка получения информации о фактах!';
       const url = `${this.baseUrl}/${id}/facts`;
-      const result = await this.request<Facts>(url, defaultErrorMessage, options);
 
-      if (!result.ok) {
-         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
-         return { error: result.error, total: 0, items: [] };
-      }
-
-      return result.data;
+      return await this.request<Facts>(url, defaultErrorMessage, options);
    }
 
-   async getSimilars(id = '', options: RequestOptions = {}): Promise<Similars | null> {
+   async getSimilars(id = '', options: RequestOptions = {}): Promise<JsonResult<Similars | null>> {
       const defaultErrorMessage = 'Ошибка получения информации о похожих фильмах!';
       const url = `${this.baseUrl}/${id}/similars`;
-      const result = await this.request<Similars>(url, defaultErrorMessage, options);
 
-      if (!result.ok) {
-         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
-         return null;
-      }
-
-      return result.data;
+      return await this.request<Similars>(url, defaultErrorMessage, options);
    }
 
-   async getSequelsAndPrequels(id = '', options: RequestOptions = {}): Promise<Sequel[] | null> {
+   async getSequelsAndPrequels(id = '', options: RequestOptions = {}): Promise<JsonResult<Sequel[] | null>> {
       const defaultErrorMessage = 'Ошибка получения информации о сиквелах и приквелах!';
       const url = `${this.baseUrlOldAPI}/${id}/sequels_and_prequels`;
-      const result = await this.request<Sequel[]>(url, defaultErrorMessage, options);
 
-      if (!result.ok) {
-         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
-         return null;
-      }
-
-      return result.data;
+      return await this.request<Sequel[]>(url, defaultErrorMessage, options);
    }
 
-   async getReviews(id = '', options: RequestOptions = {}): Promise<Reviews | null> {
+   async getReviews(id = '', options: RequestOptions = {}): Promise<JsonResult<Reviews | null>> {
       const defaultErrorMessage = 'Ошибка получения рецензий!';
       const url = `${this.baseUrl}/${id}/reviews`;
-      const result = await this.request<Reviews>(url, defaultErrorMessage, options);
 
-      if (!result.ok) {
-         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
-         return null;
-      }
-
-      return result.data;
+      return await this.request<Reviews>(url, defaultErrorMessage, options);
    }
 
-   async getBestFilms(number: string = '1', options: RequestOptions = {}): Promise<MoviesProps> {
+   async getBestFilms(number: string = '1', options: RequestOptions = {}): Promise<JsonResult<MoviesProps>> {
       return await this.getCollection(number, 'TOP_250_MOVIES', options);
    }
 
-   async getProgrammersFilms(number: string = '1', options: RequestOptions = {}): Promise<MoviesProps> {
+   async getProgrammersFilms(number: string = '1', options: RequestOptions = {}): Promise<JsonResult<MoviesProps>> {
       return await this.getCollection(number, 'PROGRAMMERS_THEME', options);
    }
 
-   async getFrames(id = ''): Promise<Frame[]> {
+   async getFrames(id = ''): Promise<JsonResult<Frame[]>> {
       const options = { withAuth: false };
       const defaultErrorMessage = 'Ошибка получения фреймов!';
       const url = `${this.baseUrlFramesAPI}?kinopoisk=${id}`;
-      const result = await this.request<Frame[]>(url, defaultErrorMessage, options);
 
-      if (!result.ok) {
-         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
-         return [];
-      }
-
-      return result.data;
+      return await this.request<Frame[]>(url, defaultErrorMessage, options);
    }
 
-   async getDataFrames(id = ''): Promise<MiniFrame[]> {
+   async getDataFrames(id = ''): Promise<JsonResult<{ data?: MiniFrame[] }>> {
       const options = { withAuth: false };
       const defaultErrorMessage = 'Ошибка получения информации о похожих фильмах!';
       const url = `${this.baseUrlDataFramesAPI}?kinopoisk=${id}`;
-      const result = await this.request<{ data?: MiniFrame[] }>(url, defaultErrorMessage, options);
 
-      if (!result.ok) {
-         if (result.aborted) throw new DOMException('Aborted', 'AbortError');
-         return [];
-      }
-
-      return result.data.data || [];
+      return await this.request<{ data?: MiniFrame[] }>(url, defaultErrorMessage, options);
    }
 }
 

@@ -9,16 +9,17 @@ import styles from './page.module.scss';
 export default async function SimilarsPage({ params }: Props) {
    const title = 'Похожие фильмы';
    const { id } = await params;
-   const similars = await Services.getSimilars(id);
+   const result = await Services.getSimilars(id);
+   if (!result.ok) return null;
 
-   if (!similars) {
-      return null;
-   }
+   const { data: similars } = result || {};
+   if (!similars) return null;
 
    const { total = 0, items = [] } = similars;
    const itemsLength = items.length;
+   if (!total || !itemsLength) return null;
 
-   return total && itemsLength ? (
+   return (
       <section className={styles.similars}>
          <h2 className={styles.similars_title}>{title}</h2>
 
@@ -28,5 +29,5 @@ export default async function SimilarsPage({ params }: Props) {
             ))}
          </SliderList>
       </section>
-   ) : null;
+   );
 }

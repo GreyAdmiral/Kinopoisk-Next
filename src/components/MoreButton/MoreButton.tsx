@@ -34,8 +34,11 @@ export const MoreButton: FC<MoreButtonProps> = ({ page, totalPages, searchParams
       setIsLoading(true);
 
       try {
-         const data = await loadHomeMovies(nextPage, keyword);
-         if (data.error) throw data.error;
+         const results = await loadHomeMovies(nextPage, keyword);
+
+         if (!results.ok) throw results.error;
+
+         const { data } = results || {};
          const prepared = prepareMovies(data.items, { sorted, reversed });
 
          setMovies((prev) => [...prev, ...prepared]);

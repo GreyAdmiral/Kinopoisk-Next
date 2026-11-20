@@ -51,7 +51,23 @@ export default async function MoviesPage({ params, searchParams }: Props) {
    const pageNumber = normalizePage(page);
 
    const results = await loadHomeMovies(pageNumber, keyword);
-   const { totalPages: rawTotalPages, items: rawMovies, error } = results;
+
+   if (!results.ok) {
+      if (results.error) {
+         return (
+            <MoviesCard>
+               <ErrorComponent message={results.error} />
+            </MoviesCard>
+         );
+      } else {
+         notFound();
+      }
+   }
+
+   const { data: moviesResult } = results || {};
+   if (!moviesResult) notFound();
+
+   const { totalPages: rawTotalPages, items: rawMovies, error } = moviesResult || {};
    const totalPages = normalizeTotalPages(rawTotalPages);
 
    if (!error && pageNumber > totalPages) {

@@ -11,13 +11,13 @@ import styles from './page.module.scss';
 export default async function ReviewsPage({ params }: Props) {
    const title = 'Рецензии зрителей';
    const { id } = await params;
-   const reviews = await Services.getReviews(id);
+   const results = await Services.getReviews(id);
+   if (!results.ok) return null;
 
-   if (!reviews) {
-      return null;
-   }
+   const { data: reviews } = results || {};
+   if (!reviews) return null;
 
-   const { total, totalPages, items = [] } = reviews;
+   const { total, totalPages, items = [] } = reviews || {};
    const isItems = Boolean(items.length);
    const startContentCount = Math.ceil(total / totalPages);
    const result: Array<Review[]> = [];

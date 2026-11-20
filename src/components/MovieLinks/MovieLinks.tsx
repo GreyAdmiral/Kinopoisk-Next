@@ -20,11 +20,12 @@ export const MovieLinks: FC<MovieLinksProps> = async ({ info }) => {
    const imdbLinktext = 'Плеер Imdb';
    const factsLinkRoute = `/movies/info/${id}/facts`;
    const imdbInfo = { id: imdbId, type };
-   const imdbUrl = imdbId ? getImdbUrl(imdbInfo) : null;
+
    const frames = await Services.getDataFrames(id);
-   const framesLinks = getFilteredPlayers(getDataFrameLinks(frames));
+   const framesLinks = frames.ok ? getFilteredPlayers(getDataFrameLinks(frames.data.data)) : null;
    const torrentSearchUrl = getTorrentSearchLink({ title, year });
-   const linksForPlayer = framesLinks.length ? [...framesLinks, ...getLinksForStaticPlayer(id)] : null;
+   const linksForPlayer = framesLinks?.length ? [...framesLinks, ...getLinksForStaticPlayer(id)] : null;
+   const imdbUrl = imdbId ? getImdbUrl(imdbInfo) : null;
 
    return (
       <div className={styles.movie_content_links}>

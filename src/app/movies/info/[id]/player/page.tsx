@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { BackLink } from '@components/BackLink/BackLink';
+import { ErrorComponent } from '@components/ErrorComponent/ErrorComponent';
 import { ScrollArrows } from '@components/ScrollArrows/ScrollArrows';
 import { ScrollRestoration } from '@components/ScrollRestoration/ScrollRestoration';
 import { Services } from '@services/Kinopoisk';
@@ -18,7 +19,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
    const { id } = await params;
    const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/info/${id}`;
    const unknownTitle = 'Неизвестный фильм';
-   const movie = await Services.getMovie(id);
+   const results = await Services.getMovie(id);
+
+   if (!results.ok) {
+      return { title: brandTitle };
+   }
+
+   const { data: movie } = results || {};
    const { nameRu, nameEn, nameOriginal, description, shortDescription, year } = movie || {};
    const title = nameRu || nameEn || nameOriginal || unknownTitle;
    const yearString = year ? ` (${year})` : '';
@@ -43,9 +50,15 @@ export default async function PlayerPage({ params, searchParams }: Props) {
 
    if (!id || !token) notFound();
 
-   const movie = await Services.getMovie(id);
+   const result = await Services.getMovie(id);
 
-   if (!movie) notFound();
+   if (!result.ok) {
+      if (result.error) {
+         return <ErrorComponent message={result.error} />;
+      } else {
+         notFound();
+      }
+   }
 
    const width = 1120;
    const height = 610;
@@ -54,6 +67,7 @@ export default async function PlayerPage({ params, searchParams }: Props) {
    const titleLink = `/movies/info/${id}`;
    const notFoundTitle = 'Неизвестный фильм';
    const linkClue = 'Перейти на страницу фильма';
+   const { data: movie } = result || {};
    const { nameRu, nameEn, nameOriginal } = movie;
    const title = nameRu || nameEn || nameOriginal;
    const validatedTitle = isExists(title) ? title : notFoundTitle;
