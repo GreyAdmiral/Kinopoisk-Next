@@ -20,10 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
    const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/info/${id}`;
    const unknownTitle = 'Неизвестный фильм';
    const results = await Services.getMovie(id);
-
-   if (!results.ok) {
-      return { title: brandTitle };
-   }
+   if (!results.ok) return { title: brandTitle };
 
    const { data: movie } = results || {};
    const { nameRu, nameEn, nameOriginal, description, shortDescription, year } = movie || {};
@@ -47,7 +44,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function PlayerPage({ params, searchParams }: Props) {
    const { id } = await params;
    const { token = '' } = await searchParams;
-
    if (!id || !token) notFound();
 
    const result = await Services.getMovie(id);

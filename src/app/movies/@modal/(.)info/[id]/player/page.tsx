@@ -12,7 +12,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
    const { id } = await params;
    const pageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/movies/info/${id}`;
    const unknownTitle = 'Неизвестный фильм';
-   const movie = await Services.getMovie(id);
+   const results = await Services.getMovie(id);
+   if (!results.ok) return { title: brandTitle };
+
+   const { data: movie } = results || {};
    const { nameRu, nameEn, nameOriginal, description, shortDescription, year } = movie || {};
    const title = nameRu || nameEn || nameOriginal || unknownTitle;
    const yearString = year ? ` (${year})` : '';
